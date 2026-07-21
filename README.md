@@ -1,5 +1,7 @@
 # rd-quartics-thm7prime
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21470001.svg)](https://doi.org/10.5281/zenodo.21470001)
+
 Lean 4 formalization of **Theorem 7′**: an unconditional, machine-verified
 repair of the classification of rational-derived quartics with a repeated
 root (Theorem 7 of Buchholz–MacDougall, *J. Number Theory* **81** (2000),
