@@ -1,0 +1,224 @@
+\chapter{Theorem $7'$}
+
+This blueprint documents the Lean~4 formalization of Theorem~$7'$: the
+unconditional repair of the classification of rational-derived quartics
+with a repeated root (Theorem~7 of Buchholz--MacDougall,
+J.~Number Theory 81 (2000)).  Every node below is formalized; the master
+statement \texttt{Thm7Statement.thm7prime} has axiom footprint exactly
+\texttt{[propext, Classical.choice, Quot.sound]}.
+
+\section{The normalized family and the gates}
+
+\begin{definition}[Normalized $p(2,1,1)$ family]\label{def:family}
+\lean{Thm7Statement.quartic211}\leanok
+For $a \in \Q$ let $q_a(x) = x^2(x-1)(x-a)$, the normalized quartic with
+root multiset $\{0,0,1,a\}$; it has genuine type $p(2,1,1)$ iff
+$a \notin \{0,1\}$.
+\end{definition}
+
+\begin{definition}[Gates]\label{def:gates}
+\lean{Thm7Statement.Gate1}\leanok
+\uses{def:family}
+$G_1(a)$: $9a^2-14a+9$ is a rational square.
+$G_2(a)$: $9a^2-6a+9$ is a rational square.
+(Formalized as \texttt{Gate1} and \texttt{Gate2}.)  These are the
+discriminant conditions for $q_a'$ and $q_a''$ to split over $\Q$.
+\end{definition}
+
+\begin{definition}[Rational-derivedness, gate form]\label{def:rd}
+\lean{Thm7Statement.RD211}\leanok
+\uses{def:gates}
+$\mathrm{RD}(a)$: $a \neq 0$, $a \neq 1$, $G_1(a)$ and $G_2(a)$.
+\end{definition}
+
+\begin{lemma}[Splitting under the gates]\label{lem:splits}
+\lean{Thm7Statement.dq1_splits}\leanok
+\uses{def:gates}
+Under $G_1$ resp.\ $G_2$, the derivatives $q_a'$ and $q_a''$ split with
+explicit rational roots.  (Formalized as \texttt{dq1\_splits} and
+\texttt{dq2\_splits}.)
+\end{lemma}
+\begin{proof}\leanok
+Quadratic formula; a one-line \texttt{linear\_combination}.
+\end{proof}
+
+\begin{lemma}[Normalization of a general $p(2,1,1)$ translate]
+\label{lem:normalize}
+\lean{Thm7Statement.caseA_normalized}\leanok
+\uses{def:family}
+For $r_1 \neq c$, the quartic $(x-c)^2(x-r_1)(x-r_2)$ pulled back along
+$x = c + (r_1-c)u$ equals $(r_1-c)^4\, q_a(u)$ with
+$a = (r_2-c)/(r_1-c)$.
+\end{lemma}
+\begin{proof}\leanok
+A ring identity.
+\end{proof}
+
+\section{The curve and the $a$-map}
+
+\begin{definition}[The curve $E$]\label{def:E}
+\lean{Thm7Statement.OnE}\leanok
+$E\colon z^2 = w^3+12w^2-108w = w(w-6)(w+18)$, Cremona \texttt{576i2}.
+The membership predicate is \texttt{OnE}; the mathlib Weierstrass model
+is \texttt{E576i2}, tied to \texttt{OnE} by
+\texttt{OnE\_iff\_equation}, with $\Delta \neq 0$ proved in
+\texttt{E576i2\_elliptic}.
+\end{definition}
+
+\begin{definition}[The $a$-map]\label{def:amap}
+\lean{Thm7Statement.aMap}\leanok
+\uses{def:E}
+$a(w,z) = \dfrac{9(2w+z-12)(w+2)}{(z-w-18)(8w+z)}$, written with the
+on-curve reduced denominator
+$D(w,z) = (7w-18)z + w^3+4w^2-252w$ (\texttt{D\_reduce},
+\texttt{aNum}, \texttt{aDen}).
+\end{definition}
+
+\section{The statement}
+
+\begin{definition}[Theorem $7'$, the statement]\label{def:thm7prime}
+\lean{Thm7Statement.Thm7Prime}\leanok
+\uses{def:rd, def:amap}
+$\mathrm{Thm7'}$ is the conjunction of the backward direction
+(\texttt{Thm7Backward}: every $a$-map value on $E(\Q)$ away from the
+denominator locus and from $\{0,1\}$ satisfies $\mathrm{RD}$) and the
+forward direction (\texttt{Thm7Forward}: every $a$ with $\mathrm{RD}(a)$
+arises as such a value).
+\end{definition}
+
+\section{The backward direction}
+
+\begin{lemma}[Cleared gate identities]\label{lem:gatescleared}
+\lean{Thm7Statement.gate1_cleared}\leanok
+\uses{def:E, def:amap}
+On $E$, cleared of denominators, $9a^2-14a+9$ and $9a^2-6a+9$
+(for $a = a(w,z)$) are squares of explicit rational functions;
+the certificates are single \texttt{linear\_combination} steps
+(\texttt{gate1\_cleared}, \texttt{gate2\_cleared}), packaged in division
+form as \texttt{gate1\_sq}, \texttt{gate2\_sq}.
+\end{lemma}
+\begin{proof}\leanok
+Sage-lifted cofactor certificates, checked by the kernel.
+\end{proof}
+
+\begin{lemma}[Exceptional locus]\label{lem:exceptional}
+\lean{Thm7Statement.exceptional_points}\leanok
+\uses{def:E, def:amap}
+On $E(\Q)$, the side factor $w(w+18)(w^2-63w+486)$ vanishes with
+$D(w,z) \neq 0$ only at $(54,432)$ and $(9,-27)$; both map to
+$a = 77/90$, where the gates hold with witnesses $19/10$, $97/30$
+(\texttt{gates\_at\_77\_90}).
+\end{lemma}
+\begin{proof}\leanok
+Finite case analysis.
+\end{proof}
+
+\begin{theorem}[Backward direction]\label{thm:backward}
+\lean{Thm7Statement.thm7_backward}\leanok
+\uses{def:thm7prime, lem:gatescleared, lem:exceptional}
+\texttt{Thm7Backward} holds.
+\end{theorem}
+\begin{proof}\leanok
+Generic branch by \Cref{lem:gatescleared}, exceptional branch by
+\Cref{lem:exceptional}.  No rank input.
+\end{proof}
+
+\section{The forward direction}
+
+\begin{definition}[The inverse map]\label{def:inverse}
+\lean{Thm7Statement.wNp}\leanok
+\uses{def:gates, def:E}
+Given gate witnesses $(r,s)$ for $a$, set
+$w = 18(15a-6r-s-13)/(3r-7s+12)$ and determine $z$ linearly from
+$a \cdot D(w,z) = 9(2w+z-12)(w+2)$; the denominators involve
+$K(a,r,s) = 105a^2-45ar-238a+51r+16s+105$ and the sign-selection sextic
+$P(a,r,s)$ (\texttt{wNp}, \texttt{wDp}, \texttt{zNp}, \texttt{zDp},
+\texttt{K1p}, \texttt{adP6}).  Discovered by Gr\"obner elimination.
+\end{definition}
+
+\begin{lemma}[Cleared inverse identities]\label{lem:inversecleared}
+\lean{Thm7Statement.curve_cleared}\leanok
+\uses{def:inverse}
+Modulo the two gate relations, the inverse point lies on $E$
+(\texttt{curve\_cleared}) and the pulled-back denominator equals
+$-62208\,P(a,r,s)$ up to the chart clearing (\texttt{aden\_cleared}).
+\end{lemma}
+\begin{proof}\leanok
+Sage-lifted cofactor certificates, checked by the kernel.
+\end{proof}
+
+\begin{lemma}[$96$ is not a rational square]\label{lem:sq96}
+\lean{Thm7Statement.sq_ne_96}\leanok
+For all $x \in \Q$, $x^2 \neq 96$.
+\end{lemma}
+\begin{proof}\leanok
+Via \texttt{Rat.sqrt}.
+\end{proof}
+
+\begin{lemma}[Denominator nonvanishing, all signs]\label{lem:denoms}
+\lean{Thm7Statement.wD_ne}\leanok
+\uses{def:inverse, lem:sq96}
+If the gates hold and $a \neq 0$, then $3r-7s+12 \neq 0$ and
+$K(a,r,s) \neq 0$ for every choice of signs of $(r,s)$: the eliminants
+are $a^2(225a^2-210a+238)$ with $225a^2-210a+238 = (15a-7)^2+189 > 0$,
+and $(3a-5)(5a-3)a^2(225a^2-210a+238)$, whose linear branches force
+$(3r)^2 = 96$ resp.\ $(5r)^2 = 96$
+(\texttt{wD\_ne}, \texttt{K1\_ne}).
+\end{lemma}
+\begin{proof}\leanok
+Eliminant certificates plus \Cref{lem:sq96} and positivity.
+\end{proof}
+
+\begin{lemma}[Sign cover]\label{lem:cover}
+\lean{Thm7Statement.adP6_cover}\leanok
+\uses{def:inverse}
+Under the gates, at least one of the four sign choices keeps
+$P(a,\pm r,\pm s) \neq 0$: the ideal generated by the gate relations and
+all four conjugates is the unit ideal, and the Nullstellensatz
+certificate is checked by the kernel.
+\end{lemma}
+\begin{proof}\leanok
+A single \texttt{linear\_combination} deriving $1 = 0$ from the contrary.
+\end{proof}
+
+\begin{lemma}[Forward core]\label{lem:core}
+\lean{Thm7Statement.forward_core}\leanok
+\uses{lem:inversecleared, lem:denoms}
+Under the gates and the three nonvanishing conditions, the inverse point
+lies on $E(\Q)$, avoids the $a$-map denominator locus, and maps back to
+$a$.
+\end{lemma}
+\begin{proof}\leanok
+Assemble \Cref{lem:inversecleared} with the chart clearings.
+\end{proof}
+
+\begin{theorem}[Forward direction]\label{thm:forward}
+\lean{Thm7Statement.thm7_forward}\leanok
+\uses{def:thm7prime, lem:core, lem:cover, lem:denoms}
+\texttt{Thm7Forward} holds.  No rank input.
+\end{theorem}
+\begin{proof}\leanok
+Choose signs by \Cref{lem:cover}; apply \Cref{lem:core}.
+\end{proof}
+
+\section{The main theorem}
+
+\begin{theorem}[Theorem $7'$, unconditional]\label{thm:main}
+\lean{Thm7Statement.thm7prime}\leanok
+\uses{thm:backward, thm:forward}
+$\mathrm{Thm7'}$ holds, with axiom footprint exactly
+\texttt{[propext, Classical.choice, Quot.sound]}.
+\end{theorem}
+\begin{proof}\leanok
+$\langle$\texttt{thm7\_backward}, \texttt{thm7\_forward}$\rangle$.
+\end{proof}
+
+\begin{remark}[The disclosed rank axiom]\label{rem:rank}
+\uses{thm:main}
+The development retains one disclosed, instance-localized axiom
+(\texttt{rank\_E576i2}: the Mordell--Weil rank of \texttt{576i2} is $1$,
+verified unconditionally in two independent systems), consumed only by
+two auxiliary declarations from an earlier conditional architecture.
+The main theorem does not depend on it, and the kernel's
+per-declaration axiom report documents this separation.
+\end{remark}

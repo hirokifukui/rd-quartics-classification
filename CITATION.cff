@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this formalization, please cite it as below."
+authors:
+  - family-names: Fukui
+    given-names: Hiroki
+    orcid: "https://orcid.org/0009-0008-7122-522X"
+title: "rd-quartics-thm7prime: an unconditional, machine-verified repair of the classification of rational-derived quartics with a repeated root"
+version: v1.0.0
+date-released: 2026-07-21
+url: "https://github.com/hirokifukui/rd-quartics-thm7prime"

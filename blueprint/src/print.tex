@@ -1,0 +1,37 @@
+% Printable version of the blueprint.
+% Kept dependency-minimal (plain amsthm; blueprint macros neutralized here)
+% so it builds on a minimal TeX installation. The web version (web.tex)
+% uses the real leanblueprint plasTeX plugin in CI.
+\documentclass[a4paper]{report}
+\usepackage[textwidth=14cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+
+\input{preamble/common}
+
+% Theorem environments (chapter-numbered, shared counter)
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+% Neutralize the plasTeX/leanblueprint macros for the print build
+\newcommand{\lean}[1]{}
+\newcommand{\leanok}{}
+\newcommand{\uses}[1]{}
+\newcommand{\proves}[1]{}
+\newcommand{\Cref}[1]{\ref*{#1}\,(\autoref{#1})}
+% simple fallback: render \Cref as a plain reference
+\renewcommand{\Cref}[1]{Lemma~\ref{#1}}
+
+\title{Theorem $7'$: rational-derived quartics with a repeated root\\
+{\large Blueprint of the Lean formalization}}
+\author{Hiroki Fukui}
+
+\begin{document}
+\maketitle
+\input{chapter/thm7}
+\end{document}

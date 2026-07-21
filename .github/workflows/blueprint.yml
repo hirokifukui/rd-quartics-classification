@@ -1,0 +1,60 @@
+name: Build project and blueprint
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Build the Lean project (with mathlib cache)
+        uses: leanprover/lean-action@v1
+        with:
+          use-github-cache: true
+
+      - name: Install blueprint dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz libgraphviz-dev
+          pip install -r blueprint/requirements.txt
+
+      - name: Build blueprint web version
+        run: |
+          cd blueprint/src
+          plastex --plugins leanblueprint web.tex || plastex web.tex
+        continue-on-error: false
+
+      - name: Check declarations
+        run: |
+          ls blueprint/lean_decls && ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp -r blueprint/web _site/blueprint
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

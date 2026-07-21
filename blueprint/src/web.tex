@@ -1,0 +1,21 @@
+% Web version of the blueprint (plasTeX + leanblueprint plugin).
+\documentclass{report}
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage[showmore, dep_graph, project=../../]{blueprint}
+
+\input{preamble/common}
+\input{preamble/web}
+
+\github{https://github.com/hirokifukui/rd-quartics-thm7prime}
+\dochome{https://hirokifukui.github.io/rd-quartics-thm7prime/docs}
+
+\title{Theorem $7'$: rational-derived quartics with a repeated root}
+\author{Hiroki Fukui}
+
+\begin{document}
+\maketitle
+\input{chapter/thm7}
+\end{document}

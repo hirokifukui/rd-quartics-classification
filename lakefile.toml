@@ -1,0 +1,18 @@
+name = "Thm7Prime"
+keywords = ["math", "number-theory", "elliptic-curves", "rational-derived-polynomials"]
+defaultTargets = ["Thm7Prime"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "checkdecls"
+git = "https://github.com/PatrickMassot/checkdecls.git"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "d568c8c09630de097a046763c17b9ea99f95f950"
+
+[[lean_lib]]
+name = "Thm7Prime"

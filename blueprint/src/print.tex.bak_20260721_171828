@@ -1,0 +1,22 @@
+% Printable version of the blueprint (pdflatex-compatible).
+\documentclass[a4paper]{report}
+\usepackage[textwidth=14cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[nameinlink, capitalize]{cleveref}
+\usepackage{amsthm}
+\usepackage{etexcmds}
+\usepackage{thmtools}
+\usepackage{xparse}
+
+\input{preamble/common}
+\input{preamble/print}
+
+\title{Theorem $7'$: rational-derived quartics with a repeated root\\
+{\large Blueprint of the Lean formalization}}
+\author{Hiroki Fukui}
+
+\begin{document}
+\maketitle
+\input{chapter/thm7}
+\end{document}
