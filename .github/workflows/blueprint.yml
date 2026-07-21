@@ -29,10 +29,7 @@ jobs:
           pip install -r blueprint/requirements.txt
 
       - name: Build blueprint web version
-        run: |
-          cd blueprint/src
-          plastex --plugins leanblueprint web.tex || plastex web.tex
-        continue-on-error: false
+        run: leanblueprint web
 
       - name: Check declarations
         run: |
