@@ -1,6 +1,6 @@
 name = "Thm7Prime"
 keywords = ["math", "number-theory", "elliptic-curves", "rational-derived-polynomials"]
-defaultTargets = ["Thm7Prime"]
+defaultTargets = ["Thm7Prime", "Gap"]
 
 [leanOptions]
 autoImplicit = false
@@ -16,3 +16,6 @@ rev = "d568c8c09630de097a046763c17b9ea99f95f950"
 
 [[lean_lib]]
 name = "Thm7Prime"
+
+[[lean_lib]]
+name = "Gap"

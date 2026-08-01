@@ -1,70 +1,46 @@
-# rd-quartics-thm7prime
+# rd-quartics-classification
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21470001.svg)](https://doi.org/10.5281/zenodo.21470001)
+Lean 4 formalization and computational certificates for:
 
-Lean 4 formalization of **Theorem 7′**: an unconditional, machine-verified
-repair of the classification of rational-derived quartics with a repeated
-root (Theorem 7 of Buchholz–MacDougall, *J. Number Theory* **81** (2000),
-210–233).
+**The classification of rational-derived quartics with a repeated root: a proof gap, its unconditional repair, and the formalization that found both** (Hiroki Fukui, 2026 — manuscript in `paper/`).
 
-**Main statement.** For the normalized family `x²(x−1)(x−a)`, the
-rational-derived parameters `a ∉ {0,1}` are exactly the values of the
-Buchholz–MacDougall a-map on the rational points of the elliptic curve
-`E : z² = w(w−6)(w+18)` (Cremona 576i2), away from an explicit degenerate
-locus. Both directions are proved by explicit polynomial identities; no
-rank computation enters.
+A monic polynomial over ℚ is *rational-derived* if it and all of its derivatives split completely over ℚ. Buchholz–MacDougall (J. Number Theory 81 (2000), Theorem 7) presented a classification of the repeated-root quartics `x²(x−1)(x−a)` by the rational points of the elliptic curve 576i2. This repository contains:
+
+1. **The gap** (`Gap/`): kernel certificates that the published proof of Theorem 7 contains a circularity and a quantifier jump, exhibited by an explicit quartic over two base fields (`BMThm7Gap.lean`, `BMThm7Transcript.lean`; adjudication record in `ADJUDICATION.md`).
+2. **The repair** (`Thm7Prime/`): Theorem 7′ — an unconditional, rank-free classification. Both directions are exact polynomial identities; the completeness direction uses an explicit rational reconstruction of a curve point from the two gate witnesses. Main statement: `theorem thm7prime : Thm7Prime` in `Thm7Prime/Master.lean`.
+3. **Computational certificates** (`scripts/`): Magma and Sage scripts and logs for every CAS-derived fact (rank corrections to BM2000 Table 5 and Stroeker Ex. 4.1; the curve E₀ = 576i2 identifications; the Guy-1989 multiples 2P–5P; all Gröbner/elimination/Nullstellensatz cofactors, which are additionally reproduced verbatim in the Lean source and checked by the kernel).
+
+## Verification
+
+Toolchain `v4.31.0-rc1`, mathlib pin `d568c8c` (see `lean-toolchain`, `lake-manifest.json`).
 
 ```
-theorem Thm7Statement.thm7prime : Thm7Prime
--- axioms: [propext, Classical.choice, Quot.sound]
+lake exe cache get
+lake env lean Thm7Prime/Master.lean
 ```
 
-## Verify it yourself (~30 minutes)
+The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Classical.choice, Quot.sound]` — no custom axioms, no `sorry`. The auxiliary declaration `rank_E576i2` (a single disclosed axiom, rank 1 of 576i2, unconditional 2-descent in Magma and Sage) is retained for enumeration only; the per-declaration axiom report documents that `thm7prime` does not depend on it.
 
-1. Install [elan](https://leanprover-community.github.io/get_started.html).
-2. ```
-   git clone https://github.com/hirokifukui/rd-quartics-thm7prime
-   cd rd-quartics-thm7prime
-   lake exe cache get
-   lake build
-   ```
-3. The build elaborates `Thm7Prime/Master.lean`, whose trailing
-   `#print axioms` commands report the footprint of every declaration.
-   The main theorem `thm7prime` must report exactly
-   `[propext, Classical.choice, Quot.sound]`. Two auxiliary declarations
-   (`rankOneE_holds`, `thm7prime_of_forward`) additionally report the
-   single disclosed axiom `rank_E576i2` (Mordell–Weil rank of 576i2,
-   verified unconditionally in Magma and Sage); they are the retained
-   trace of an earlier conditional architecture and are not used by
-   `thm7prime`.
+## Theorem → file map
 
-Toolchain: `leanprover/lean4:v4.31.0-rc1`, mathlib pinned to
-`d568c8c09630de097a046763c17b9ea99f95f950`.
+| Claim (paper) | Formal declaration | File |
+|---|---|---|
+| Theorem 7′ (both directions) | `thm7prime` | `Thm7Prime/Master.lean` |
+| Printed assumption ⟺ splitting of residual quadratic | `T2_iff_conclusion` | `Gap/BMThm7Transcript.lean` |
+| Concluding universal ⟸ printed assumption | `T9_via_T2` | `Gap/BMThm7Transcript.lean` |
+| ℚ-counterexample chain | — | `Gap/BMThm7Gap.lean` |
+| Backward gate identities | `gate1_cleared`, `gate2_cleared` | `Thm7Prime/Master.lean` |
+| Forward reconstruction & denominator control | `curve_cleared`, `aden_cleared`, `wD_ne`, `K1_ne`, `adP6_cover` | `Thm7Prime/Master.lean` |
 
-## Layout
+(Line-pinned links to be added at release freeze.)
 
-- `Thm7Prime/Master.lean` — the complete development (34 declarations),
-  MD5 `a1b1d54566481b50bd0ce3667c2ee509`.
-- `blueprint/` — leanblueprint sources (natural-language ↔ Lean
-  correspondence, dependency graph).
-- `scripts/sage/`, `scripts/magma/` — the exact computer-algebra scripts
-  used for statement-fidelity gating, certificate extraction (Gröbner
-  lifts), and cross-system verification; `scripts/wp3_stage3_certs.txt`
-  is the raw Sage lift output (the certificates are reproduced verbatim
-  inside the Lean source, where the kernel checks them).
-- `archive/` — the three session files from which `Master.lean` was
-  assembled by verbatim concatenation, with their MANIFESTs (provenance;
-  not built — they share declaration names with the master).
+## Lineage
 
-## Related
+This repository merges and supersedes, for the purposes of the merged paper, two earlier per-paper repositories, both preserved with their own DOIs:
 
-- Companion note (the gap report): H. Fukui, *A proof gap in the claimed
-  classification of rational-derived quartics, two rank corrections, and
-  a common elliptic curve*, submitted to J. Number Theory (2026).
-  Artifacts: <https://doi.org/10.5281/zenodo.21465598>.
-- The accompanying paper for this repository is submitted to
-  *Research in Number Theory*.
+- `rational-derived-audit` — the audit and gap note. Zenodo: 10.5281/zenodo.21465598 (v1.2.0).
+- `rd-quartics-thm7prime` — the repair paper. Zenodo: 10.5281/zenodo.21470001. This repository is seeded from it (git history preserved).
 
-## License
+## License / Citation
 
-Apache License 2.0. See `LICENSE`.
+See `LICENSE` and `CITATION.cff`.
