@@ -29,9 +29,17 @@ Seed: `rd-quartics-thm7prime` @ main（git 履歴ごと clone、2026-08-01、log
 - `lakefile.toml` — defaultTargets に "Gap" 追加、`[[lean_lib]] name = "Gap"` 追記
 - `README.md` — 全面置換（出典: 金庫 submission_regs_AFM_20260801/repo_staging/README_draft.md、変換: `gap/`→`Gap/` の sed のみ）
 
+## 追記 2026-08-01（同日第二便）
+
+- Gap/BMThm7Boundary.lean — 出典: 金庫 qderived/bm_thm7_gap/repo/BMThm7/（audit-repo 未収録、本 repo で初公開）md5 b238bdf459c242ad90bb0f621ad64ac7、変換なし
+- Gap/BMThm7GapK.lean — 同上、md5 607ec2377deaea1739d8aeb1a453d743、変換なし
+- 検証: fetched 済み二枚と gap repo 版は md5 完全一致（正典整合確認済み）
+- blueprint 五章合流: 01_provenance / 02_transcript（gap 側そのまま）、03_repair（旧 thm7.tex、章ラベル付与）、04_boundary / 05_obstacles（gap 側 03/04 を 7′ 成立後の枠組みで改訂: 冒頭一文・W1 顛末・W5 外部性明確化）
+- web.tex / print.tex: 新 repo URL・新タイトル・五章 include
+- blueprint/lean_decls: 19 + 44 → 63 名（和集合）、checkdecls 通過
+
 ## TODO（未転記・未更新）
 
-- blueprint 五章合流（BLUEPRINT_SPEC.md）＋ `blueprint/lean_decls` を両 namespace の和集合へ
 - CITATION.cff 更新（新タイトル・URL。version/DOI は release 凍結時）
 - Guy 2P–5P スクリプトの特定・追加（執筆と往復で確定）
 - `paper/` — Phase W 成果物

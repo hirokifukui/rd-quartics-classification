@@ -1,0 +1,97 @@
+\chapter{The obstacle map}\label{chap:obstacles}
+
+The preceding chapters closed the repeated-root sector (Theorem~$7'$, Chapter~\ref{chap:repair}) and located the remaining open content of Theorem~7 at a single open statement, Definition~\ref{Conjecture1_normal}.  This chapter records
+what stands between the present state of knowledge and that statement.  Each wall
+below is documented by a machine-verifiable artefact (a kernel check, a two-system
+computer-algebra record with checksum, or a live computation log), together with a
+\emph{reopening gate}: the explicit external event that would dissolve it.  The
+purpose is the one served by the dependency graph throughout this blueprint: to
+draw the boundary between the settled and the open so that it can be audited, and
+so that future work --- ours or anyone's --- knows exactly where to push.
+None of the walls is an assertion of impossibility.
+
+\section{Formalisation ceiling}
+
+\begin{remark}[Wall W1: the proof-assistant library]\label{wall-mathlib}
+The Mathlib library, at the pinned commit used throughout this development,
+contains no formalisation of Mordell--Weil rank, of Selmer groups, of Chabauty's
+method, or of Coleman integration (verified by exhaustive search of the library
+source at the pin).  Consequently any completion of
+Definition~\ref{Conjecture1_normal} that proceeds through the arithmetic of
+elliptic surfaces --- the only known route, by Chapter~\ref{chap:boundary} --- cannot
+at present be carried to a kernel-checked proof without disclosed axioms
+encapsulating the computer-algebra rank computations.  This is a property of the
+current library, not of the mathematics.
+\emph{Status (2026-08):} for the repeated-root sector this wall was \emph{bypassed} rather than breached: Theorem~$7'$ (Chapter~\ref{chap:repair}) is rank-free --- both directions are polynomial identities --- so the classification of that sector consumed no Mordell--Weil input and closed with the standard three axioms. The wall remains standing exactly for Definition~\ref{Conjecture1_normal}.
+\emph{Reopening gate:} Mathlib acquires Mordell--Weil rank and descent machinery.
+\end{remark}
+
+\section{Arithmetic walls}
+
+\begin{remark}[Wall W2: five measured fibres are the noise floor]\label{wall-beta}
+In the companion programme attacking Definition~\ref{Conjecture1_normal} through
+the fibred structure of the associated elliptic surfaces, the target parity datum
+$\beta$ has been measured for exactly five fibres ($n = 2,\dots,6$).  A systematic
+mining run over $488$ atomic arithmetic features (with a pre-declared overfit
+guard) found $16$ exact matches against $15.25$ expected by chance: agreement over
+five fibres is statistically vacuous, and every surviving rule was verified to be
+an avatar of the single invariant $[3 \nmid n]$.  Candidate softer structures were
+refuted by extension testing.  The mining record, with checksums, accompanies the
+repository.  \emph{Reopening gate:} measurement of $\beta$ for any fibre with
+$n \ge 7$.
+\end{remark}
+
+\begin{remark}[Wall W3: the cost of one more fibre]\label{wall-descent}
+The reason $n \ge 7$ is unmeasured is concrete.  The $2$-descent on the genus-$2$
+Jacobian attached to the fibre $n = 6$ --- an integral model with leading
+coefficient of $171$ decimal digits --- has, at the time of writing, been running
+continuously for more than three and a half days on a dedicated machine inside the
+class-group stage, under an unconditional (non-GRH) regime.  The launch record and
+log are preserved.  This is the physical form of Wall~W2: the per-fibre cost of
+unconditional descent grows past the practical horizon exactly where finer
+structure would first become visible.
+\emph{Reopening gate:} completion of the $n = 6$ computation; or an improved model
+reducing the coefficient blow-up; or an algorithmic advance in unconditional
+class-group computation.
+\end{remark}
+
+\begin{remark}[Wall W4: no geometric mechanism, no descent finiteness]\label{wall-covers}
+Chapter~\ref{chap:boundary} shows that away from the (rationally empty) symmetric
+locus, the conclusion of Theorem~7 demands the lifting of rational points through
+one of three nontrivial double covers governed by the single polynomial $Q_4$, and
+that the relevant twist classes on the surface admit no finiteness that a descent
+argument could exploit.  Every mechanism visible at the function-field level is
+therefore closed, and the field-dependence exhibited by the two refutations
+(Theorem~\ref{not_T9_bridge_Q} over $\mathbb{Q}$,
+Theorem~\ref{not_T0_claim_K} over $\mathbb{Q}(\sqrt{3441})$, both funnelling
+through the square class $209$) constrains any future proof to depend essentially
+on the arithmetic of the base field.
+\emph{Reopening gate:} a new arithmetic mechanism --- for instance a Brauer--Manin
+computation on the surface confining its rational points --- or
+Definition~\ref{Conjecture1_normal} itself.
+\end{remark}
+
+\section{The measured distance}
+
+\begin{remark}[Wall W5: the disclosed-axiom footprint]\label{wall-footprint}
+The companion programme --- whose artifacts live outside this repository; the present artifact is std-3 throughout --- has a current summit theorem for
+Definition~\ref{Conjecture1_normal} carries, by independent kernel measurement, an
+axiom footprint consisting of the three standard axioms of Lean's classical logic
+together with five disclosed axioms: three encapsulating specific computer-algebra
+rank computations, one packaging the tail of an even-orbit Mordell--Weil argument,
+and one a coordinate function pending replacement by the library's Weierstrass
+group law.  This footprint is the honest, machine-readable measure of the distance
+between the present state and a complete proof; two of the five are engineering
+debts with identified repairs, three are permanent under Wall~W1.
+\emph{Reopening gate:} discharge of the load-bearing reduction through
+Definition~\ref{Conjecture1_normal} (Chapter~\ref{chap:boundary}); the two
+engineering repairs; and, for the remaining three, Wall~W1.
+\end{remark}
+
+\section*{Reading the map}
+
+Twenty-six years ago the material of Chapter~\ref{chap:transcript} was printed as a
+theorem, and the boundary drawn in this blueprint was invisible.  The walls above
+are offered in the opposite spirit: as a verifiable record of where the open
+problem actually stands, in a form that a reader --- or a machine --- can audit,
+attack, and, we hope, eventually demolish.

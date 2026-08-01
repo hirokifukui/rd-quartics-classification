@@ -1,0 +1,323 @@
+\chapter{The transcript: a T-unit walk of \S2.2.4}\label{chap:transcript}
+
+Section~2.2.4 is segmented into eleven inferential units $\mathrm{T0}$--$\mathrm{T10}$
+covering l.527--632 with no residue.  Each unit is transcribed as a Lean object in the
+namespace \texttt{BMThm7Transcript}, over a general field (a linearly ordered field
+where an order is needed), so that Stroeker's published $K$-derived quartic can act as
+a transparent negative control (P7).  A green node below is kernel-verified; the two
+non-green nodes (\lean{BMThm7Transcript.T9_bridge} and, in
+Chapter~\ref{chap:boundary}, \lean{BMThm7Transcript.Conjecture1_normal}) are the open
+propositions.
+
+\section{Vocabulary: the quartic, K-derivedness, the translate (T1)}
+
+Unit $\mathrm{T1}$ (l.549--551) fixes the normalisation $f(x)=x(x-1)(x-a)(x-b)$ and
+records that the translate amount $c$ is rational; it is a setup, not a derivation
+(class $[\mathrm{D}]$).
+
+\begin{definition}[The T1 quartic]\label{bmQuartic}\lean{BMThm7Transcript.bmQuartic}\leanok
+$f(x)=x(x-1)(x-a)(x-b)$ over a field $K$.
+\end{definition}
+
+\begin{definition}[Distinct roots]\label{DistinctRoots}\lean{BMThm7Transcript.DistinctRoots}\leanok
+\uses{bmQuartic}
+The four roots $\{0,1,a,b\}$ are distinct: $a\neq 0$, $a\neq 1$, $b\neq 0$, $b\neq 1$,
+$a\neq b$.  (Buchholz--MacDougall's $p(1,1,1,1)$ case.)
+\end{definition}
+
+\begin{definition}[K-derived]\label{KDerived}\lean{BMThm7Transcript.KDerived}\leanok
+A polynomial is $K$-derived when it and its first three derivatives each split into
+linear factors over $K$.  For a quartic the fourth derivative is constant, so four
+levels suffice.
+\end{definition}
+
+\begin{definition}[Vertical translate]\label{translate}\lean{BMThm7Transcript.translate}\leanok
+$F(x)=f(x)+c$, equation~(4) at l.556.
+\end{definition}
+
+\begin{definition}[The BM translate]\label{bmTranslate}\lean{BMThm7Transcript.bmTranslate}\leanok
+\uses{translate}
+The specific translate $c=-f(x_{0})$ that moves the graph so that the chosen critical
+point $x_{0}$ lands on the $x$-axis (l.529--531).  The amount $-f(x_{0})$ is
+$K$-rational because $f'$ splits over $K$; this part of the setup is sound and survives
+transcription.
+\end{definition}
+
+Derivatives are invariant under a vertical translate, so $F'=f'$ and $F''=f''$: the
+derivative content of the assumption T2 is inherited from $f$, and the only new content
+in ``$F$ is $K$-derived'' is the splitting of $F$ itself.
+
+\begin{lemma}[Derivative is translate-invariant]\label{derivative_translate}\lean{BMThm7Transcript.derivative_translate}\leanok
+\uses{translate}
+$\der(F+c)=\der F$.
+\end{lemma}
+\begin{proof}\leanok
+By the definition of the translate and linearity of the derivative.
+\end{proof}
+
+\section{The assumption and the circle (T2)}
+
+Unit $\mathrm{T2}$ (l.554--558) is the standing assumption: the translate $F$ is
+$K$-derived and has a double root (class $[\mathrm{D}]$, flagged).  The double-root part
+is automatic once $x_{0}$ is critical; the substantive content is the $K$-derivedness of
+$F$.
+
+\begin{definition}[T2, the printed assumption]\label{T2_assumption}\lean{BMThm7Transcript.T2_assumption}\leanok
+\uses{KDerived, bmTranslate, bmQuartic}
+$F=\mathrm{bmTranslate}(f,x_{0})$ is $K$-derived.
+\end{definition}
+
+\begin{lemma}[Inheritance of K-derivedness under translation]\label{KDerived_translate_iff}\lean{BMThm7Transcript.KDerived_translate_iff}\leanok
+\uses{KDerived, translate, derivative_translate}
+If $f$ is $K$-derived, then $F=f+c$ is $K$-derived if and only if $F$ splits over $K$.
+\end{lemma}
+\begin{proof}\leanok
+\uses{derivative_translate}
+The derivative-level conditions of $K$-derivedness transfer from $f$ to $F$ because
+$\der F=\der f$ at every level; only the splitting of $F$ itself is new.
+\end{proof}
+
+The pre-registered gap P1 is that, under the section's standing hypothesis that $f$ is
+$K$-derived, the assumption T2 is \emph{equivalent} to the section's promised
+conclusion.  The assumption assumes the conclusion: nothing less, nothing more.
+
+\begin{theorem}[The circle: T2 $\iff$ the conclusion]\label{T2_iff_conclusion}\lean{BMThm7Transcript.T2_iff_conclusion}\leanok
+\uses{T2_assumption, bmTranslate, bmQuartic, KDerived}
+If $f$ is $K$-derived, then $\mathrm{T2\_assumption}(a,b,x_{0})$ holds if and only if
+$\mathrm{bmTranslate}(f,x_{0})$ splits over $K$ --- which is exactly the section's
+promised conclusion T0.
+\end{theorem}
+\begin{proof}\leanok
+\uses{KDerived_translate_iff}
+Immediate from the inheritance lemma.
+\end{proof}
+
+\section{The identity layer (T3, T4, T7b, T8)}
+
+Units $\mathrm{T3}$--$\mathrm{T4}$ (l.558--577) and the algebraic cores of
+$\mathrm{T7b}$ and $\mathrm{T8}$ (l.603--614) are exact algebraic identities
+(class $[\mathrm{ID}]$).  Each closed form was gated on two independent computer-algebra
+systems (Magma V2.29-7 and Sage 10.8) before formalisation; the identities between the
+resulting Lean quantities are then proved in the kernel by \texttt{ring}.  The
+Buchholz--MacDougall discriminants are the \emph{resultant} at both levels; the standard
+discriminant convention differs from the resultant at the second level by a factor $16$.
+
+\begin{definition}[Symmetric factor]\label{symF}\lean{BMThm7Transcript.symF}\leanok
+$\mathrm{sym}(a,b)=(a-b-1)^{2}(a-b+1)^{2}(a+b-1)^{2}$, the factor of l.568/l.611.
+\end{definition}
+
+\begin{definition}[$D_6$]\label{D6}\lean{BMThm7Transcript.D6}\leanok
+The multisextic $D_{6}(a,b)$ transcribed coefficientwise from the verbatim display
+l.572--577.
+\end{definition}
+
+\begin{definition}[$\Delta(f')$]\label{deltaFp}\lean{BMThm7Transcript.deltaFp}\leanok
+\uses{D6}
+$\Delta(f')=-16\,D_{6}(a,b)$ (l.606), defined here by its closed form; the
+identification with $\mathrm{Res}(f',f'')$ is the computer-algebra gate.
+\end{definition}
+
+\begin{definition}[$\Delta F$]\label{deltaF}\lean{BMThm7Transcript.deltaF}\leanok
+\uses{symF, D6}
+$\Delta F=-2^{12}\,\mathrm{sym}(a,b)\,D_{6}(a,b)^{3}$ (T4, l.568), defined by its closed
+form; the identification with the iterated resultant is the computer-algebra gate.
+\end{definition}
+
+Buchholz--MacDougall print two forms of $\Delta F$: $-2^{12}\,\mathrm{sym}\,D_{6}^{3}$
+at l.568 and $2^{8}\,\mathrm{sym}\,\Delta(f')^{3}$ at l.611.  With
+$\Delta(f')=-16\,D_{6}$ the second reads $2^{8}(-16)^{3}\,\mathrm{sym}\,D_{6}^{3}
+=-2^{20}\,\mathrm{sym}\,D_{6}^{3}$, so the two printed forms contradict one another.
+The kernel identity below fixes the correct relation --- prefactor exactly $1$ --- and
+adjudicates the printed $2^{8}$ at l.611 as a typographical error (P6).
+
+\begin{theorem}[T4 vs T8 reconciled: the l.568/l.611 typo]\label{deltaF_eq_sym_mul_deltaFp_cubed}\lean{BMThm7Transcript.deltaF_eq_sym_mul_deltaFp_cubed}\leanok
+\uses{deltaF, deltaFp, symF}
+$\Delta F=\mathrm{sym}(a,b)\cdot\Delta(f')^{3}$, with prefactor $1$.
+\end{theorem}
+\begin{proof}\leanok
+By \texttt{ring} from the closed forms: $\mathrm{sym}\cdot(-16D_{6})^{3}
+=-2^{12}\,\mathrm{sym}\,D_{6}^{3}=\Delta F$.
+\end{proof}
+
+\begin{theorem}[T7b algebraic core]\label{deltaFp_eq_zero_of_D6}\lean{BMThm7Transcript.deltaFp_eq_zero_of_D6}\leanok
+\uses{deltaFp, D6}
+If $D_{6}(a,b)=0$ then $\Delta(f')=0$ (l.603--607).
+\end{theorem}
+\begin{proof}\leanok
+Immediate from $\Delta(f')=-16\,D_{6}$.
+\end{proof}
+
+\begin{definition}[Standard discriminant of a cubic]\label{discCubic}\lean{BMThm7Transcript.discCubic}\leanok
+$\mathrm{discCubic}(p,q,r,s)=18pqrs-4q^{3}s+q^{2}r^{2}-4pr^{3}-27p^{2}s^{2}$.
+\end{definition}
+
+\begin{theorem}[The P5 anchor]\label{discCubic_fp_eq_four_D6}\lean{BMThm7Transcript.discCubic_fp_eq_four_D6}\leanok
+\uses{discCubic, D6}
+The standard discriminant of $f'=4x^{3}-3(1+a+b)x^{2}+2(a+b+ab)x-ab$ equals
+$4\,D_{6}(a,b)$.  Hence, over an ordered field where $f'$ splits, $D_{6}\geq 0$ (a
+discriminant is a square of root differences).
+\end{theorem}
+\begin{proof}\leanok
+By \texttt{ring} from the coefficient list.
+\end{proof}
+
+\section{The Vieta repair (T6)}
+
+Unit $\mathrm{T6}$ (l.581--592) argues that $D_{6}\geq 0$ from a stationary-point
+analysis of the surface $z=D_{6}(a,b)$ (Table~3).  That argument inspects three
+stationary points and two sample values; it cannot establish global non-negativity on
+an unbounded domain, because it omits the behaviour at infinity (class $[\mathrm{B}]$,
+flagged; P5).  The conclusion $D_{6}\geq 0$ is nonetheless true, and the following
+lemmas \emph{replace} the stationary-point argument of l.581--592 with an
+identity-based proof valid over any linearly ordered field: an integer sum-of-squares
+certificate, found by computer algebra and verified in the kernel.
+
+\begin{theorem}[$D_6$ is a square on the Vieta locus]\label{D6_eq_sq_of_vieta}\lean{BMThm7Transcript.D6_eq_sq_of_vieta}\leanok
+\uses{D6}
+If the coefficients of $f'$ match a split cubic $4(x-u)(x-v)(x-w)$ (the three Vieta
+relations), then $D_{6}(a,b)=64\,\bigl((u-v)(u-w)(v-w)\bigr)^{2}$.  Characteristic zero
+is genuinely required: in characteristic~$3$ the first Vieta relation degenerates.
+\end{theorem}
+\begin{proof}\leanok
+By the explicit integer \texttt{linear\_combination} certificate of the three Vieta
+relations.
+\end{proof}
+
+\begin{theorem}[Honest T6: $D_6\geq 0$]\label{D6_nonneg_of_vieta}\lean{BMThm7Transcript.D6_nonneg_of_vieta}\leanok
+\uses{D6, D6_eq_sq_of_vieta}
+Whenever $f'$ splits in Vieta form, $D_{6}(a,b)\geq 0$ over any linearly ordered field.
+This is stronger than the printed real-plane claim and needs no analysis.
+\end{theorem}
+\begin{proof}\leanok
+\uses{D6_eq_sq_of_vieta}
+$D_{6}$ is $64$ times a square, so \texttt{positivity} closes it.
+\end{proof}
+
+\begin{theorem}[T6 downstream: $\Delta F\leq 0$]\label{deltaF_nonpos_of_vieta}\lean{BMThm7Transcript.deltaF_nonpos_of_vieta}\leanok
+\uses{deltaF, symF, D6, D6_nonneg_of_vieta}
+On the Vieta locus $\Delta F\leq 0$ (l.591--592), since
+$\Delta F=-2^{12}\,\mathrm{sym}\,D_{6}^{3}$ with $\mathrm{sym}$ a square and
+$D_{6}\geq 0$.
+\end{theorem}
+\begin{proof}\leanok
+\uses{D6_nonneg_of_vieta}
+The product $\mathrm{sym}\cdot D_{6}^{3}$ is non-negative; the sign of the prefactor
+gives $\Delta F\leq 0$.
+\end{proof}
+
+\section{T7a in-house: the symmetric locus (T7a)}
+
+Unit $\mathrm{T7a}$ (l.601--603) disposes of the three symmetric configurations
+$\mathrm{sym}=0$ by asserting that a symmetric quartic cannot be rational-derived.
+Buchholz--MacDougall attribute this to Caldwell [6]~\cite{Caldwell1990}
+(Math.\ Spectrum \textbf{23} (1990), closed access).  The transcript replaces the
+external citation by a
+self-contained proof: in each symmetric case $K$-derivedness forces a rational point on
+a conic $r^{2}=3(p^{2}+q^{2})$, which has only the trivial solution by $3$-adic descent.
+Caldwell [6] is thereby eliminated from the load path.
+
+\begin{theorem}[3-adic descent]\label{sq_ne_three_mul_sq_add_sq}\lean{BMThm7Transcript.sq_ne_three_mul_sq_add_sq}\leanok
+Over $\Z$, $r^{2}=3(m^{2}+n^{2})$ forces $m=n=0$.
+\end{theorem}
+\begin{proof}\leanok
+$3\mid r^{2}$ gives $3\mid r$; writing $r=3s$ yields $3s^{2}=m^{2}+n^{2}$, and reducing
+modulo~$3$ (squares lie in $\{0,1\}$) forces $3\mid m$ and $3\mid n$.  The measure
+$|m|+|n|$ strictly decreases, so strong induction closes it.
+\end{proof}
+
+\begin{theorem}[T7a in-house]\label{symF_zero_not_KDerived}\lean{BMThm7Transcript.symF_zero_not_KDerived}\leanok
+\uses{symF, KDerived, bmQuartic, DistinctRoots, sq_ne_three_mul_sq_add_sq}
+A quartic in the symmetric locus $\mathrm{sym}(a,b)=0$ with distinct roots is not
+$K$-derived over $\Q$.
+\end{theorem}
+\begin{proof}\leanok
+\uses{sq_ne_three_mul_sq_add_sq}
+If it were $K$-derived, $f''$ would split, yielding a rational $y$ with $f''(y)=0$;
+completing the square gives $\bigl((24y-6(1+a+b))/4\bigr)^{2}=3(p^{2}+q^{2})$ with
+$(p,q)$ one of $(a-1,1)$, $(a,1)$, $(a,a-1)$ in the three symmetric cases (rational form
+of the descent, denominators cleared).  Descent forces $p=q=0$, contradicting $q=1$ in
+the first two cases and $a\neq 0$ in the third.
+\end{proof}
+
+\section{The bridge and its refutation (T9)}
+
+Unit $\mathrm{T9}$ (l.615--623) is where the section claims completion: ``The result of
+all the previous work shows that the latter class is empty'' and ``we have proven''.
+The pre-registered prediction P2 is that no derivation to T0 exists from the hypotheses
+that the transcribed chain T3--T8 actually consumes.  The claimed implication is
+transcribed as a definition, not proved: it is the non-green node.
+
+\begin{definition}[The T9 bridge --- OPEN]\label{T9_bridge}\lean{BMThm7Transcript.T9_bridge}
+\uses{DistinctRoots, bmQuartic, symF, bmTranslate}
+The implication Buchholz--MacDougall assert at l.615--623, from the hypotheses actually
+consumed by T3--T8 --- four distinct roots, $f$ splits, $f'$ splits, $\mathrm{sym}\neq 0$,
+and a highest local minimum at $x_{0}$ --- to the conclusion that the translate splits.
+Stated without proof: P2 predicts no derivation exists.
+\end{definition}
+
+\begin{theorem}[P2: the bridge is false over $\Q$]\label{not_T9_bridge_Q}\lean{BMThm7Transcript.not_T9_bridge_Q}\leanok
+\uses{T9_bridge}
+$\neg\,\mathrm{T9\_bridge}(\Q)$.
+\end{theorem}
+\begin{proof}\leanok
+\uses{T9_bridge, bmTranslate, symF}
+The frozen witness $x(x-136)(x-52)(x+312)$, renormalised to the file's $0,1,a,b$
+coordinates by dividing the roots by $136$ ($a=13/34$, $b=-39/17$, $x_{0}=13/17$),
+satisfies every hypothesis the chain consumes: the four roots are distinct, $f$ and
+$f'$ split over $\Q$, $\mathrm{sym}\neq 0$, and $x_{0}$ is a highest local minimum.  The
+vertical translate factors as a double root at $x_{0}$ times the residual quadratic
+$X^{2}+\tfrac{83}{34}X+\tfrac{104}{289}$, whose roots satisfy
+$\bigl((2\,\text{root}+\tfrac{83}{34})\cdot\tfrac{34}{5}\bigr)^{2}=209$, and $209$ is not
+a rational square.  So the translate does not split, and the hypotheses do not imply the
+conclusion.
+\end{proof}
+
+\begin{theorem}[The circle restated at T9]\label{T9_via_T2}\lean{BMThm7Transcript.T9_via_T2}\leanok
+\uses{T2_assumption, bmTranslate, bmQuartic}
+With the printed assumption T2, the translate splits in one step --- because T2 contains
+it.
+\end{theorem}
+\begin{proof}\leanok
+The conclusion is the first component of $\mathrm{T2\_assumption}$.
+\end{proof}
+
+\section{The statement and the K negative control (T10)}
+
+Unit $\mathrm{T10}$ (l.624--632) states Theorem~7 itself; the object of proof is T0.
+Over an ordered field, T0 is stated as follows.
+
+\begin{definition}[T0, the promised conclusion]\label{T0_claim}\lean{BMThm7Transcript.T0_claim}\leanok
+\uses{DistinctRoots, KDerived, bmQuartic, bmTranslate}
+For a $K$-derived quartic with four distinct roots, the vertical translate turning the
+highest local minimum into a double root leaves a quartic that splits over $K$;
+equivalently, the remaining two roots $r,s$ lie in $K$.  Stated over the ambient field
+to honour P7.
+\end{definition}
+
+The deepest control (P7): the $K$-analogue of Theorem~7's $p(1,1,1,1)$ clause is
+\emph{false} over a specific real quadratic field.  Let $K=\Q(\sqrt{3441})$, built as an
+explicit subfield of $\R$ (so it inherits its field, order, and ordered-ring structure).
+Stroeker's published proper $K$-derived quartic~\cite{Stroeker2006}
+(Rocky Mountain J.\ Math.\ \textbf{36}(5) (2006), $D=3\cdot 31\cdot 37=3441$, $t=-7/17$),
+renormalised to $a=39/56$, $b=13/16$,
+$x_{0}=13/14$, splits at all four levels over $K$ --- the second derivative genuinely
+requiring the $\sqrt{3441}$ elements --- yet its translate does not split.
+
+\begin{theorem}[P7: the statement fails over $K=\Q(\sqrt{3441})$]\label{not_T0_claim_K}\lean{BMThm7Transcript.not_T0_claim_K}\leanok
+\uses{T0_claim, bmQuartic, bmTranslate, KDerived}
+$\neg\,\mathrm{T0\_claim}(\Q(\sqrt{3441}))$.
+\end{theorem}
+\begin{proof}\leanok
+The four roots are distinct, all four levels split over $K$, and $x_{0}=13/14$ is a
+highest local minimum, yet the translate at $x_{0}$ has residual quadratic
+$X^{2}-\tfrac{73}{112}X+\tfrac{13}{6272}$, whose roots involve $\sqrt{209}$.  A rational
+square in $K$ is either $p^{2}$ or $3441\,q^{2}$, and neither $209$ nor
+$209\cdot 3441=719169$ is a rational square; so the translate does not split over $K$.
+Both refutations, over $\Q$ and over $K$, funnel through the same square class $209$.
+\end{proof}
+
+The transcript is a survey, not a demolition.  The translate setup is sound; T4 and
+$\Delta(f')=-16D_{6}$ are exact; T6's conclusion is true and now proved in stronger,
+analysis-free form; T7a is true and now proved self-containedly.  What does not survive
+is the bridge from all of the above to ``$r$ and $s$ are rational''.  It does not exist
+(P2), because it was assumed (P1).

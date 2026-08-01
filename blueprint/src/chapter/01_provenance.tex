@@ -1,0 +1,91 @@
+\chapter{Provenance and claim boundary}\label{chap:provenance}
+
+\section{The source and the object of study}
+
+The object of this transcript is a single section of the paper of Buchholz and
+MacDougall in J.\ Number Theory \textbf{81} (2000)~\cite{BuchholzMacDougall2000};
+specifically \S2.2.4, ``Vertical translation of a quartic'' (l.527--632 of the
+verbatim layout, md5 \texttt{a177e2e673705c0d68cc5fdf3a6626ce}).  That section supplies the last
+inferential step of the paper's Theorem~7, the classification of rational-derived
+quartics.  A quartic is \emph{rational-derived} when it and all of its derivatives
+split into linear factors over $\Q$; Theorem~7 asserts that every rational-derived
+quartic is equivalent, modulo the affine group $\langle X^{*}\rangle$, to one of an
+explicitly parametrised family, the last clause of which is governed by the elliptic
+curve $E\colon z^{2}=w(w-6)(w+18)$ (l.630).
+
+The transcript is a survey of one section, not a verdict on the paper.  Buchholz and
+MacDougall's verified results (their Theorems~5 and~6, the identity
+$\Delta(f')=-16\,D_{6}(a,b)$ at l.606, and the discriminant tower at l.568) remain
+machine-verified true; typographical errors and inferential gaps are distinct
+phenomena and are kept distinct throughout.
+
+\section{The promise (T0) and the assumption (T2), quoted}
+
+The section opens with its promise.  It sets up a rational-derived quartic, moves the
+highest local minimum up to become a double root by a rational vertical translate, and
+undertakes to show that the two remaining roots are rational (l.529--534):
+
+\begin{quote}
+``If we now allow our rational-derived quartics to undergo a vertical translate by a
+rational distance, so that the (highest) local minimum, $x_{\min}$ say, is moved up to
+become a double root, then the remaining two roots, $r$ and $s$ say, of the quartic
+could possibly lie in a quadratic extension of $\Q$. Certainly, we have no a priori
+reason to expect the extra roots to be rational (see Figure~2). None-the-less, in this
+section we show that the latter is precisely the case.'' \hfill (l.529--534)
+\end{quote}
+
+This is the terminus of the transcript: the proposition the section undertakes to
+prove.  In the formalisation it is the object \lean{BMThm7Transcript.T0_claim}
+(Chapter~\ref{chap:transcript}).
+
+The argument then names its standing datum.  Having introduced
+$f(x)=x(x-1)(x-a)(x-b)$ (l.549--551) and a rational translate amount $c$, it writes
+(l.554--558):
+
+\begin{quote}
+``We assume that the resulting quartic, $F(x)$ say, given by
+\[
+F(x) = x(x-1)(x-a)(x-b) + c \tag{4}
+\]
+is rational-derived and has a double root. As before, we require $\Delta(F)=0$\dots''
+\hfill (l.554--558)
+\end{quote}
+
+The verb is \emph{assume}.  The clause ``$F$ is rational-derived'' is, under the
+standing hypothesis that $f$ is rational-derived, exactly the section's own
+conclusion; this is the pre-registered location of the gap
+(P1, Chapter~\ref{chap:transcript}).  In the formalisation the assumption is
+\lean{BMThm7Transcript.T2_assumption}.
+
+\section{Claim boundary}
+
+The transcript establishes nothing for or against Theorem~7 over $\Q$, and by
+construction it cannot.  Theorem~7 over $\Q$ is \emph{not} refuted here: a
+counterexample over $\Q$ would refute Conjecture~1 of the same paper, which is open
+(RESULTS \S7).  What the transcript does establish is a boundary result: the printed
+argument of \S2.2.4 does not derive its conclusion from the results preceding it, and
+every known route to the conclusion passes through Conjecture~1
+(Chapter~\ref{chap:boundary}).  The two refutations carried out in the formalisation
+are refutations of the printed \emph{implication} over $\Q$
+(\lean{BMThm7Transcript.not_T9_bridge_Q}) and of the \emph{statement} over a specific
+quadratic field $K=\Q(\sqrt{3441})$ (\lean{BMThm7Transcript.not_T0_claim_K}); neither
+is a statement about Theorem~7 over $\Q$.
+
+\section{Pre-registration discipline}
+
+The segmentation of \S2.2.4 into inferential units $\mathrm{T0}$--$\mathrm{T10}$, the
+classification of each unit, and seven numbered predictions $\mathrm{P1}$--$\mathrm{P7}$
+about where the argument would and would not formalise, were fixed in a document
+(STEPS.md) whose md5 was frozen at \texttt{3ccf4bb1620b264baece2e2e510ad283} at
+12:25 on 2026-07-16c, \emph{before} any Lean build was attempted.  The freeze precedes
+every verdict; the adjudication record (ADJUDICATION.md) postdates it in full.  The
+discipline is that predictions are compared against the kernel and recorded as met or
+unmet, and are not rewritten after the fact.  All seven predictions were confirmed;
+two (P5 and~P7) were confirmed in a form stronger than predicted, and one incidental
+finding upgraded the symmetric-case lemma T7a to an in-house proof
+(Chapter~\ref{chap:transcript}).
+
+The blueprint format below follows the leanblueprint convention used by projects such
+as PFR~\cite{pfr-blueprint}, the Equational Theories Project~\cite{equational-theories-blueprint},
+and PrimeNumberTheoremAnd~\cite{pnt-blueprint}, from which the template plumbing of this
+document was adapted.
