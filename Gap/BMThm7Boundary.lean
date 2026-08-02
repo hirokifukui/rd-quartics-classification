@@ -96,8 +96,17 @@ theorem n2Q4RqSq_neg : -2 * Q4 1 3 * (Rq 1 3 * Sq 1 3) < 0 := by
 
 end BMThm7Boundary
 
-#print axioms BMThm7Boundary.Q4_factor
+#print axioms BMThm7Boundary.I1_cleared
 #print axioms BMThm7Boundary.I2
+#print axioms BMThm7Boundary.Q4_factor
 #print axioms BMThm7Boundary.pairing1
+#print axioms BMThm7Boundary.pairing2
+#print axioms BMThm7Boundary.pairing3
 #print axioms BMThm7Boundary.Q4_neg
+#print axioms BMThm7Boundary.Q4Rq_neg
+#print axioms BMThm7Boundary.Q4Sq_neg
+#print axioms BMThm7Boundary.Q4RqSq_neg
+#print axioms BMThm7Boundary.n2Q4_neg
+#print axioms BMThm7Boundary.n2Q4Rq_neg
+#print axioms BMThm7Boundary.n2Q4Sq_neg
 #print axioms BMThm7Boundary.n2Q4RqSq_neg

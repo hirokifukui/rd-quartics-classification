@@ -2,13 +2,13 @@
 
 Lean 4 formalization and computational certificates for:
 
-**The classification of rational-derived quartics with a repeated root: a proof gap, its unconditional repair, and the formalization that found both** (Hiroki Fukui, 2026 — manuscript in `paper/`).
+**The classification of rational-derived quartics with a repeated root: a proof gap, its unconditional repair, and the formalization that found both** (Hiroki Fukui, 2026 — manuscript in preparation; will appear in `paper/`).
 
 A monic polynomial over ℚ is *rational-derived* if it and all of its derivatives split completely over ℚ. Buchholz–MacDougall (J. Number Theory 81 (2000), Theorem 7) presented a classification of the repeated-root quartics `x²(x−1)(x−a)` by the rational points of the elliptic curve 576i2. This repository contains:
 
 1. **The gap** (`Gap/`): kernel certificates that the published proof of Theorem 7 contains a circularity and a quantifier jump, exhibited by an explicit quartic over two base fields (`BMThm7Gap.lean`, `BMThm7Transcript.lean`; adjudication record in `ADJUDICATION.md`).
 2. **The repair** (`Thm7Prime/`): Theorem 7′ — an unconditional, rank-free classification. Both directions are exact polynomial identities; the completeness direction uses an explicit rational reconstruction of a curve point from the two gate witnesses. Main statement: `theorem thm7prime : Thm7Prime` in `Thm7Prime/Master.lean`.
-3. **Computational certificates** (`scripts/`): Magma and Sage scripts and logs for every CAS-derived fact (rank corrections to BM2000 Table 5 and Stroeker Ex. 4.1; the curve E₀ = 576i2 identifications; the Guy-1989 multiples 2P–5P; all Gröbner/elimination/Nullstellensatz cofactors, which are additionally reproduced verbatim in the Lean source and checked by the kernel).
+3. **Computational certificates** (`scripts/`): Magma and Sage scripts and logs for every CAS-derived fact (rank corrections to BM2000 Table 5 and Stroeker Ex. 4.1; the curve E₀ = 576i2 identifications; all Gröbner/elimination/Nullstellensatz cofactors, which are additionally reproduced verbatim in the Lean source and checked by the kernel; the Guy-1989 multiples 2P–5P scripts will be added with the manuscript).
 
 ## Verification
 

@@ -15,8 +15,8 @@ None of the walls is an assertion of impossibility.
 \begin{remark}[Wall W1: the proof-assistant library]\label{wall-mathlib}
 The Mathlib library, at the pinned commit used throughout this development,
 contains no formalisation of Mordell--Weil rank, of Selmer groups, of Chabauty's
-method, or of Coleman integration (verified by exhaustive search of the library
-source at the pin).  Consequently any completion of
+method, or of Coleman integration (no declarations for these notions were found by
+search of the library source at the pin).  Consequently any completion of
 Definition~\ref{Conjecture1_normal} that proceeds through the arithmetic of
 elliptic surfaces --- the only known route, by Chapter~\ref{chap:boundary} --- cannot
 at present be carried to a kernel-checked proof without disclosed axioms
@@ -36,8 +36,8 @@ mining run over $488$ atomic arithmetic features (with a pre-declared overfit
 guard) found $16$ exact matches against $15.25$ expected by chance: agreement over
 five fibres is statistically vacuous, and every surviving rule was verified to be
 an avatar of the single invariant $[3 \nmid n]$.  Candidate softer structures were
-refuted by extension testing.  The mining record, with checksums, accompanies the
-repository.  \emph{Reopening gate:} measurement of $\beta$ for any fibre with
+refuted by extension testing.  The mining record, with checksums, is preserved in the companion
+programme's archive, outside this repository (cf.~Wall~W5).  \emph{Reopening gate:} measurement of $\beta$ for any fibre with
 $n \ge 7$.
 \end{remark}
 
@@ -75,7 +75,7 @@ Definition~\ref{Conjecture1_normal} itself.
 
 \begin{remark}[Wall W5: the disclosed-axiom footprint]\label{wall-footprint}
 The companion programme --- whose artifacts live outside this repository; the present artifact is std-3 throughout --- has a current summit theorem for
-Definition~\ref{Conjecture1_normal} carries, by independent kernel measurement, an
+Definition~\ref{Conjecture1_normal} that carries, by independent kernel measurement, an
 axiom footprint consisting of the three standard axioms of Lean's classical logic
 together with five disclosed axioms: three encapsulating specific computer-algebra
 rank computations, one packaging the tail of an even-orbit Mordell--Weil argument,

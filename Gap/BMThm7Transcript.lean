@@ -135,7 +135,7 @@ variable {K : Type*} [Field K]
 /-- sym (l.568 / l.611): the symmetric-configuration factor. -/
 def symF (a b : K) : K := (a - b - 1)^2 * (a - b + 1)^2 * (a + b - 1)^2
 
-/-- D6 (l.572-577), transcribed coefficientwise from the verbatim display. -/
+/-- D6 (l.572-576), transcribed coefficientwise from the verbatim display. -/
 def D6 (a b : K) : K :=
   9*a^4*b^2 - 14*a^3*b^3 + 9*a^2*b^4
   - (9*a^4*b - 3*a^3*b^2 - 3*a^2*b^3 + 9*a*b^4)
@@ -143,7 +143,7 @@ def D6 (a b : K) : K :=
   - (14*a^3 - 3*a^2*b - 3*a*b^2 + 14*b^3)
   + 9*a^2 - 9*a*b + 9*b^2
 
-/-- Delta(f') in BM's resultant convention (l.605): defined here by its closed form
+/-- Delta(f') in BM's resultant convention (l.606): defined here by its closed form
 -16 D6; the identification with Resultant(f', f'') is CAS-gated [MC]. -/
 def deltaFp (a b : K) : K := -16 * D6 a b
 
