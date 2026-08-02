@@ -25,6 +25,9 @@ Provenance (2026-07-21, claude.ai design session, agora):
 Statement design frozen by claude.ai under Dr. Fukui's WP1 directive.
 Claude Code may repair TACTIC BLOCKS ONLY; every def / theorem statement /
 axiom / docstring / #print axioms line is FROZEN.
+Amendment 2026-08-02 (adjudicated by Dr. Fukui): four stale status comments
+corrected to the completed state (docstrings/comments only; no statement,
+proof, or axiom changed) -- see TRANSFER_MANIFEST.md, entry 2026-08-02d.
 -/
 import Mathlib
 
@@ -174,8 +177,9 @@ def Thm7Backward : Prop :=
     RD211 (aMap w z)
 
 /-- **Theorem 7', ⇒ direction** (completeness: every rational-derived
-p(2,1,1) parameter arises from `E(ℚ)`). [OPEN] = WP3; its rank-1 input is
-spliced via `rank_E576i2` in `thm7prime_of_forward`. -/
+p(2,1,1) parameter arises from `E(ℚ)`). Proved rank-free below ([P], std-3,
+`thm7_forward`); the earlier conditional splice `thm7prime_of_forward` is
+retained as a historical trace. -/
 def Thm7Forward : Prop :=
   ∀ a : ℚ, RD211 a → ∃ w z : ℚ, OnE w z ∧ aDen w z ≠ 0 ∧ aMap w z = a
 
@@ -270,7 +274,7 @@ theorem thm7_backward : Thm7Backward := by
       unfold aMap aNum aDen
       exact gate2_sq w z hE' hM' hD'
 
-/-! ## 6. The rank-1 safe axiom and the WP3 splice -/
+/-! ## 6. The disclosed rank axiom and the superseded WP3 splice (historical; the main line is rank-free) -/
 
 open WeierstrassCurve
 
@@ -315,17 +319,18 @@ qderived `rank_W_*`):
         `thm7prime_of_forward` below. -/
 axiom rank_E576i2 : Module.rank ℤ E576i2.toAffine.Point = 1
 
-/-- The rank-1 obligation slot consumed by the WP3 completeness argument. -/
+/-- The rank-1 obligation slot consumed by the superseded WP3 splice (historical). -/
 def RankOneE : Prop := Module.rank ℤ E576i2.toAffine.Point = 1
 
 /-- The disclosed axiom discharges the slot (definitional). -/
 theorem rankOneE_holds : RankOneE := rank_E576i2
 
-/-- **The WP1/WP3 splice**: Theorem 7' follows from the single remaining
-open slot `hF : RankOneE → Thm7Forward` (the BK1995-chain completeness
-argument, to be built in WP3), with the rank input discharged by the
-disclosed safe axiom. `#print axioms` of this theorem = std trio +
-`rank_E576i2`, the machine-readable [P-ax] boundary of the track. -/
+/-- **The WP1/WP3 splice (historical, superseded)**: the conditional route
+`hF : RankOneE → Thm7Forward`, with the rank input discharged by the
+disclosed axiom. Superseded by the rank-free `thm7_forward` below; retained
+as a trace of the earlier conditional architecture. `#print axioms` of this
+theorem = std trio + `rank_E576i2`, the machine-readable record of that
+history. -/
 theorem thm7prime_of_forward (hF : RankOneE → Thm7Forward) : Thm7Prime :=
   ⟨thm7_backward, hF rankOneE_holds⟩
 

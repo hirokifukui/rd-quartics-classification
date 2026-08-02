@@ -92,6 +92,14 @@ Gate form の statement fidelity を kernel 化（RD211 <-> 自然形 Polynomial
 - scripts/CERTIFICATES.md 新設: 証明書↔生成スクリプト対応と全 18 ファイル md5（gate 恒等式の生成
   transcript は非保持である事実を明記 — kernel 検査が record の保証）
 
+## 追記 2026-08-02d（Master 凍結の裁定付き修正 — stale docstring 訂正）
+
+Dr. Fukui の裁定により Master.lean の凍結を docstring/コメント層に限り一時解除し、完成状態と矛盾する
+stale 記述 4 箇所を訂正（Thm7Forward の [OPEN]/rank-1 記述、§6 見出し、RankOneE docstring、
+WP1/WP3 splice docstring — 全て historical/superseded 標記へ）。**定理文・証明・axiom 宣言・#print 行は
+一字も不変**。凍結ヘッダに修正来歴を追記。md5: a1b1d54566481b50bd0ce3667c2ee509 →
+4966eaaf05a610ed5039a3a06f539412。再監査: 全宣言 footprint 従前と同一（std-3 ＋ 開示公理 2 宣言のみ）。
+
 ## TODO（未転記・未更新）
 
 - CITATION.cff 更新（新タイトル・URL。version/DOI は release 凍結時）
