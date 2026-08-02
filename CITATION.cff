@@ -1,9 +1,20 @@
 cff-version: 1.2.0
-message: "If you use this formalization, please cite it as below. Version and DOI will be added at the release freeze."
+message: "If you use this formalization, please cite it as below. A Zenodo DOI will be added when archival is enabled."
+title: "rd-quartics-classification: rational-derived quartics with a repeated root - proof gap, unconditional repair (Theorem 7'), and Lean 4 formalization"
 authors:
   - family-names: Fukui
     given-names: Hiroki
     orcid: "https://orcid.org/0009-0008-7122-522X"
-title: "rd-quartics-classification: rational-derived quartics with a repeated root - proof gap, unconditional repair (Theorem 7'), and Lean 4 formalization"
+version: "1.0.0"
+date-released: "2026-08-02"
+license: Apache-2.0
 url: "https://github.com/hirokifukui/rd-quartics-classification"
 repository-code: "https://github.com/hirokifukui/rd-quartics-classification"
+keywords:
+  - rational-derived polynomials
+  - Lean 4
+  - mathlib
+  - formal verification
+  - elliptic curves
+  - computer algebra
+  - human-AI collaboration

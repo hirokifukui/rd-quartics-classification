@@ -1,5 +1,7 @@
 # rd-quartics-classification
 
+**Frozen release: [v1.0.0](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.0.0)** (2026-08-02, the externally reviewed state; citation data in `CITATION.cff`; release notes in `RELEASE_v1.0.0.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.0/<path>`.
+
 [![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
 
 Lean 4 formalization and computational certificates for:

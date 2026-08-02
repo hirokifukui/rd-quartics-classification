@@ -369,6 +369,16 @@ thm7_repair 再投稿 repo は Phase A（外部レビュー対応）を完了し
 これをもって**全系が実測で緑**: build・axiom audit・cert audit・CAS reproduce・deploy・公開 blueprint。
 Phase A 完了の実体条件が初めて満たされた。残 = Phase F 儀式（裁可待ち）。
 
+## 追記 2026-08-02s（Phase F 執行: v1.0.0 凍結——Dr. Fukui 裁可「いい内容にしよう」）
+
+CITATION.cff 確定（version 1.0.0・date-released・Apache-2.0・ORCID・keywords；DOI は Zenodo 有効化後に
+追記）。RELEASE_v1.0.0.md 新設——確立内容（gap 監査・Thm 7′・576i2 分類・正規化橋）／kernel core と
+正確な footprint／Magma 実行情報（V2.29-7・invocation・日付・SHA-256 参照）と Sage 二系統＋CI 実再計算／
+方法と責任分界／再現手順／既知の境界（Conjecture 1 は未解決のまま——本 repo はその境界を写像した）。
+README に permanent references 節（tag pin URL 規約）。旧ブートストラップの stale local tag v1.0.0
+（968aef9 指し・remote 未 push）を削除の上、凍結 commit に annotated tag を打ち直し。GitHub Release 作成。
+残（要 Dr. Fukui）: Zenodo 連携＋webhook → DOI 発行 → CITATION.cff へ追記。blueprint PDF は後日添付。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴
