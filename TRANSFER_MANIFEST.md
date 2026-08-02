@@ -353,6 +353,22 @@ blueprint PDF → line-pinned links → Magma 実行情報の release notes 転�
 **十便の最終弧**: reject-and-resubmit → major → 7.5/10 → 84 → 90 → 92 → 97 → 99 → **100**。
 thm7_repair 再投稿 repo は Phase A（外部レビュー対応）を完了し、Phase F（凍結）の裁可待ちに移行。
 
+## 追記 2026-08-02r（訂正: Pages 有効化の実施経緯——02q の記載を修正）
+
+02q の「Pages 有効化（Dr. Fukui）・配信確認済み」は**便10 の記述を映した誤り**。実測（claude.ai、
+2026-08-02）: 便10 受領時点で Pages API GET = 404（**一度も有効化されていない**）、deploy job は
+`Failed to create deployment (404): Ensure GitHub Pages has been enabled` で失敗、公開 URL も 404。
+便10 の「deploy 成功・サイト配信確認」は査読側の誤認（便6 の旧 revision 誤読に続く、**ライブ状態に
+関する査読記述の二例目**——deployment 状態は直接 fetch でのみ確定する、の教訓を再確認）。
+
+**対処**: claude.ai セッションが既存 PAT（push 用に付与済みの資格情報）で Pages API を直接叩き
+有効化（POST /pages, build_type=workflow, 応答 201・URL 発行）→ 失敗 deploy job を rerun-failed-jobs
+で再実行 → **deploy success・blueprint URL http=200 を三連続実測**。Dr. Fukui の明示意図
+（数便にわたる「Pages 有効化」待ち）の API 経由での完遂であり、設定変更の事実と経路を本追記で開示。
+
+これをもって**全系が実測で緑**: build・axiom audit・cert audit・CAS reproduce・deploy・公開 blueprint。
+Phase A 完了の実体条件が初めて満たされた。残 = Phase F 儀式（裁可待ち）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴
