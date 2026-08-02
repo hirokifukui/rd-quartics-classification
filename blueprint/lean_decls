@@ -61,3 +61,17 @@ Thm7Statement.thm7_forward
 Thm7Statement.thm7prime
 Thm7Statement.wD_ne
 Thm7Statement.wNp
+Thm7Fidelity.Q_eval
+Thm7Fidelity.derivative_Q
+Thm7Fidelity.derivative_Q_eval
+Thm7Fidelity.derivative2_Q
+Thm7Fidelity.derivative2_Q_eval
+Thm7Fidelity.derivative3_Q
+Thm7Fidelity.Q_splits
+Thm7Fidelity.derivative3_splits
+Thm7Fidelity.derivative_splits_of_gate1
+Thm7Fidelity.derivative2_splits_of_gate2
+Thm7Fidelity.disc_sq_of_quadratic_splits
+Thm7Fidelity.gate1_of_derivative_splits
+Thm7Fidelity.gate2_of_derivative2_splits
+Thm7Fidelity.rd211_iff_natural

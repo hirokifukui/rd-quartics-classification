@@ -222,3 +222,35 @@ two auxiliary declarations from an earlier conditional architecture.
 The main theorem does not depend on it, and the kernel's
 per-declaration axiom report documents this separation.
 \end{remark}
+
+\section{Statement fidelity in the kernel}
+
+The gate form (Definition~\ref{def:rd}) was chosen at design time as the
+division-free, verification-friendly restatement of rational-derivedness; its
+correspondence with the natural form was originally carried by the CAS
+statement-fidelity gate (\texttt{scripts/sage/wp1\_fidelity.sage}).  The two
+links are now closed in the kernel as well
+(\texttt{Thm7Prime/Fidelity.lean}); the CAS gate remains as the independent
+design-time cross-check.
+
+\begin{definition}[Natural form]\label{def:naturalrd}\lean{Thm7Fidelity.NaturalRD}\leanok
+\uses{def:rd}
+$\mathrm{NaturalRD}(a)$: the polynomial $Q_a = X^{2}(X-1)(X-\mathrm{C}\,a)$ and
+its first three \texttt{Polynomial.derivative}s split over $\Q$ (the fourth
+derivative is constant), mirroring the transcript's \texttt{KDerived}.
+\end{definition}
+
+\begin{theorem}[Gate form $\iff$ natural form]\label{thm:fidelity}\lean{Thm7Fidelity.rd211_iff_natural}\leanok
+\uses{def:naturalrd, def:rd}
+$\mathrm{RD211}(a) \iff a\neq 0 \wedge a\neq 1 \wedge \mathrm{NaturalRD}(a)$.
+\end{theorem}
+\begin{proof}\leanok
+Forward: the kernel-computed derivatives (\texttt{derivative\_Q},
+\texttt{derivative2\_Q}, with evaluation anchors to \texttt{dq1},
+\texttt{dq2}) split explicitly under the gates
+(\texttt{derivative\_splits\_of\_gate1},
+\texttt{derivative2\_splits\_of\_gate2}); the quartic and the linear third
+derivative split outright.  Converse: a quadratic over $\Q$ with nonzero
+leading coefficient that splits has square discriminant
+(\texttt{disc\_sq\_of\_quadratic\_splits}), applied to both derivatives.
+\end{proof}
