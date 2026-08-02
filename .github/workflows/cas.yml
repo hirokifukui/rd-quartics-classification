@@ -10,9 +10,9 @@ jobs:
       - name: Re-run terrain crosscheck in a pinned Sage container and compare
         run: |
           set -euo pipefail
-          # image ENTRYPOINT is bash and `sage` is on PATH only for login shells
-          docker run --rm -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9 \
-            -lc "sage terrain_crosscheck.sage" > /tmp/fresh_raw.txt
+          docker run --rm --entrypoint /bin/bash \
+            -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9 \
+            -lc 'sage terrain_crosscheck.sage || { echo DIAG; command -v sage; echo PATH=$PATH; ls /usr/local/bin /home/sage 2>/dev/null | head -30; exit 1; }' > /tmp/fresh_raw.txt
           grep -E "^(CHECK|  zero|DONE)" /tmp/fresh_raw.txt > /tmp/fresh.txt
           grep -E "^(CHECK|  zero|DONE)" terrain_crosscheck.captured.log > /tmp/stored.txt
           diff -u /tmp/stored.txt /tmp/fresh.txt
