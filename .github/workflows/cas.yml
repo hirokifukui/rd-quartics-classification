@@ -14,6 +14,6 @@ jobs:
             -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9 \
             -lc 'sage terrain_crosscheck.sage || { echo DIAG; command -v sage; echo PATH=$PATH; ls /usr/local/bin /home/sage 2>/dev/null | head -30; exit 1; }' > /tmp/fresh_raw.txt
           grep -E "^(CHECK|  zero|DONE)" /tmp/fresh_raw.txt > /tmp/fresh.txt
-          grep -E "^(CHECK|  zero|DONE)" terrain_crosscheck.captured.log > /tmp/stored.txt
+          grep -E "^(CHECK|  zero|DONE)" scripts/terrain/terrain_crosscheck.captured.log > /tmp/stored.txt
           diff -u /tmp/stored.txt /tmp/fresh.txt
           echo "CAS REPRODUCE PASS: all normalized CHECK lines identical (stored: Sage 10.8 on macOS; fresh: Sage 10.9 container -- cross-version, cross-platform reproduction)"
