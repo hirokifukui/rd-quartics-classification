@@ -1,9 +1,9 @@
-\chapter{The boundary: Theorem 7 hangs from Conjecture 1}\label{chap:boundary}
+\chapter{The boundary: the open sector and Conjecture 1}\label{chap:boundary}
 
 \section{The white node}
 
-With Theorem~$7'$ (Chapter~\ref{chap:repair}) the repeated-root sector $p(2,1,1)$ is classified unconditionally; what remains open of the original Theorem~7 is exactly its $p(1,1,1,1)$ clause. Note the nuance: Theorem~$7'$ proves a corrected statement on \texttt{576i2}; the printed bridging claim T9 itself stays refuted (Theorem~\ref{not_T9_bridge_Q}). The gap located in Chapter~\ref{chap:transcript} has an exact upper boundary: the only
-known route from the results of \S2.2.4 to the conclusion T0 passes through
+With Theorem~$7'$ (Chapter~\ref{chap:repair}) the repeated-root sector $p(2,1,1)$ is classified unconditionally; what remains open of the original Theorem~7 is exactly its $p(1,1,1,1)$ clause. Note the nuance: Theorem~$7'$ proves a corrected statement on \texttt{576i2}; the printed bridging claim T9 itself stays refuted (Theorem~\ref{not_T9_bridge_Q}). The gap located in Chapter~\ref{chap:transcript} admits a precise sufficient input: the only
+route known to us from the results of \S2.2.4 to the conclusion T0 passes through
 Conjecture~1 of Buchholz--MacDougall.  In normalised form the conjecture asserts that no
 quartic $x(x-1)(x-a)(x-b)$ with four distinct roots is $K$-derived; the unnormalised
 conjecture is equivalent to this via the affine group $\langle X^{*}\rangle$, and only
@@ -23,8 +23,8 @@ If Conjecture~1 (normalised) holds, then T0 holds.
 \begin{proof}\leanok
 \uses{Conjecture1_normal}
 Vacuously: the conjecture empties the hypothesis class of T0, so the conclusion holds on
-an empty domain.  This one line is the only known route to T0 (the adjudication record,
-P1/P2/P7).
+an empty domain.  This one line is the only route to T0 known to us (the adjudication record,
+P1/P2/P7); what it proves is sufficiency, not necessity.
 \end{proof}
 
 \section{The terrain, machine-verified}
@@ -197,13 +197,18 @@ Conjecture-1-refutation scenario via these curves is closed (no admissible point
 Away from the degeneracy locus each of the three disjuncts demands lifting through a
 double cover that is nontrivial over the function field $\Q(S)$ --- which encodes all
 splitting hypotheses --- so by Hilbert irreducibility the liftable rational points of each
-cover form a thin subset.  There is no geometric mechanism; twist classes on a surface are
-unbounded, so there is no descent finiteness either; and the field-dependence begins
+cover form a thin subset.  Thinness bounds what a generic-point argument can see, not what
+rational points exist; we found no geometric mechanism that decides the lifting, and no
+descent route achieving finiteness (the naive twist family is unbounded, and none of the
+standard finiteness devices --- ramification restriction, local conditions, Selmer-type
+bounds --- was found by us to apply); and the field-dependence begins
 already at Buchholz--MacDougall's own excluded case, over the smallest field
 $\Q(\sqrt{3})$ (since $12=4\cdot 3$), while Stroeker's points live over $\Q(\sqrt{3441})$.
 
-The reading is machine-established but assessed, not proved: every escape hatch for a
-Theorem-7 proof that avoids Conjecture~1 is shut at the level computation can shut it ---
-no geometric mechanism, no automatic locus over $\Q$, no descent finiteness --- leaving
-the single remaining route, that $S(\Q)$ has no nondegenerate points, which is
-Conjecture~1 itself.  Every known route to Theorem~7 passes through the white node.
+The reading is an assessment anchored by machine artefacts, not a theorem: within the
+proof architectures we surveyed, each escape hatch for a Theorem-7 proof avoiding
+Conjecture~1 is shut at the level computation can shut it, and what remains open is that
+$S(\Q)$ has no nondegenerate points --- Conjecture~1 itself.  Formally, only sufficiency
+is proved (Theorem~\ref{thm7_of_conjecture1}); necessity, and the nonexistence of routes
+unknown to us, are not claimed.  Every route to Theorem~7 known to us passes through the
+white node.

@@ -35,6 +35,22 @@ jobs:
         run: |
           ls blueprint/lean_decls && ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
 
+      - name: Axiom footprint audit
+        run: |
+          set -uo pipefail
+          out=""
+          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean; do
+            o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
+            out="$out$o"$'\n'
+          done
+          if echo "$out" | grep -q "sorryAx"; then echo "FAIL: sorryAx present"; exit 1; fi
+          ax=$(echo "$out" | tr '\n' ' ' | grep -oE "depends on axioms: \[[^]]*\]")
+          bad=$(echo "$ax" | grep -oE "\[[^]]*\]" | tr ',[]' '\n' | tr -d ' ' | sort -u | grep -vE "^(propext|Classical\.choice|Quot\.sound|Thm7Statement\.rank_E576i2)$" | grep -v "^$" || true)
+          if [ -n "$bad" ]; then echo "FAIL: unexpected axioms:"; echo "$bad"; exit 1; fi
+          if ! echo "$out" | grep -qF "'Thm7Statement.thm7prime' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: thm7prime footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'Thm7Fidelity.rd211_iff_natural' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: rd211_iff_natural footprint"; exit 1; fi
+          echo "AXIOM AUDIT PASS"
+
       - name: Assemble site
         run: |
           mkdir -p _site

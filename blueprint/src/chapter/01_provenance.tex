@@ -64,12 +64,16 @@ construction it cannot.  Theorem~7 over $\Q$ is \emph{not} refuted here: a
 counterexample over $\Q$ would refute Conjecture~1 of the same paper, which is open
 (RESULTS \S7).  What the transcript does establish is a boundary result: the printed
 argument of \S2.2.4 does not derive its conclusion from the results preceding it, and
-every known route to the conclusion passes through Conjecture~1
+every route to the conclusion known to us passes through Conjecture~1
 (Chapter~\ref{chap:boundary}).  The two refutations carried out in the formalisation
 are refutations of the printed \emph{implication} over $\Q$
 (\lean{BMThm7Transcript.not_T9_bridge_Q}) and of the \emph{statement} over a specific
 quadratic field $K=\Q(\sqrt{3441})$ (\lean{BMThm7Transcript.not_T0_claim_K}); neither
-is a statement about Theorem~7 over $\Q$.
+is a statement about Theorem~7 over $\Q$.  Both refutations are of the
+\emph{reconstructed} formal propositions; that the reconstruction captures the hypotheses
+materially used in the printed argument is the transcript-fidelity claim --- a documented
+human judgement (Chapter~\ref{chap:transcript}, the adjudication record), not itself a
+kernel theorem.
 
 \section{Pre-registration discipline}
 

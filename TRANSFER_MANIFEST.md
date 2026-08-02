@@ -69,6 +69,29 @@ Gate form の statement fidelity を kernel 化（RD211 <-> 自然形 Polynomial
 | blueprint 03_repair.tex | 「Statement fidelity in the kernel」節追加（def:naturalrd / thm:fidelity、両 \leanok） | - |
 | README.md | Statement form 段落を kernel 化後の文面へ、定理対応表に rd211_iff_natural 行追加 | - |
 
+## 追記 2026-08-02c（Phase A-2 便2 = gpt5.6 レビューへの採用修正）
+
+叙述が証明済み範囲を越える箇所の scoping pass ＋ 検証インフラ強化。数学・Lean 本体は非接触
+（Master md5 不変 a1b1d545）。仕分け記録は金庫 SUBMISSION_PLAN 参照。
+
+- blueprint 04: 章題「hangs from」→「the open sector and Conjecture 1」／「exact upper boundary」→
+  「precise sufficient input」／thin⇒機構なし・twist無限⇒descent不能の非帰結を assessment 形へ／
+  結語に「sufficiency のみ証明・necessity 非主張」を明文化
+- blueprint 05: 「present artifact is std-3 throughout」の偽を訂正（main-line 限定＋rank_E576i2 明示）／
+  「permanent under W1」→「W1 が立つ限り」／冒頭の「located the remaining open content」を精密化
+- blueprint 01: 「every known route」→「known to us」／transcript-fidelity は人間判断であり kernel 定理
+  でない旨の限定文を追加
+- README: 「classification」の意味を明文化（正規化族の像特徴付け＋caseA kernel 橋）／「exact polynomial
+  identities」→「certificates + elementary field/order reasoning」／lake build を第一検証コマンドに／
+  主定理の Lean 文を Master から機械抽出で逐語掲載／Master 内 stale コメント（[OPEN] 等）は凍結下保持・
+  公理報告が正である旨を明記／archive 非ビルド・rc toolchain 理由
+- CITATION.cff: 旧 repo 指し（旧題・旧URL・v1.0.0）を現 repo に全面更新（version/DOI は release 凍結時）
+- CI: 「Axiom footprint audit」step 新設 — sorryAx 不検出・公理 allowlist
+  {std-3, Thm7Statement.rank_E576i2}・thm7prime / rd211_iff_natural の厳密 footprint を機械 assert
+  （門は散文でなく機構に。ローカルで判定ロジック実走検証済み — BSD grep の空代替分岐バグを一つ潰した）
+- scripts/CERTIFICATES.md 新設: 証明書↔生成スクリプト対応と全 18 ファイル md5（gate 恒等式の生成
+  transcript は非保持である事実を明記 — kernel 検査が record の保証）
+
 ## TODO（未転記・未更新）
 
 - CITATION.cff 更新（新タイトル・URL。version/DOI は release 凍結時）
