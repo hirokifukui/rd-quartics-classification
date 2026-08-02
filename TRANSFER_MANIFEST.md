@@ -316,6 +316,29 @@ captured log ヘッダーに記載済み（release artifact 転記は Phase F）
 v4・deploy-pages v5）／README の md5 残渣二箇所を SHA-256 に統一。**Pages 有効化は Dr. Fukui の
 一クリック待ち（現在の筆頭ゲート）**。PDF・release tag/DOI/line-pinned links = Phase F（記録済み）。
 
+## 追記 2026-08-02p（便9 = 99/100: 収束宣言の記録）
+
+便9 判定 = **99/100・「公開・投稿に十分な水準」・リポジトリ側の修正要求なし**。前便までの全対応
+（fibre_correspondence・geomint statement 正置・biquad_criterion・CAS 再実行 CI・node24 化）を確認の上、
+唯一の減点 = **Pages 未有効化（設定作業、Dr. Fukui の一クリック）**。P1/P2 = Phase F 儀式
+（release v1.0.0・CITATION.md・Zenodo DOI・blueprint PDF・line-pinned links・Magma 実行情報の
+release notes 転記）——全て既記録、凍結裁可後に一括実施。
+
+**任意項目（Phase W 選択肢として記録、UNDERFLOW 相当）**: fibre_correspondence の Lean 化
+（disjunct 述語の形式定義＋対応定理——Terrain の設計パターンで到達可能）／biquad_criterion の
+Lean 化（IntermediateField 次数・基底——span 版は SquareClass/NormCriterion に既存）／
+gamma 定理の抽象基礎体版（抽象補題は既に任意 char 0 体、特殊化定理のみ ℚ(a,b) 固定）。
+
+**九便の弧（2026-08-01〜02）**: reject-and-resubmit → major → 7.5/10 → 84 → 90 → 92 → 97 → **99**。
+この間の kernel 新設 = Fidelity 14（前日）＋ Classification 14・FunctionField 16・SquareClass 4・
+NormCriterion 8・Terrain 9（本日 51）。CI = 三重監査（axiom footprint 厳密形 8 本・SHA-256 cert
+30 行＋claim-map 存在検査・**CAS 実再計算** = pin 済み Sage 10.9 コンテナで毎 push 再導出・diff）。
+査読の「省略された標準論法」は全て定理になり、指摘の誤り（radicand 記述）は撤回・修正した。
+
+**運用メモ**: git credential 経由の PAT が logos に生存しており（push 用）、本日 CI ログ直読に
+再利用した——**旧 TODO「PAT revoke」は未実施のまま有効活用中**。存置か revoke＋fine-grained 再発行かは
+Dr. Fukui の裁定事項（Actions log 読取は今後も有用）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴
