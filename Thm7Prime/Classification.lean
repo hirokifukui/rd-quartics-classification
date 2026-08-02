@@ -73,6 +73,11 @@ theorem affineEquiv_trans {f g h : ℚ[X]} (hfg : AffineEquiv f g)
     ring
   rw [e2, e1, mul_comp, C_comp, comp_assoc, hcomp, ← mul_assoc, ← C_mul]
 
+/-- `AffineEquiv` packaged as a `Setoid` on `ℚ[X]`: the ⟨X*⟩-equivalence. -/
+instance affineSetoid : Setoid (ℚ[X]) :=
+  ⟨AffineEquiv, affineEquiv_refl, fun h => affineEquiv_symm h,
+    fun h₁ h₂ => affineEquiv_trans h₁ h₂⟩
+
 /-! ## 2. Transport of splitting and derivatives -/
 
 theorem derivative_comp_linear (f : ℚ[X]) (lam mu : ℚ) :
@@ -175,8 +180,9 @@ theorem classification (f : ℚ[X]) (hf : IsP211 f) :
 
 /-- **The classification by the curve** (with `thm7prime`): a split (2,1,1)
 quartic is rational-derived iff it is `<X*>`-equivalent to `Q (aMap w z)` for
-a rational point `(w,z)` of `E` = 576i2 away from the denominator and
-exceptional loci. -/
+an affine rational point `(w,z)` of the Weierstrass model of `E` = 576i2, away
+from the pole locus of the parameter map (`aDen ≠ 0`) and the degenerate
+parameter values `aMap ∈ {0,1}`. -/
 theorem classification_by_curve (f : ℚ[X]) (hf : IsP211 f) :
     RDPoly f ↔ ∃ w z : ℚ, OnE w z ∧ aDen w z ≠ 0 ∧
       aMap w z ≠ 0 ∧ aMap w z ≠ 1 ∧ AffineEquiv f (Q (aMap w z)) := by
@@ -196,6 +202,7 @@ end Thm7Classification
 #print axioms Thm7Classification.affineEquiv_refl
 #print axioms Thm7Classification.affineEquiv_symm
 #print axioms Thm7Classification.affineEquiv_trans
+#print axioms Thm7Classification.affineSetoid
 #print axioms Thm7Classification.derivative_comp_linear
 #print axioms Thm7Classification.splits_comp_linear
 #print axioms Thm7Classification.splits_C_mul

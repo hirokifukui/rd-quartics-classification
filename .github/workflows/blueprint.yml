@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -42,12 +40,12 @@ jobs:
           python3 - << 'EOF'
           import hashlib, pathlib, re, sys
           text = pathlib.Path("scripts/CERTIFICATES.md").read_text()
-          rows = dict(re.findall(r"\| `([^`]+)` \| `([0-9a-f]{32})` \|", text))
+          rows = dict(re.findall(r"\| `([^`]+)` \| `([0-9a-f]{64})` \|", text))
           bad = []
           for p, h in rows.items():
               q = pathlib.Path(p)
               if not q.is_file(): bad.append("MISSING " + p); continue
-              m = hashlib.md5(q.read_bytes()).hexdigest()
+              m = hashlib.sha256(q.read_bytes()).hexdigest()
               if m != h: bad.append("MISMATCH %s (table %s, actual %s)" % (p, h, m))
           for q in pathlib.Path("scripts").rglob("*"):
               if q.is_file() and q.name != "CERTIFICATES.md" and q.as_posix() not in rows:
@@ -61,7 +59,7 @@ jobs:
         run: |
           set -uo pipefail
           out=""
-          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean; do
+          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean Gap/BMThm7SquareClass.lean; do
             o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
             out="$out$o"$'\n'
           done
@@ -86,7 +84,11 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

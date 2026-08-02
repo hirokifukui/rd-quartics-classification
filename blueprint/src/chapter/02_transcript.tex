@@ -4,10 +4,10 @@ Section~2.2.4 is segmented into eleven inferential units $\mathrm{T0}$--$\mathrm
 covering l.527--632 with no residue.  Each unit is transcribed as a Lean object in the
 namespace \texttt{BMThm7Transcript}, over a general field (a linearly ordered field
 where an order is needed), so that Stroeker's published $K$-derived quartic can act as
-a transparent negative control (P7).  A green node below is kernel-verified; the two
-non-green nodes (\lean{BMThm7Transcript.T9_bridge} and, in
-Chapter~\ref{chap:boundary}, \lean{BMThm7Transcript.Conjecture1_normal}) are the open
-propositions.
+a transparent negative control (P7).  A green node below is kernel-verified.  Of the two
+non-green nodes, \lean{BMThm7Transcript.T9_bridge} is the \emph{reconstructed} bridge
+claim, refuted below as stated (Theorem~\ref{not_T9_bridge_Q}); the open proposition is
+\lean{BMThm7Transcript.Conjecture1_normal} (Chapter~\ref{chap:boundary}).
 
 \section{Vocabulary: the quartic, K-derivedness, the translate (T1)}
 
@@ -264,7 +264,11 @@ $\neg\,\mathrm{T9\_bridge}(\Q)$.
 The frozen witness $x(x-136)(x-52)(x+312)$, renormalised to the file's $0,1,a,b$
 coordinates by dividing the roots by $136$ ($a=13/34$, $b=-39/17$, $x_{0}=13/17$),
 satisfies every hypothesis the chain consumes: the four roots are distinct, $f$ and
-$f'$ split over $\Q$, $\mathrm{sym}\neq 0$, and $x_{0}$ is a highest local minimum.  The
+$f'$ split over $\Q$, $\mathrm{sym}\neq 0$, and $x_{0}$ is a highest local minimum.
+(Throughout, ``highest local minimum'' abbreviates the transcript's algebraic
+second-derivative critical-point predicate, stated over a linearly ordered field; over
+$\R$, under the nondegeneracy hypotheses in force, it coincides with the higher of the
+two local minima.)  The
 vertical translate factors as a double root at $x_{0}$ times the residual quadratic
 $X^{2}+\tfrac{83}{34}X+\tfrac{104}{289}$, whose roots satisfy
 $\bigl((2\,\text{root}+\tfrac{83}{34})\cdot\tfrac{34}{5}\bigr)^{2}=209$, and $209$ is not

@@ -4,7 +4,13 @@
 
 With Theorem~$7'$ (Chapter~\ref{chap:repair}) the repeated-root sector $p(2,1,1)$ is classified unconditionally; what remains open of the original Theorem~7 is exactly its $p(1,1,1,1)$ clause. Note the nuance: Theorem~$7'$ proves a corrected statement on \texttt{576i2}; the printed bridging claim T9 itself stays refuted (Theorem~\ref{not_T9_bridge_Q}). The gap located in Chapter~\ref{chap:transcript} admits a precise sufficient input: the only
 route known to us from the results of \S2.2.4 to the conclusion T0 passes through
-Conjecture~1 of Buchholz--MacDougall.  In normalised form the conjecture asserts that no
+Conjecture~1 of Buchholz--MacDougall.
+
+Throughout this chapter, each load-bearing claim carries a label: [K] =
+kernel-verified in Lean; [C] = computer-algebra computation (two-system where so
+stated; scripts and coverage in \texttt{scripts/CERTIFICATES.md}); [M] = ordinary
+mathematical deduction, written but not kernel-checked; [A] = research assessment.
+Narrative sentences without a label carry no evidential weight.  In normalised form the conjecture asserts that no
 quartic $x(x-1)(x-a)(x-b)$ with four distinct roots is $K$-derived; the unnormalised
 conjecture is equivalent to this via the affine group $\langle X^{*}\rangle$, and only
 this direction is used here.
@@ -118,9 +124,13 @@ By \texttt{ring}.
 A square in the function field $\Q(a,b)$ is non-negative at every rational point where it
 is defined.  Each of the eight candidates whose squareness would trivialise a double
 cover is \emph{negative} at an explicit rational point, from which the kernel now derives
-the verdict that none of the eight is a square --- so $\sqrt{Q_{4}}\notin\Q(S)$ and
-$\sqrt{-2Q_{4}}\notin\Q(S)$, and all three covers are irreducible nontrivial double
-covers of $S$.  Point~1 is the $K$-witness $(-51/13,-17/7)$; point~2 is $(1,3)$.  The eight negativity certificates are the kernel anchors; as of 2026-08-02 the
+the verdict that none of the eight is a square --- by the square-class transfer
+(Lemma~\ref{sq_transfer}, Theorem~\ref{multiquad_verdicts}) $Q_{4}$ and $-2Q_{4}$
+remain non-squares in every field containing $\Q(a,b)$ together with square roots
+of $R_{q}$ and $S_{q}$ [K] --- in particular in any model of the multiquadratic
+splitting extension.  The identification of a concrete model of $\Q(S)$ with such
+an extension is [M/C]; granted it, all three covers are irreducible nontrivial
+double covers of $S$ [M].  Point~1 is the $K$-witness $(-51/13,-17/7)$; point~2 is $(1,3)$.  The eight negativity certificates are the kernel anchors; as of 2026-08-02 the
 deduction itself is also in the kernel (\texttt{Gap/BMThm7FunctionField.lean}): the
 specialisation principle is formalised as evaluation along a ring homomorphism
 (Lemma~\ref{spec_principle}), squares descend from the fraction field to the
@@ -156,6 +166,32 @@ theorems consuming the negativity certificates through the evaluation bridges).
 \begin{proof}\leanok
 Square descent, then the specialisation principle at the certificate point
 contradicts the kernel negativity.
+\end{proof}
+
+\begin{lemma}[Biquadratic square-class transfer]\label{sq_transfer}\lean{BMThm7SquareClass.biquadratic_transfer}\leanok
+For fields $K \subseteq M$ (characteristic $0$) with $\rho^{2}=r$, $\sigma^{2}=s$
+($r,s \in K$): if an element of the $K$-span of $\{1,\rho,\sigma,\rho\sigma\}$
+squares to $x \in K$, then one of $x$, $xr$, $xs$, $xrs$ is a square in $K$.
+Degenerate cases ($r$, $s$ a square; $\rho$ or $\sigma$ already in $K$) are not
+excluded: the case analysis absorbs them.
+\end{lemma}
+\begin{proof}\leanok
+One quadratic step (\texttt{step}), applied through a master case split on the
+square classes of $r$ and $s$.
+\end{proof}
+
+\begin{theorem}[Non-squareness in the multiquadratic extension]\label{multiquad_verdicts}\lean{BMThm7SquareClass.Q4_not_square_multiquadratic}\leanok
+\uses{sq_transfer, covers_nonsquare}
+In every field containing $\Q(a,b)$ together with square roots of $R_{q}$ and
+$S_{q}$, neither $Q_{4}$ nor $-2Q_{4}$ is the square of any element of the span
+of $\{1,\rho,\sigma,\rho\sigma\}$ --- hence of any element of the multiquadratic
+extension $\Q(a,b)(\sqrt{R_{q}},\sqrt{S_{q}})$
+(\texttt{Q4\_not\_square\_multiquadratic},
+\texttt{n2Q4\_not\_square\_multiquadratic}).
+\end{theorem}
+\begin{proof}\leanok
+The transfer lemma reduces to the eight base-field exclusions of
+Theorem~\ref{covers_nonsquare}.
 \end{proof}
 
 \begin{lemma}[Negativity certificates at point 1: $Q_4$]\label{Q4_neg}\lean{BMThm7Boundary.Q4_neg}\leanok
@@ -225,26 +261,30 @@ By \texttt{norm\_num}.
 \section{What the terrain shows}
 
 The locus inside $S$ where Theorem~7's conclusion is algebraically forced is the proper
-curve $S\cap\{Q_{4}=0\}$: six one-dimensional components, each of genus~$0$.  On each
+curve $S\cap\{Q_{4}=0\}$: six one-dimensional components, each of genus~$0$ [C].  On each
 component $R_{q}$ restricts to a square while $S_{q}$ does not; the restriction of $S_{q}$
-has constant square class $12=4\cdot 3$, so $w^{2}=S_{q}$ has rational solutions only
+has constant square class $12=4\cdot 3$ [C], so $w^{2}=S_{q}$ has rational solutions only
 where $S_{q}=0$, and the only rational roots of the even part ($t=-1$, $t=0$) are
-inadmissible.  Hence over $\Q$ the conclusion is never automatic: every hypothetical
+inadmissible [C+M].  Hence over $\Q$ the conclusion is never automatic: every hypothetical
 nondegenerate point of $S(\Q)$ must lift through a nontrivial double cover, and the
-Conjecture-1-refutation scenario via these curves is closed (no admissible points).
+Conjecture-1-refutation scenario via these curves is closed (no admissible points) [C+M].
 
 Away from the degeneracy locus each of the three disjuncts demands lifting through a
 double cover that is nontrivial over the function field $\Q(S)$ --- which encodes all
 splitting hypotheses --- so by Hilbert irreducibility the liftable rational points of each
-cover form a thin subset.  Thinness bounds what a generic-point argument can see, not what
+cover form a thin subset [M].  (The application of Hilbert irreducibility here: the
+covers are irreducible over $\Q(a,b)$ by Theorem~\ref{covers_nonsquare}; the further
+hypotheses --- dominance, degree two, integrality over $\overline{\Q}$, the branch
+locus --- are read off the cover data by ordinary mathematics, not kernel-checked.)
+Thinness bounds what a generic-point argument can see, not what
 rational points exist; we found no geometric mechanism that decides the lifting, and no
 descent route achieving finiteness (the naive twist family is unbounded, and none of the
 standard finiteness devices --- ramification restriction, local conditions, Selmer-type
 bounds --- was found by us to apply); and the field-dependence begins
-already at Buchholz--MacDougall's own excluded case, over the smallest field
-$\Q(\sqrt{3})$ (since $12=4\cdot 3$), while Stroeker's points live over $\Q(\sqrt{3441})$.
+already at Buchholz--MacDougall's own excluded case, over the quadratic extension suggested by
+the square class, $\Q(\sqrt{3})$ ($12=4\cdot 3$), while Stroeker's points live over $\Q(\sqrt{3441})$.
 
-The reading is an assessment anchored by machine artefacts, not a theorem: within the
+The reading is an assessment [A] anchored by machine artefacts, not a theorem: within the
 proof architectures we surveyed, each escape hatch for a Theorem-7 proof avoiding
 Conjecture~1 is shut at the level computation can shut it, and what remains open is that
 $S(\Q)$ has no nondegenerate points --- Conjecture~1 itself.  Formally, only sufficiency

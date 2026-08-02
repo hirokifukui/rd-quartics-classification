@@ -165,6 +165,31 @@ map_pow + sq_nonneg）、UFD 整閉性による平方降下（square_descent）�
 門が「repo が主張する証明書の実在」を機械検問した最初の実例。処置: `.gitignore` に
 `!scripts/**/*.log` の再包含を追加し、三本を追跡下へ（md5 は収載値と一致、内容変換なし）。
 
+## 追記 2026-08-02j（便4 = gpt 再々レビューへの対応: SquareClass kernel 化＋精度・provenance 一括）
+
+便4 判定 = 中心定理 accept 相当・repo 全体 major revision・公開準備度 7.5。必須三点のうち (1)(2) を実施:
+
+**(1) Gap/BMThm7SquareClass.lean 新設（4 宣言、全 std-3）** — 便4 の中心指摘「ℚ(a,b) の非平方性は多二次拡大
+L = K(√Rq,√Sq) へ自動では移らない」への定理による回答。step（一段補題: 退化時は σ が基礎体に落ちて吸収）、
+biquadratic_transfer（{1,ρ,σ,ρσ} 張成元の平方 → x/xr/xs/xrs のどれかが K で平方、master case split で退化全吸収）、
+応用二本（FunctionField 八定理を消費、任意の拡大体 M を量化——ℚ(S) のモデル選択を前提しない）。
+凍結 = SquareClass.STATEMENT_FREEZE_20260802.lean（md5 d743c715）、CC 逸脱記録 = scratch ファイル一時作成
+（自己申告・現存せず）。監査 = kernel_audit/20260802_squareclass_audit.md。md5 = ea31047a51eb436f76cc2c0725d44fd0
+
+**(2) T9 stale 全掃討** — Ch2 冒頭「two open propositions」訂正・ADJUDICATION の [OPEN]/「does not exist」訂正。
+
+**精度・provenance 一括（便4 採用群）**: Ch2 highest-local-minimum の代数的述語限定／Ch4 claim-label 体系
+[K]/[C]/[M]/[A] 導入＋genus・square class・admissible・thin（Hilbert 適用条件明文化）・[A] 標記・smallest field 訂正／
+被覆結論を三層化（[K] 拡大体非平方まで → [M/C] ℚ(S) 同定 → [M] 既約性）／Ch5 permanent→standing ceiling・
+only-known→currently-developed・reopening gate に local 形式化・polynomial identities 緩和／Classification docstring
+の exceptional loci 訂正＋ **Setoid インスタンス追加**（affineSetoid、std-3、lean_decls 111）／Master「neither
+provable nor refutable」→「not proved at the pinned mathlib」（裁定済み区分、md5 → a8a919a60f68dcc63b82b58cc7dbde0d）／README relation 表現・
+build 対象修正／**CERTIFICATES.md SHA-256 主化＋rank ログ三本の正直な Status**（m33 rigorous／rank_tables 部分・
+末尾 traceback／rank_unruly 三体 analytic のみ）＋two-system 文言の適用範囲限定／**CI: cert audit SHA-256 化・
+deploy を main push 限定・permissions を job 限定・audit 対象に SquareClass**／**Gap/PROVENANCE.md**（BM2000 書誌・
+STEPS/ADJUDICATION SHA-256・内部セッション名の公開的意味）／**AI_PROVENANCE.md**（責任分界一元化）／Ch1 に
+preregistration = methodological audit trail の framing。却下: Master 分割・Actions SHA pin（Phase F 項目）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

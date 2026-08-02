@@ -104,3 +104,8 @@ BMThm7FunctionField.n2Q4_not_square
 BMThm7FunctionField.n2Q4Rq_not_square
 BMThm7FunctionField.n2Q4Sq_not_square
 BMThm7FunctionField.n2Q4RqSq_not_square
+Thm7Classification.affineSetoid
+BMThm7SquareClass.step
+BMThm7SquareClass.biquadratic_transfer
+BMThm7SquareClass.Q4_not_square_multiquadratic
+BMThm7SquareClass.n2Q4_not_square_multiquadratic

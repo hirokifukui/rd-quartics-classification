@@ -6,7 +6,7 @@ BEFORE any build.  Every verdict below postdates the freeze.
 | Pre-reg | Prediction | Verdict | Evidence |
 |---|---|---|---|
 | P1 | The hole is T2; `T2_assumption <-> T0-conclusion` provable std-3 | **CONFIRMED [P]** | `T2_iff_conclusion` std-3 (Phase B, MANIFEST_phaseB) |
-| P2 | Kernel stops at T9; no derivation from T1,T3-T8; with T2 it closes (circle) | **CONFIRMED [P]** | `T9_bridge` remains a def [OPEN]; `not_T9_bridge_Q` std-3 refutes the implication over Q on the renormalised frozen witness (a,b,x0)=(13/34,-39/17,13/17); `T9_via_T2` std-3 shows one-step closure with T2 (MANIFEST_phaseC2/C3) |
+| P2 | Kernel stops at T9; no derivation from T1,T3-T8; with T2 it closes (circle) | **CONFIRMED [P]** | `T9_bridge` remains a bare def (the reconstructed proposition, refuted as stated by the next clause); `not_T9_bridge_Q` std-3 refutes the implication over Q on the renormalised frozen witness (a,b,x0)=(13/34,-39/17,13/17); `T9_via_T2` std-3 shows one-step closure with T2 (MANIFEST_phaseC2/C3) |
 | P3 | No step of T1-T9 uses splitting of f'' | **CONFIRMED (structural)** | No lemma in the transcribed T3-T8 chain takes an f''-hypothesis; kernel-visible in signatures. (f'' enters ONLY through the KDerived package of T2 -- which is the conclusion.) |
 | P4 | T8 "Conversely..." is a non-sequitur but carries no load | **CONFIRMED (by isolation)** | T8 transcribed as square-class identities only; the converse direction was never needed anywhere downstream -- the chain compiles without it. |
 | P5 | T6's stationary-point argument insufficient; conclusion D6 >= 0 true; SOS-style repair | **CONFIRMED + UPGRADED [P]** | `discCubic_fp_eq_four_D6`, `D6_eq_sq_of_vieta` (Sage-found integer certificate, kernel-verified), `D6_nonneg_of_vieta`, `deltaF_nonpos_of_vieta` -- D6 >= 0 over ANY linearly ordered field where f' splits: stronger than the printed real-plane claim, no analysis needed. Bonus discovery: CharZero is genuinely required (char 3 degenerates the first Vieta relation) -- invisible on paper, surfaced by a failed general-Field build. |
@@ -22,7 +22,7 @@ BEFORE any build.  Every verdict below postdates the freeze.
 - T7a is true and now proved self-containedly [P].
 - T7b's algebraic core is exact (`deltaFp_eq_zero_of_D6` [P]).
 What does not survive: the bridge from all of the above to "r and s are rational".
-It does not exist (P2), because it was assumed (P1).
+The reconstructed implication is false as stated (P2), because in the printed text it was assumed rather than derived (P1).
 
 
 ## Addendum (2026-07-21): prose discharge scan

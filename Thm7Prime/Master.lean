@@ -302,8 +302,8 @@ theorem E576i2_elliptic : E576i2.Δ ≠ 0 := by
 thm7_repair track (instance-localized, five-point-gated, style of
 qderived `rank_W_*`):
   (i)   CONSISTENCY : a fixed true rank equality about one genuine elliptic
-        curve (`Δ ≠ 0`, `E576i2_elliptic`); neither provable nor refutable
-        in current mathlib (no Mordell-Weil rank computation); NOT a
+        curve (`Δ ≠ 0`, `E576i2_elliptic`); not proved in the present development at the
+        pinned mathlib (which has no Mordell-Weil rank machinery); NOT a
         universal over a free predicate -- no degenerate-instance loophole.
   (ii)  LOCALIZED   : bound to the single concrete `WeierstrassCurve ℚ`
         `E576i2` = Cremona 576i2, conductor 576.

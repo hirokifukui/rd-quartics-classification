@@ -3,7 +3,7 @@
 The preceding chapters closed the repeated-root sector (Theorem~$7'$, Chapter~\ref{chap:repair}) and isolated a single open statement, Definition~\ref{Conjecture1_normal}, as the outstanding sufficient input for what remains of Theorem~7.  This chapter records
 what stands between the present state of knowledge and that statement, together
 with a \emph{reopening gate} for each obstacle: the explicit external event that
-would dissolve it.  The permanent obstacle --- the formalisation ceiling --- is
+would dissolve it.  The standing obstacle --- the formalisation ceiling at the pinned library --- is
 recorded below.  The arithmetic and computational obstacles, whose content is a
 dated record of computational status rather than permanent mathematics, are kept
 as dated research notes in \texttt{research-notes/} at the repository root, so
@@ -18,13 +18,13 @@ contains no formalisation of Mordell--Weil rank, of Selmer groups, of Chabauty's
 method, or of Coleman integration (no declarations for these notions were found by
 search of the library source at the pin).  Consequently any completion of
 Definition~\ref{Conjecture1_normal} that proceeds through the arithmetic of
-elliptic surfaces --- the only known route, by Chapter~\ref{chap:boundary} --- cannot
+elliptic surfaces --- the only route currently developed in this project (Chapter~\ref{chap:boundary}) --- cannot
 at present be carried to a kernel-checked proof without either substantial new
 formalization of that machinery or disclosed axioms encapsulating the
 computer-algebra rank computations.  This is a property of the
 current library, not of the mathematics.
-\emph{Status (2026-08):} for the repeated-root sector this wall was \emph{bypassed} rather than breached: Theorem~$7'$ (Chapter~\ref{chap:repair}) is rank-free --- both directions are polynomial identities --- so the classification of that sector consumed no Mordell--Weil input and closed with the standard three axioms. The wall remains standing exactly for Definition~\ref{Conjecture1_normal}.
-\emph{Reopening gate:} Mathlib acquires Mordell--Weil rank and descent machinery.
+\emph{Status (2026-08):} for the repeated-root sector this wall was \emph{bypassed} rather than breached: Theorem~$7'$ (Chapter~\ref{chap:repair}) is rank-free --- both directions reduce to explicit polynomial certificates together with elementary field and order reasoning --- so the classification of that sector consumed no Mordell--Weil input and closed with the standard three axioms. The wall remains standing exactly for Definition~\ref{Conjecture1_normal}.
+\emph{Reopening gate:} the required machinery is formalised --- in Mathlib, or locally in this development.
 \end{remark}
 
 \section{Dated computational records}
