@@ -162,8 +162,8 @@ theorem kderived_of_terrain {a b z w : ℚ} (h : NondegTerrainPoint a b z w) :
     simp only [C_0, zero_mul, sub_zero]
     apply Polynomial.funext; intro x
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one,
-      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one, eval_zero,
+      zero_mul, add_zero, zero_add,
+      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C,
       Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hf'split : (derivative (rootQuartic a b c)).Splits := by
@@ -175,8 +175,8 @@ theorem kderived_of_terrain {a b z w : ℚ} (h : NondegTerrainPoint a b z w) :
     rw [rootQuartic_expand]
     apply Polynomial.funext; intro x
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one,
-      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one, eval_zero,
+      derivative_X, derivative_ofNat, zero_mul, add_zero, zero_add, mul_one,
+      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_zero,
       Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hf''split : (derivative (derivative (rootQuartic a b c))).Splits := by
@@ -187,8 +187,8 @@ theorem kderived_of_terrain {a b z w : ℚ} (h : NondegTerrainPoint a b z w) :
     rw [rootQuartic_expand]
     apply Polynomial.funext; intro x
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one,
-      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one, eval_zero,
+      derivative_X, derivative_ofNat, derivative_zero, zero_mul, add_zero, zero_add, mul_one,
+      eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_zero,
       Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hf'''split : (derivative (derivative (derivative (rootQuartic a b c)))).Splits := by
@@ -209,7 +209,7 @@ theorem kderived_of_terrain {a b z w : ℚ} (h : NondegTerrainPoint a b z w) :
         = C ((a - 1) ^ 4) * bmQuartic ((b - 1) / (a - 1)) ((c - 1) / (a - 1)) := by
       apply Polynomial.funext; intro x
       simp only [rootQuartic, bmQuartic, eval_comp, eval_mul, eval_sub, eval_add, eval_C, eval_X,
-        eval_one, eval_pow]
+        eval_one]
       field_simp
       ring
     have hK1 := (KDerived_shift_iff (rootQuartic a b c) 1).mpr hKf
@@ -273,7 +273,7 @@ theorem terrain_of_kderived {a b : ℚ} (hd : DistinctRoots a b)
       = C ((-x0) ^ 4) * rootQuartic A B Cc := by
     apply Polynomial.funext; intro x
     simp only [bmQuartic, rootQuartic, eval_comp, eval_mul, eval_sub, eval_add, eval_C, eval_X,
-      eval_one, eval_pow]
+      eval_one]
     rw [hAdef, hBdef, hCcdef]
     field_simp
     ring
@@ -308,9 +308,9 @@ theorem terrain_of_kderived {a b : ℚ} (hd : DistinctRoots a b)
         + 2 * (A + B + Cc + A * B + A * Cc + B * Cc) * y - (A * B + A * Cc + B * Cc + A * B * Cc) := by
     intro y; rw [rootQuartic_expand]
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero,
-      zero_add, mul_one, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one,
-      eval_zero, Nat.cast_ofNat, map_ofNat, eval_ofNat]
+      derivative_X, zero_mul, add_zero,
+      zero_add, mul_one, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C,
+      Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hE3zero : A * B + A * Cc + B * Cc + A * B * Cc = 0 := by
     have h := hqder 0; rw [hcrit0] at h; linear_combination h
@@ -340,9 +340,9 @@ theorem terrain_of_kderived {a b : ℚ} (hd : DistinctRoots a b)
     simp only [C_0, zero_mul, sub_zero]
     apply Polynomial.funext; intro x
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero,
-      zero_add, mul_one, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one,
-      eval_zero, Nat.cast_ofNat, map_ofNat, eval_ofNat]
+      zero_mul, add_zero,
+      zero_add, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C,
+      Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hf''fac : derivative (derivative (rootQuartic A B Cc))
       = C 12 * (X ^ 2 + C (-(1 + A + B + Cc) / 2) * X
@@ -350,8 +350,8 @@ theorem terrain_of_kderived {a b : ℚ} (hd : DistinctRoots a b)
     rw [rootQuartic_expand]
     apply Polynomial.funext; intro x
     simp only [derivative_sub, derivative_add, derivative_mul, derivative_C, derivative_X_pow,
-      derivative_X, derivative_one, derivative_ofNat, derivative_zero, mul_zero, zero_mul, add_zero,
-      zero_add, mul_one, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C, eval_one,
+      derivative_X, derivative_ofNat, zero_mul, add_zero,
+      zero_add, mul_one, eval_mul, eval_sub, eval_add, eval_pow, eval_X, eval_C,
       eval_zero, Nat.cast_ofNat, map_ofNat, eval_ofNat]
     ring
   have hqne : ∀ (P Q : ℚ), (X ^ 2 + C P * X + C Q : ℚ[X]) ≠ 0 := by

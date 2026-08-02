@@ -60,7 +60,7 @@ jobs:
           set -uo pipefail
           out=""
           for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean Gap/BMThm7SquareClass.lean Gap/BMThm7NormCriterion.lean Gap/BMThm7Terrain.lean; do
-            o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
+            o=$(~/.elan/bin/lake env lean "$f" 2>&1) || { echo "FAIL: $f did not compile; output follows:"; echo "$o" | tail -40; exit 1; }
             out="$out$o"$'\n'
           done
           if echo "$out" | grep -q "sorryAx"; then echo "FAIL: sorryAx present"; exit 1; fi
