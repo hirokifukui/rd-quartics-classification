@@ -8,6 +8,7 @@ autoImplicit = false
 [[require]]
 name = "checkdecls"
 git = "https://github.com/PatrickMassot/checkdecls.git"
+rev = "3d425859e73fcfbef85b9638c2a91708ef4a22d4"
 
 [[require]]
 name = "mathlib"

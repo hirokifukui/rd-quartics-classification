@@ -190,6 +190,37 @@ deploy を main push 限定・permissions を job 限定・audit 対象に Squar
 STEPS/ADJUDICATION SHA-256・内部セッション名の公開的意味）／**AI_PROVENANCE.md**（責任分界一元化）／Ch1 に
 preregistration = methodological audit trail の framing。却下: Master 分割・Actions SHA pin（Phase F 項目）。
 
+## 追記 2026-08-02k（便5 = 84/100 への対応: Ch4 証拠管理の全面整備）
+
+便5 判定 = 中心定理 accept 近接・Ch4 の証拠管理のみ major。P0 四点＋P1/P2 採用分を実施:
+
+**(1) Ch4 [C] 主張の公開 artifact 化（−7 の解消）** — 親セッション 2026-07-16c の原 Magma スクリプト三本＋
+採取ログ五本を scripts/terrain/ へ転記（provenance は Gap/PROVENANCE.md の session 名規定で公開的に確定）。
+**新規 terrain_crosscheck.sage 作成・実走**（Sage 10.8, 2026-08-02, 全 CHECK True・採取ログ込み）: I1/I2・
+Q4=F1F2F3 squarefree・Fi 既約 genus 0・明示パラメータ化・八非平方・Rq square / Sq class 12 per 成分・
+Sq 有理零点の不変形判定（F1 は零点なし、F2/F3 は (0,0)=den 0 のみ→全て退化点）・gcd(Fi,RqSq)=1・
+pairing 恒等式・witness。現行二系統 = 原 Magma（V2.29-7）＋新 Sage。CERTIFICATES に Ch4 claim map
+（主張×script×log×status の対応表）を新設、全 28 行に Status 完備、rank_E576i2 の Sage 側を
+rank_tables.log 冒頭 PASS 行として明示。
+
+**(2) B/S 体系の正式定義** — Ch4 に「The chart, the surface, and the covers」節: B=(a,b) チャート・
+K(B)=ℚ(a,b)・S=splitting cover・K(S)=ℚ(a,b)(z,w)（定義として多二次拡大）・基底 {1,z,w,zw} [M]・
+span[K]/基底[M] の境界明示（multiquad_verdicts ノード本文は span 形に限定、拡大体到達は節外の [M] 注記へ）。
+
+**(3) 三被覆対応表** — disjunct×cover×radicand×exclusion の表: C0 radicand=Q4（I1 [K]）、C± は共に
+norm 判定（N(γ)=−8s1n²Q4 = I2 [K]）経由で −2Q4 [M]。三被覆・二平方類・一 sextic。
+
+**(4) Hilbert 幾何学的既約性命題** — prop:geomint 新設: Q4=F1F2F3 各一乗 [C]＋gcd(Fi,RqSq)=1 [C] →
+奇 valuation が ℚ̄(S) まで保存 [M] → Q4,−2Q4 ∉ ℚ̄(S)^×2。thin 括弧書きの参照を covers_nonsquare →
+multiquad_verdicts＋prop:geomint に更新（便5 指摘 4 の参照齟齬解消）。Sq 零点文言を不変形に更新。
+
+**P1/P2 一括**: 依存固定（lakefile checkdecls rev pin・Actions 四本 full SHA pin・ubuntu-24.04）／README
+theorem map に新 kernel 五行／research-notes の stale（Ch.5→Ch.4、二重置換、生 \section）修正／
+Classification ヘッダー（relation 表現・RDPoly 記述）修正＋三 Lean ファイルに AI_PROVENANCE 参照行
+（ヘッダー保持方針は維持、md5: Classification=c3626ad6bf429f2fd101d86948a33e8c, FunctionField=39def1f0d6a7eddf9dec07af5e103407, SquareClass=89362d209c124656529a3f16883b0a49、footprint 再確認
+14/16/4 std-3）／PROVENANCE の kernel 役割文を正確化。却下（既裁定・記録）: span の Lean 拡大体化は
+Phase W 選択肢、line-pinned links・CITATION/DOI は Phase F。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

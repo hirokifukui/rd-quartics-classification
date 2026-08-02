@@ -29,5 +29,6 @@ The pre-registration record (`STEPS.md`, predictions P1-P7) is a methodological
 audit trail: the predictions and their confirmations were both produced within
 this project.  It documents that the formal reconstruction was fixed before the
 kernel results existed - a procedural transparency measure - and is not itself
-independent verification.  Independent verification is what the kernel performs,
-and what any reader can re-run.
+independent verification.  What the kernel provides is machine verification of the stated formal
+propositions; independent human verification is what any reader can perform by
+re-running the build and reading the statements.

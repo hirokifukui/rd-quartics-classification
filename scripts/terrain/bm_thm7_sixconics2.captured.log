@@ -1,0 +1,9 @@
+pair1 divisible by F1: true -a - b
+pair2 divisible by F3: false
+pair2 divisible by F2: true a + 1
+pair3 divisible by F2: false
+pair3 divisible by F3: true -b - 1
+=== factor 1 === param on curve: true / fact: [<x+1,2>,<x^2+1,2>] lc 12 / class c(t)=12 (deg 0) not square / Sq=0 roots: [-1] pole
+=== factor 2 === param on curve: true / fact: [<x,4>,<x+1,2>,<x^2+1,2>] lc 12 / class 12 not square / Sq=0 roots: [-1] pole, [0] den=0
+=== factor 3 === param on curve: true / fact: [<x,4>,<x+1,2>,<x^2+1,2>] lc 12 / class 12 not square / Sq=0 roots: [-1] pole, [0] den=0
+(first run bm_thm7_sixconics: factor 1 identical; Conic() crashed on degenerate constant class, loop redesigned)

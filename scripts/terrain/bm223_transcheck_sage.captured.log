@@ -1,0 +1,6 @@
+SAGE Dr == Rq: True
+SAGE Ds == Sq: True
+c matches -3: True
+Dr at witness is square: True
+Ds at witness square /Q (expect False): False
+Ds/3441 square: True

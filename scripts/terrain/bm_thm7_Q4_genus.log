@@ -1,0 +1,10 @@
+base factor 1 irreducible: true genus: 0
+base factor 2 irreducible: true genus: 0
+base factor 3 irreducible: true genus: 0
+F1 : A square true / B square false / AB square false
+F1 splits: 2 components, each genus: 0
+F2 : A square true / B square false / AB square false
+F2 splits: 2 components, each genus: 0
+F3 : A square true / B square false / AB square false
+F3 splits: 2 components, each genus: 0
+DONE

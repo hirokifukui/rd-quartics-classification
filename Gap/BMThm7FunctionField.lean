@@ -1,6 +1,7 @@
 /-
 Gap/BMThm7FunctionField.lean -- function-field non-squareness, kernel form
-(2026-08-02; statements FROZEN by claude.ai, tactics delegated)
+(2026-08-02; statements FROZEN by claude.ai, tactics delegated;
+division of labour and responsibility: AI_PROVENANCE.md at the repository root)
 
 Purpose: close in the kernel the step that Chapter 4 previously scoped as
 [MC]: the eight cover-nontriviality candidates are non-squares in the

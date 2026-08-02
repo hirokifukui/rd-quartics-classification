@@ -1,16 +1,18 @@
 /-
 Thm7Prime/Classification.lean -- the global affine classification bridge
 (Option ii, second installment, 2026-08-02; statements FROZEN by claude.ai,
-tactics delegated)
+tactics delegated;
+division of labour and responsibility: AI_PROVENANCE.md at the repository root)
 
 Purpose: close in the kernel the bridge from an arbitrary split quartic with
 root profile (2,1,1) to the normalised family of Theorem 7', answering the
 reviewer demand for a packaged classification theorem:
-  * `AffineEquiv` = BM's group <X*> (variable scaling+translation, nonzero
+  * `AffineEquiv` = the equivalence relation induced by BM's <X*> (variable
+    scaling+translation, nonzero
     scalar multiple of the polynomial);
   * `IsP211` = split quartic with root profile (2,1,1);
-  * `RDPoly` = natural rational-derivedness of an arbitrary polynomial
-    (same four-conjunct shape as `NaturalRD` / `KDerived`);
+  * `RDPoly` = splitting of a polynomial and its first three derivatives
+    (exactly rational-derivedness for quartics; used only under `IsP211`);
   * `classification`: for `IsP211 f`, `RDPoly f` iff `f` is affine-equivalent
     to `Q a` for some gate parameter `a` with `RD211 a`;
   * `classification_by_curve`: the same with the parameter realised as

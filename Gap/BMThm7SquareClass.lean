@@ -1,6 +1,7 @@
 /-
 Gap/BMThm7SquareClass.lean -- square-class transfer to the multiquadratic
-extension (2026-08-02; statements FROZEN by claude.ai, tactics delegated)
+extension (2026-08-02; statements FROZEN by claude.ai, tactics delegated;
+division of labour and responsibility: AI_PROVENANCE.md at the repository root)
 
 Purpose: close the step identified by external review as the remaining hole
 of Chapter 4: non-squareness in the base field K = ℚ(a,b) does not by

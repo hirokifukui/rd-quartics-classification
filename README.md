@@ -51,6 +51,10 @@ The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Clas
 | Gate form ⟺ natural rational-derivedness | `rd211_iff_natural` | `Thm7Prime/Fidelity.lean` |
 | Affine classification of split (2,1,1) quartics | `classification` | `Thm7Prime/Classification.lean` |
 | Classification by rational points of 576i2 | `classification_by_curve` | `Thm7Prime/Classification.lean` |
+| Specialisation principle and square descent in ℚ[a][b] | `sq_eval_nonneg`, `square_descent` | `Gap/BMThm7FunctionField.lean` |
+| Eight non-squareness verdicts in ℚ(a,b) | `Q4_not_square` … `n2Q4RqSq_not_square` | `Gap/BMThm7FunctionField.lean` |
+| Biquadratic square-class transfer | `biquadratic_transfer` | `Gap/BMThm7SquareClass.lean` |
+| Q₄, −2Q₄ non-square in the multiquadratic extension | `Q4_not_square_multiquadratic`, `n2Q4_not_square_multiquadratic` | `Gap/BMThm7SquareClass.lean` |
 
 (Line-pinned links to be added at release freeze.)
 

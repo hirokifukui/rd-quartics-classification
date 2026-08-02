@@ -11,7 +11,7 @@ remains blueprint Chapter 4; the wall form recorded here adds no mathematical cl
 None of these is an assertion of impossibility.
 
 ## Wall W2: five measured fibres are the noise floor
-In the companion programme attacking `Conjecture1_normal` (blueprint Ch.5, open statement) through
+In the companion programme attacking `Conjecture1_normal` (blueprint Ch.4, the open statement) through
 the fibred structure of the associated elliptic surfaces, the target parity datum
 beta has been measured for exactly five fibres (n = 2,...,6).  A systematic
 mining run over 488 atomic arithmetic features (with a pre-declared overfit
@@ -50,14 +50,14 @@ through the square class 209) suggests that a proof along these lines would have
 the base field in an essential way.
 **Reopening gate:** a new arithmetic mechanism — for instance a Brauer--Manin
 computation on the surface confining its rational points — or
-`Conjecture1_normal` (blueprint Ch.5, open statement) itself.
+`Conjecture1_normal` (blueprint Ch.4, the open statement) itself.
 
 
-\section{The measured distance}
+## The measured distance
 
 ## Wall W5: the disclosed-axiom footprint
 The companion programme — whose artifacts live outside this repository; the main-line theorems of the present artifact close on the standard three axioms, with the single disclosed axiom `rank_E576i2` retained off the main line (README / blueprint Ch.3 rank remark) — has a current summit theorem for
-`Conjecture1_normal` (blueprint Ch.5, open statement) that carries, by independent kernel measurement, an
+`Conjecture1_normal` (blueprint Ch.4, the open statement) that carries, by independent kernel measurement, an
 axiom footprint consisting of the three standard axioms of Lean's classical logic
 together with five disclosed axioms: three encapsulating specific computer-algebra
 rank computations, one packaging the tail of an even-orbit Mordell--Weil argument,
@@ -67,5 +67,5 @@ between the present state and a complete proof; two of the five are engineering
 debts with identified repairs; the remaining three stand exactly as long as Wall~W1 does
 (a property of the current library, not of the mathematics).
 **Reopening gate:** discharge of the load-bearing reduction through
-`Conjecture1_normal` (blueprint Ch.5, open statement) (blueprint Chapter 4); the two
+`Conjecture1_normal` (blueprint Ch.4, the open statement); the two
 engineering repairs; and, for the remaining three, Wall~W1.

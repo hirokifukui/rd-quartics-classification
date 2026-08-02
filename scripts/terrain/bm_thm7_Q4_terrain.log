@@ -1,0 +1,36 @@
+ID1 18*Q4 eq 3Rq-Sq: true
+ID2 s1n^2 - Rq eq -8*Q4: true
+--- factorization of Q4 ---
+[
+    <a*b + a + b - 1, 1>,
+    <a*b + a - b^2 + b, 1>,
+    <a^2 - a*b - a - b, 1>
+]
+Q4 squarefree: true
+--- cover triviality tests (all should be false for nontrivial covers) ---
+Q4 square: false
+Q4*Rq square: false
+Q4*Sq square: false
+Q4*Rq*Sq square: false
+-2*Q4 square: false
+-2*Q4*Rq square: false
+-2*Q4*Sq square: false
+-2*Q4*Rq*Sq square: false
+--- witness values ---
+Q4 at K-witness: -4961147400/68574961
+Q4 witness negative: true
+--- degeneracy locus Q4 = 0 as plane curve ---
+C irreducible: false
+--- pullback of Q4=0 to S: dimension and components ---
+dim of (S meet {Q4=0}): 1 [ 4 ]
+dim of S: 2 [ 3, 4 ]
+--- primary decomposition of pullback (may take time) ---
+Time: 0.510
+number of primary components: 6
+component dim: 1 [ 4 ]
+component dim: 1 [ 4 ]
+component dim: 1 [ 4 ]
+component dim: 1 [ 4 ]
+component dim: 1 [ 4 ]
+component dim: 1 [ 4 ]
+DONE
