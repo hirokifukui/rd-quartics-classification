@@ -1,0 +1,18 @@
+name: CAS reproduce
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  sage:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Re-run terrain crosscheck in a pinned Sage container and compare
+        run: |
+          set -euo pipefail
+          docker run --rm -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9 \
+            sage terrain_crosscheck.sage > /tmp/fresh_raw.txt
+          grep -E "^(CHECK|  zero|DONE)" /tmp/fresh_raw.txt > /tmp/fresh.txt
+          grep -E "^(CHECK|  zero|DONE)" terrain_crosscheck.captured.log > /tmp/stored.txt
+          diff -u /tmp/stored.txt /tmp/fresh.txt
+          echo "CAS REPRODUCE PASS: all normalized CHECK lines identical (stored: Sage 10.8 on macOS; fresh: Sage 10.9 container -- cross-version, cross-platform reproduction)"

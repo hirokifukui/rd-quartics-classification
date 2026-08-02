@@ -290,6 +290,32 @@ kderived_of_terrain（terrain→正規形: z,w から明示分裂根）／terrai
 exact footprint 追加・audit 対象に Terrain。checkdecls 128。本日の kernel 新設は
 Classification 14＋FunctionField 16＋SquareClass 4＋NormCriterion 8＋Terrain 9 = **51 宣言**。
 
+## 追記 2026-08-02o（便8 = 97/100 への対応: 最終整形——対応の命題化と再計算 CI）
+
+便8 判定 = 97 点・「数学的な本丸はほぼ閉じている」・前回最大減点（正規化橋）撤回。残五点のうち四点を実施:
+
+**(1) prop:fibre_correspondence 新設（指摘1 = 残る最大の整形不足）**: 非退化 locus U 上の各有理点で
+三 disjunct ⟺ 三被覆 fibre の有理点存在。全条件列挙——den≠0・相異非零根・有理点で z,w∈ℚ ゆえ
+γ±(P)∈ℚ／D₀ は I1 [K] の v=den·t 置換が**全単射**（den≠0 で分母払いは非零平方倍、余計な解なし）／
+D± は radicand 導出 [M, C 裏取り・I2 は K] を認めれば fibre 文は定義的、多価性は v↔−v のみ。
+
+**(2) prop:geomint の statement を証明内容に一致（指摘2）**: 「Q₄, γ₊, γ₋ ∉ ℚ̄(S)^×²」に書換え、
+−2Q₄ は radicand でなく **layer-norm obstruction class** と statement 内で明示区分。
+
+**(3) lem:biquad_criterion 新設（指摘3）**: char≠2・r,s,rs 非平方 → 次数4・積基底・被覆代数は体（整）。
+√s=α+β√r の座標比較で 2αβ=0 → β=0 は s 平方・α=0 は rs 平方で両排除、の完全証明＋Lang Algebra Ch.VI
+参照＋sqfree_basechange 経由の定数拡大持続を明文接続。prop:S_integral の証明がこれを消費。
+
+**(4) CAS 監査を hash 確認から再実行確認へ（指摘4 Sage 部）**: 新 workflow **cas.yml** ——
+pin した sagemath/sagemath:10.9 コンテナで terrain_crosscheck.sage を **CI 実走**し、正規化 CHECK 行を
+保存 log と diff（保存 = Sage 10.8/macOS、新走 = 10.9/Linux コンテナ——版・платформ横断再現）。
+cert audit に **claim-map 全 script の存在検査**追加。Magma は exact command・version・md5 を
+captured log ヘッダーに記載済み（release artifact 転記は Phase F）。
+
+**(5) 周辺（指摘5/7 部分）**: Actions を node24 系へ SHA pin 更新（checkout v5・upload-pages-artifact
+v4・deploy-pages v5）／README の md5 残渣二箇所を SHA-256 に統一。**Pages 有効化は Dr. Fukui の
+一クリック待ち（現在の筆頭ゲート）**。PDF・release tag/DOI/line-pinned links = Phase F（記録済み）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

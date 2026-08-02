@@ -56,6 +56,33 @@ $\gamma_{+}\gamma_{-}=s_{1n}^{2}(s_{1n}^{2}-z^{2})=-8s_{1n}^{2}Q_{4}$ by (I2), a
 it is this \emph{norm class} that the kernel obstruction consumes.  $C_{0}$ carries
 the class $Q_{4}$: three covers, one sextic, two obstruction routes.
 
+\begin{proposition}[Fibre correspondence on the nondegenerate locus]\label{prop:fibre_correspondence}
+Let $U\subset S$ be the open locus $\mathrm{den}\neq0$ with the four roots
+$\{1,a,b,c\}$ pairwise distinct and nonzero.  At every rational point $P$ of
+$U$, each disjunct of Theorem~7 is equivalent to the existence of a rational
+point in the corresponding fibre:
+$D_{0}(P)\iff\exists\,v\in\Q,\ (P,v)\in C_{0}$, and
+$D_{\pm}(P)\iff\exists\,v\in\Q,\ (P,v)\in C_{\pm}$.
+\end{proposition}
+\begin{proof}[Proof {[M]} with {[K]} identities; every condition listed]
+Conditions in force: $\mathrm{den}(P)\neq0$ (chart); roots distinct and nonzero
+(nondegeneracy); at a rational point of $S$ the splitting witnesses $z,w$ are
+rational numbers, so $\gamma_{\pm}(P)=s_{1n}(s_{1n}\mp z)(P)\in\Q$.
+$D_{0}$: the first disjunct asks that $\sigma_{1}^{2}-4\sigma_{2}$ be a rational
+square.  The kernel identity (I1),
+$\mathrm{den}^{2}(\sigma_{1}^{2}-4\sigma_{2})=Q_{4}$, gives the substitution
+$v=\mathrm{den}\cdot t$ between $t^{2}=\sigma_{1}^{2}-4\sigma_{2}$ and
+$v^{2}=Q_{4}(P)$; since $\mathrm{den}(P)\neq0$ this is a bijection on solutions
+--- clearing the denominator multiplies by the nonzero square
+$\mathrm{den}^{2}$ and introduces no spurious solutions.
+$D_{\pm}$: the reduction of the disjunct at $x_{0}=(3\sigma_{1}\pm r)/8$ to the
+single condition ``$\gamma_{\pm}(P)$ is a rational square'' is the terrain-map
+computation (session artifacts, cross-checked [C]; its governing identity (I2)
+is kernel); granted the radicand derivation, the fibre statement
+$v^{2}=\gamma_{\pm}(P)$ is definitional, the correspondence $v\leftrightarrow-v$
+being the only multiplicity.  No further denominators are cleared in this case.
+\end{proof}
+
 \begin{lemma}[Squarefree base change]\label{lem:sqfree_basechange}
 Let $k$ be a perfect field and $f\in k[a,b]$ nonconstant with a nonconstant
 irreducible factor of odd multiplicity.  Then $f$ is not a square in $k'(a,b)$
@@ -68,6 +95,26 @@ field), so each irreducible factor of $f$ splits over $k'$ into \emph{distinct}
 irreducibles, each inheriting the multiplicity it had in $f$.  A nonconstant
 factor of odd multiplicity therefore yields a prime of $k'[a,b]$ at which $f$
 has odd valuation; a square in $k'(a,b)$ has even valuation at every prime.
+\end{proof}
+
+\begin{lemma}[Biquadratic-extension criterion]\label{lem:biquad_criterion}
+Let $K$ be a field of characteristic $\neq2$ and $r,s\in K^{\times}$ with $r$,
+$s$ and $rs$ all nonsquares in $K$.  Then $K(\sqrt r,\sqrt s)/K$ has degree
+four with basis $\{1,\sqrt r,\sqrt s,\sqrt r\sqrt s\}$, and the double-double
+cover algebra $K[z,w]/(z^{2}-r,\;w^{2}-s)$ is integral (a field).
+\end{lemma}
+\begin{proof}[Proof {[M]}]
+$[K(\sqrt r):K]=2$ since $r$ is a nonsquare.  If $\sqrt s\in K(\sqrt r)$, write
+$\sqrt s=\alpha+\beta\sqrt r$; squaring and comparing coordinates (valid since
+$\{1,\sqrt r\}$ is independent and $\operatorname{char}K\neq2$) forces
+$2\alpha\beta=0$: $\beta=0$ makes $s=\alpha^{2}$ a square, and $\alpha=0$ makes
+$rs=(\beta r)^{2}$ a square --- both excluded.  Hence the tower has degree four
+and the product basis; the quotient algebra is then a free $K$-module of rank
+four which coincides with the field $K(\sqrt r,\sqrt s)$, hence is integral.
+(Standard exponent-2 Kummer theory; see e.g.\ Lang, \emph{Algebra}, Ch.~VI.)
+For constant-field extensions the hypotheses persist by
+Lemma~\ref{lem:sqfree_basechange}, so the criterion applies verbatim over
+$\overline{\Q}(a,b)$.
 \end{proof}
 
 \begin{proposition}[Integrality of the splitting cover]\label{prop:S_integral}
@@ -86,7 +133,9 @@ each of the three has a nonconstant factor of odd multiplicity
 \texttt{terrain\_crosscheck}, \texttt{terrain\_class12}], so Lemma~\ref{lem:sqfree_basechange}
 applies: none is a square in $\overline{\Q}(a,b)$ ($R_{q}$ and $S_{q}$ each carry
 one odd nonconstant factor; they are coprime [C: gcd data], so $R_{q}S_{q}$
-retains both).  Degree four and integrality follow [M].
+retains both).  Degree four, the basis, and integrality now follow from
+Lemma~\ref{lem:biquad_criterion} applied over $\Q(a,b)$ and, via
+Lemma~\ref{lem:sqfree_basechange}, over $\overline{\Q}(a,b)$ [M].
 \end{proof}  In normalised form the conjecture asserts that no
 quartic $x(x-1)(x-a)(x-b)$ with four distinct roots is $K$-derived; the unnormalised
 conjecture is equivalent to this via the affine group $\langle X^{*}\rangle$, and only
@@ -290,9 +339,11 @@ Layer step, coordinate norm, (I2), then \texttt{n2Q4\_not\_square}.
 \end{proof}
 
 \begin{proposition}[Geometric integrality of the covers]\label{prop:geomint}
-Neither $Q_{4}$ nor $-2Q_{4}$ is a square in $\overline{\Q}(S)$; each cover
-$C_{0},C_{\pm}\to S$ is a dominant, geometrically integral degree-two cover away
-from its branch locus.
+Neither $Q_{4}$ nor $\gamma_{+}$ nor $\gamma_{-}$ is a square in
+$\overline{\Q}(S)$; consequently $C_{0}$, $C_{+}$ and $C_{-}$ are dominant,
+geometrically integral degree-two covers over the stated open subset of $S$,
+away from their branch loci.  ($-2Q_{4}$ is not itself a radicand: it enters as
+the layer-norm obstruction class of $\gamma_{\pm}$.)
 \end{proposition}
 \begin{proof}[Proof {[M]} with {[C]} inputs]
 $Q_{4}=F_{1}F_{2}F_{3}$ with the $F_{i}$ distinct irreducible factors, each to
