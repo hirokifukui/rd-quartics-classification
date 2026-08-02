@@ -34,8 +34,10 @@ def IsP211 (f : ℚ[X]) : Prop :=
   ∃ lam c r1 r2 : ℚ, lam ≠ 0 ∧ c ≠ r1 ∧ c ≠ r2 ∧ r1 ≠ r2 ∧
     f = C lam * (X - C c)^2 * ((X - C r1) * (X - C r2))
 
-/-- Natural rational-derivedness of an arbitrary polynomial: it and its first
-three derivatives split (same shape as `NaturalRD` / `KDerived`). -/
+/-- Splitting of a polynomial and its first three derivatives (the shape of
+`NaturalRD` / `KDerived`).  For quartics this is exactly rational-derivedness;
+for degree at least five it is weaker (higher derivatives unconstrained).
+Used in this file only under `IsP211`. -/
 def RDPoly (f : ℚ[X]) : Prop :=
   f.Splits ∧ (derivative f).Splits ∧
   (derivative (derivative f)).Splits ∧
@@ -57,6 +59,19 @@ theorem affineEquiv_symm {f g : ℚ[X]} (h : AffineEquiv f g) : AffineEquiv g f 
     ring
   rw [hg, mul_comp, C_comp, comp_assoc, hcomp, comp_X, ← mul_assoc, ← C_mul,
     inv_mul_cancel₀ hnu, C_1, one_mul]
+
+theorem affineEquiv_trans {f g h : ℚ[X]} (hfg : AffineEquiv f g)
+    (hgh : AffineEquiv g h) : AffineEquiv f h := by
+  obtain ⟨l1, m1, n1, hl1, hn1, e1⟩ := hfg
+  obtain ⟨l2, m2, n2, hl2, hn2, e2⟩ := hgh
+  refine ⟨l1 * l2, l1 * m2 + m1, n2 * n1, mul_ne_zero hl1 hl2,
+    mul_ne_zero hn2 hn1, ?_⟩
+  have hcomp : (C l1 * X + C m1).comp (C l2 * X + C m2)
+      = C (l1 * l2) * X + C (l1 * m2 + m1) := by
+    apply Polynomial.funext; intro x
+    simp only [eval_comp, eval_add, eval_mul, eval_C, eval_X]
+    ring
+  rw [e2, e1, mul_comp, C_comp, comp_assoc, hcomp, ← mul_assoc, ← C_mul]
 
 /-! ## 2. Transport of splitting and derivatives -/
 
@@ -180,6 +195,7 @@ end Thm7Classification
 
 #print axioms Thm7Classification.affineEquiv_refl
 #print axioms Thm7Classification.affineEquiv_symm
+#print axioms Thm7Classification.affineEquiv_trans
 #print axioms Thm7Classification.derivative_comp_linear
 #print axioms Thm7Classification.splits_comp_linear
 #print axioms Thm7Classification.splits_C_mul

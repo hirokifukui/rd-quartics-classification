@@ -298,7 +298,7 @@ theorem E576i2_elliptic : E576i2.Δ ≠ 0 := by
     WeierstrassCurve.b₆, WeierstrassCurve.b₈, E576i2]
   norm_num
 
-/-- **[P-ax] rank `E(576i2)` = 1** -- the single disclosed safe axiom of the
+/-- **[P-ax] rank `E(576i2)` = 1** -- the single disclosed axiom of the
 thm7_repair track (instance-localized, five-point-gated, style of
 qderived `rank_W_*`):
   (i)   CONSISTENCY : a fixed true rank equality about one genuine elliptic
@@ -612,7 +612,7 @@ theorem thm7_forward : Thm7Forward := by
 /-- **Theorem 7' -- UNCONDITIONAL.**  The repaired BM2000 Theorem 7 holds
 with the standard three axioms only: the backward direction is the gate
 identity machinery (rank input zero), the forward direction is the explicit
-Groebner inverse of the a-map (rank input zero).  The disclosed safe axiom
+Groebner inverse of the a-map (rank input zero).  The disclosed axiom
 `rank_E576i2` is NOT consumed here; it remains available solely for the
 BK-style enumeration of `E(ℚ)` (not needed for the classification
 statement itself). -/

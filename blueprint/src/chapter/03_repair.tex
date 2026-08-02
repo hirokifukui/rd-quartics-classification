@@ -261,8 +261,10 @@ The reviewer-facing form of the result: the bridge from an arbitrary split
 $(2,1,1)$ quartic to the normalised family, packaged as one kernel theorem
 (\texttt{Thm7Prime/Classification.lean}).
 
-\begin{definition}[The group $\langle X^{*}\rangle$]\label{def:affequiv}\lean{Thm7Classification.AffineEquiv}\leanok
-$f\sim g$ iff $g=\nu\,f(\lambda X+\mu)$ with $\lambda,\nu\neq 0$.
+\begin{definition}[The equivalence induced by $\langle X^{*}\rangle$]\label{def:affequiv}\lean{Thm7Classification.AffineEquiv}\leanok
+$f\sim g$ iff $g=\nu\,f(\lambda X+\mu)$ with $\lambda,\nu\neq 0$.  This is an
+equivalence relation (\texttt{affineEquiv\_refl}, \texttt{affineEquiv\_symm},
+\texttt{affineEquiv\_trans}, all kernel-checked).
 \end{definition}
 
 \begin{definition}[Split $(2,1,1)$ quartic]\label{def:isp211}\lean{Thm7Classification.IsP211}\leanok
@@ -272,7 +274,8 @@ pairwise distinct.
 
 \begin{definition}[Rational-derivedness, natural form]\label{def:rdpoly}\lean{Thm7Classification.RDPoly}\leanok
 \uses{def:naturalrd}
-$f$ and its first three derivatives split over $\Q$.
+$f$ and its first three derivatives split over $\Q$ (for quartics, exactly
+rational-derivedness; used only under Definition~\ref{def:isp211}).
 \end{definition}
 
 \begin{theorem}[Affine classification]\label{thm:classification}\lean{Thm7Classification.classification}\leanok
@@ -291,9 +294,9 @@ the gates then come from Theorem~\ref{thm:fidelity}.
 \begin{theorem}[Classification by the curve]\label{thm:classcurve}\lean{Thm7Classification.classification_by_curve}\leanok
 \uses{thm:classification, thm:main}
 For a split $(2,1,1)$ quartic $f$: $f$ is rational-derived iff $f$ is
-$\langle X^{*}\rangle$-equivalent to $Q_{a\mathrm{Map}(w,z)}$ for a rational
-point $(w,z)$ of $E=\texttt{576i2}$ away from the denominator and exceptional
-loci.
+$\langle X^{*}\rangle$-equivalent to $Q_{a\mathrm{Map}(w,z)}$ for an affine
+rational point $(w,z)$ of the Weierstrass model of $E=\texttt{576i2}$ with
+$a\mathrm{Den}(w,z)\neq0$ and $a\mathrm{Map}(w,z)\notin\{0,1\}$.
 \end{theorem}
 \begin{proof}\leanok
 Theorem~\ref{thm:classification} composed with both directions of the main

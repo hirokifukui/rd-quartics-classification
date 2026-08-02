@@ -3,6 +3,8 @@ name: Build project and blueprint
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -34,6 +36,26 @@ jobs:
       - name: Check declarations
         run: |
           ls blueprint/lean_decls && ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
+
+      - name: Certificate hash audit
+        run: |
+          python3 - << 'EOF'
+          import hashlib, pathlib, re, sys
+          text = pathlib.Path("scripts/CERTIFICATES.md").read_text()
+          rows = dict(re.findall(r"\| `([^`]+)` \| `([0-9a-f]{32})` \|", text))
+          bad = []
+          for p, h in rows.items():
+              q = pathlib.Path(p)
+              if not q.is_file(): bad.append("MISSING " + p); continue
+              m = hashlib.md5(q.read_bytes()).hexdigest()
+              if m != h: bad.append("MISMATCH %s (table %s, actual %s)" % (p, h, m))
+          for q in pathlib.Path("scripts").rglob("*"):
+              if q.is_file() and q.name != "CERTIFICATES.md" and q.as_posix() not in rows:
+                  bad.append("UNLISTED " + q.as_posix())
+          if bad:
+              print("CERTIFICATE AUDIT FAIL"); [print(" ", b) for b in bad]; sys.exit(1)
+          print("CERTIFICATE AUDIT PASS (%d files)" % len(rows))
+          EOF
 
       - name: Axiom footprint audit
         run: |

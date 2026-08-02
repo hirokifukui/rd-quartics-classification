@@ -115,9 +115,23 @@ WP1/WP3 splice docstring — 全て historical/superseded 標記へ）。**定�
 | README.md | repair 節を大域分類の kernel 化後の文面へ、対応表 2 行追加 | - |
 | .github/workflows | axiom audit の対象に Classification 追加＋classification_by_curve footprint assert | - |
 
+## 追記 2026-08-02f（Phase A-2 便3 = gpt6.5 再レビューへの採用修正）
+
+判定 major revision・前回中心批判の明示的撤回を受けた精度パス。詳細仕分けは金庫 SUBMISSION_PLAN。
+
+- Gap/STEPS.md 転記（金庫 bm_thm7_gap/transcript/ より、md5 3ccf4bb1620b264baece2e2e510ad283 = transcript header の凍結 pin と実機一致、変換なし）
+- blueprint 02: T9 ノードの「OPEN」→「reconstructed claim, refuted below」／「It does not exist」→「reconstructed implication is false」
+- blueprint 03: 「The group ⟨X*⟩」→「equivalence induced by」＋同値関係三定理の注記／classcurve と def:rdpoly の精密化（affine Weierstrass 点・pole locus・退化値 / RDPoly の次数限定注記）
+- blueprint 04: 節題「terrain, machine-verified」→「Machine-verified algebraic anchors」／pairing 一致に余因子非零条件を明文化／specialization 原理と [MC] の scoping 一段落
+- blueprint 05: W1 に「新規形式化 or 開示公理」の二択／W4 の断定四箇所を examined-mechanisms 形へ（題・rationally empty・therefore closed・constrains）
+- Thm7Prime/Master.lean: 「safe axiom」残存 2 箇所 →「disclosed axiom」（裁定済みコメント修正権限、md5 4966eaaf→fede39b89b2706ccc9645ffdf6c24573、footprint 不変を再監査で確認）
+- Thm7Prime/Classification.lean: RDPoly docstring 精密化＋ affineEquiv_trans 追加（claude.ai 直証、std-3、#print 追加、lean_decls 89→90 checkdecls 通過）
+- README: 主結果の除外集合・affine 点の精密化／certificates の網羅主張を CERTIFICATES.md 参照へ／ADJUDICATION パス修正＋STEPS.md 言及／Result hierarchy 三層の明示
+- CI: pull_request トリガ追加＋ Certificate hash audit step（表の全 md5 照合・未収載検出、ローカル実走 18 件 PASS 確認済み）
+
 ## TODO（未転記・未更新）
 
-- CITATION.cff 更新（新タイトル・URL。version/DOI は release 凍結時）
+- ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴
 - Guy 2P–5P スクリプトの特定・追加（執筆と往復で確定）
 - `paper/` — Phase W 成果物
 

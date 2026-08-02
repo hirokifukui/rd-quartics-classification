@@ -27,7 +27,7 @@ an empty domain.  This one line is the only route to T0 known to us (the adjudic
 P1/P2/P7); what it proves is sufficiency, not necessity.
 \end{proof}
 
-\section{The terrain, machine-verified}
+\section{Machine-verified algebraic anchors for the terrain map}
 
 The boundary is not merely negative; the terrain surrounding it is mapped in the
 $\sigma_{3}=0$ chart of \S2.2.3 (roots $1,a,b,c$ with $c=-ab/\mathrm{den}$,
@@ -81,10 +81,13 @@ statement.
 
 \subsection*{The degeneracy locus is BM's own excluded symmetric case}
 
-The pairing identities identify $Q_{4}=0$ --- the locus where Theorem~7's conclusion is
+The pairing identities exhibit, for each root pairing, an exact factorisation of the
+symmetry condition with cofactors $-(a+b)$, $(a+1)$, $-(b+1)$.  Away from the vanishing
+of these cofactors they identify $Q_{4}=0$ --- the locus where Theorem~7's conclusion is
 automatic --- with the locus on which the quartic $\{1,a,b,c\}$ is symmetric under one of
-the three root pairings, which is Buchholz--MacDougall's own excluded case~(v).  The
-automatic locus and the excluded case coincide.
+the three root pairings, Buchholz--MacDougall's own excluded case~(v); on the cofactor
+loci the identification requires separate elementary inspection.  The kernel content is
+the three factorisations themselves.
 
 \begin{lemma}[Pairing $\{1,c\}\mid\{a,b\}$]\label{pairing1}\lean{BMThm7Boundary.pairing1}\leanok
 \uses{boundary-defs}
@@ -117,7 +120,12 @@ is defined.  Each of the eight candidates whose squareness would trivialise a do
 cover is \emph{negative} at an explicit rational point, kernel-anchoring the two-system
 verdict that none of the eight is a square --- so $\sqrt{Q_{4}}\notin\Q(S)$ and
 $\sqrt{-2Q_{4}}\notin\Q(S)$, and all three covers are irreducible nontrivial double
-covers of $S$.  Point~1 is the $K$-witness $(-51/13,-17/7)$; point~2 is $(1,3)$.
+covers of $S$.  Point~1 is the $K$-witness $(-51/13,-17/7)$; point~2 is $(1,3)$.  The kernel content of
+this subsection is exactly the eight negativity certificates; the specialisation
+principle itself (a square in $\Q(a,b)$ is non-negative at every rational point of its
+domain) is elementary but unformalised, and the passage to non-squareness in the
+function field $\Q(S)$ of the surface is the two-system [MC] verdict, not a kernel
+theorem.
 
 \begin{lemma}[Negativity certificates at point 1: $Q_4$]\label{Q4_neg}\lean{BMThm7Boundary.Q4_neg}\leanok
 \uses{boundary-defs}

@@ -24,3 +24,21 @@
 'Thm7Classification.classify_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Thm7Classification.classification' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Thm7Classification.classification_by_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## Addendum 2026-08-02 (post-review-3 pass)
+# affineEquiv_trans added by claude.ai directly (statement + proof, no delegation); Master comment-level
+# corrections ('safe axiom' -> 'disclosed axiom', adjudicated authority, md5 fede39b89b2706ccc9645ffdf6c24573); full re-run below.
+## lake env lean Thm7Prime/Classification.lean (exit=0)
+'Thm7Classification.affineEquiv_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.affineEquiv_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.affineEquiv_trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.derivative_comp_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.splits_comp_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.splits_C_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.rdpoly_of_affineEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.isP211_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.affineEquiv_normalize' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.classify_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.classify_backward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.classification' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Thm7Classification.classification_by_curve' depends on axioms: [propext, Classical.choice, Quot.sound]

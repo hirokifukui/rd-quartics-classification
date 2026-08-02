@@ -19,8 +19,9 @@ method, or of Coleman integration (no declarations for these notions were found 
 search of the library source at the pin).  Consequently any completion of
 Definition~\ref{Conjecture1_normal} that proceeds through the arithmetic of
 elliptic surfaces --- the only known route, by Chapter~\ref{chap:boundary} --- cannot
-at present be carried to a kernel-checked proof without disclosed axioms
-encapsulating the computer-algebra rank computations.  This is a property of the
+at present be carried to a kernel-checked proof without either substantial new
+formalization of that machinery or disclosed axioms encapsulating the
+computer-algebra rank computations.  This is a property of the
 current library, not of the mathematics.
 \emph{Status (2026-08):} for the repeated-root sector this wall was \emph{bypassed} rather than breached: Theorem~$7'$ (Chapter~\ref{chap:repair}) is rank-free --- both directions are polynomial identities --- so the classification of that sector consumed no Mordell--Weil input and closed with the standard three axioms. The wall remains standing exactly for Definition~\ref{Conjecture1_normal}.
 \emph{Reopening gate:} Mathlib acquires Mordell--Weil rank and descent machinery.
@@ -55,17 +56,17 @@ reducing the coefficient blow-up; or an algorithmic advance in unconditional
 class-group computation.
 \end{remark}
 
-\begin{remark}[Wall W4: no geometric mechanism, no descent finiteness]\label{wall-covers}
-Chapter~\ref{chap:boundary} shows that away from the (rationally empty) symmetric
-locus, the conclusion of Theorem~7 demands the lifting of rational points through
+\begin{remark}[Wall W4: no examined mechanism yields finiteness]\label{wall-covers}
+Chapter~\ref{chap:boundary} shows that away from the symmetric locus (which carries no admissible rational points,
+Chapter~\ref{chap:boundary}), the conclusion of Theorem~7 demands the lifting of rational points through
 one of three nontrivial double covers governed by the single polynomial $Q_4$, and
-that the relevant twist classes on the surface admit no finiteness that a descent
-argument could exploit.  Every mechanism visible at the function-field level is
-therefore closed, and the field-dependence exhibited by the two refutations
+that we found among the relevant twist classes no finiteness that a descent
+argument could exploit.  Every mechanism we examined at the function-field level
+failed to yield a finite reduction, and the field-dependence exhibited by the two refutations
 (Theorem~\ref{not_T9_bridge_Q} over $\mathbb{Q}$,
 Theorem~\ref{not_T0_claim_K} over $\mathbb{Q}(\sqrt{3441})$, both funnelling
-through the square class $209$) constrains any future proof to depend essentially
-on the arithmetic of the base field.
+through the square class $209$) suggests that a proof along these lines would have to engage the arithmetic of
+the base field in an essential way.
 \emph{Reopening gate:} a new arithmetic mechanism --- for instance a Brauer--Manin
 computation on the surface confining its rational points --- or
 Definition~\ref{Conjecture1_normal} itself.

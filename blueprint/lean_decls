@@ -87,3 +87,4 @@ Thm7Classification.classify_forward
 Thm7Classification.classify_backward
 Thm7Classification.classification
 Thm7Classification.classification_by_curve
+Thm7Classification.affineEquiv_trans
