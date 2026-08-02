@@ -11,9 +11,13 @@ jobs:
         run: |
           set -euo pipefail
           docker run --rm --entrypoint /bin/bash \
-            -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9 \
+            -v "$PWD":/repo -w /repo/scripts/terrain sagemath/sagemath:10.9@sha256:e068670ae5863b54b2550e72437ec637b0283acb0dc712c8584c124dbf44e667 \
             -lc 'sage terrain_crosscheck.sage || { echo DIAG; command -v sage; echo PATH=$PATH; ls /usr/local/bin /home/sage 2>/dev/null | head -30; exit 1; }' > /tmp/fresh_raw.txt
           grep -E "^(CHECK|  zero|DONE)" /tmp/fresh_raw.txt > /tmp/fresh.txt
           grep -E "^(CHECK|  zero|DONE)" scripts/terrain/terrain_crosscheck.captured.log > /tmp/stored.txt
+          if grep -E '^CHECK.*[Ff]alse' /tmp/fresh.txt; then echo "FAIL: a CHECK reported False"; exit 1; fi
+          nchk=$(grep -c '^CHECK' /tmp/fresh.txt); exp=$(grep -c '^CHECK' scripts/terrain/terrain_crosscheck.captured.log)
+          if [ "$nchk" != "$exp" ] || [ "$nchk" -lt 20 ]; then echo "FAIL: CHECK count $nchk != expected $exp (or below floor)"; exit 1; fi
+          if ! grep -q '^DONE' /tmp/fresh.txt; then echo "FAIL: no DONE marker"; exit 1; fi
           diff -u /tmp/stored.txt /tmp/fresh.txt
           echo "CAS REPRODUCE PASS: all normalized CHECK lines identical (stored: Sage 10.8 on macOS; fresh: Sage 10.9 container -- cross-version, cross-platform reproduction)"

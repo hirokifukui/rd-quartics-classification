@@ -296,7 +296,7 @@ theorem deltaF_nonpos_of_vieta (a b u v w : K)
   simp only [deltaF]
   nlinarith [this]
 
-/-- **T9 scaffold [OPEN]** (l.615-623, "The result of all the previous work shows
+/-- **T9 reconstructed bridge [REFUTED over ℚ]** (l.615-623, "The result of all the previous work shows
 that the latter class is empty"): the implication the paper asserts, from the
 hypotheses actually consumed by T3-T8 -- distinct roots (H1), f splits, f' splits
 (H2), sym != 0 (H3) -- to T0's conclusion.  Stated as a definition, not proved:

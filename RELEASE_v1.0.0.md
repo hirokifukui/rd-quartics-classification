@@ -1,8 +1,17 @@
 # v1.0.0 — freeze of the reviewed state (2026-08-02)
 
-This release freezes the repository at the close of its external review process
-(ten AI review rounds, 2026-08-01 to 2026-08-02; final assessment 100/100, all
-responses and corrections recorded in `TRANSFER_MANIFEST.md`).
+This release freezes the repository at the close of ten external AI review
+rounds (2026-08-01 to 2026-08-02; all responses and corrections recorded in
+`TRANSFER_MANIFEST.md`).
+
+> **Correction (2026-08-02, post-release review 12).** This freeze predates the
+> closure of the fibre-correspondence radicand derivation (the D+- <-> gamma_+-
+> equivalence of blueprint Chapter 4), which at v1.0.0 was stated as ordinary
+> mathematics with a "granted" step and was not yet covered by a public
+> certificate.  Reviewer scores are external opinions, not evidence, and the
+> earlier self-quotation of one is withdrawn.  The derivation is closed in
+> v1.0.1 (kernel file `Gap/BMThm7Fibre.lean` + symbolic CAS checks in
+> `terrain_crosscheck.sage`); v1.0.0 itself is left immutable.
 
 ## What this repository establishes
 

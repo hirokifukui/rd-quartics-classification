@@ -73,10 +73,32 @@ print("CHECK Rq_odd_nonconst_factors:", odd_nonconst(Rq))
 print("CHECK Sq_odd_nonconst_factors:", odd_nonconst(Sq))
 print("CHECK RqSq_odd_nonconst_factors:", odd_nonconst(Rq*Sq))
 # nonsquare-value witnesses (feed the kernel theorems of BMThm7NormCriterion)
-print("CHECK Rq_value_2_3:", Rq(a=2,b=3), "square:", QQ(Rq(a=2,b=3)).is_square())
-print("CHECK Sq_value_1_2:", Sq(a=1,b=2), "square:", QQ(Sq(a=1,b=2)).is_square())
-print("CHECK RqSq_value_1_2:", (Rq*Sq)(a=1,b=2), "square:", QQ((Rq*Sq)(a=1,b=2)).is_square())
+print("CHECK Rq_value_2_3_nonsquare:", Rq(a=2,b=3), "verdict:", not QQ(Rq(a=2,b=3)).is_square())
+print("CHECK Sq_value_1_2_nonsquare:", Sq(a=1,b=2), "verdict:", not QQ(Sq(a=1,b=2)).is_square())
+print("CHECK RqSq_value_1_2_nonsquare:", (Rq*Sq)(a=1,b=2), "verdict:", not QQ((Rq*Sq)(a=1,b=2)).is_square())
 # K-witness sanity
 w = (QQ(-51)/13, QQ(-17)/7)
 print("CHECK witness_Q4_negative:", Q4(a=w[0], b=w[1]) < 0)
+
+# --- radicand derivation: the three disjuncts vs the three covers (review-12 P0) ---
+# At a critical point x0 of the sigma_3=0 chart quartic, the vertical translate
+# q - q(x0) factors as (X-x0)^2 (X^2 + B X + C); its discriminant at
+# x0 = (3*s1 + eps*rho)/8 (rho^2 = 9 s1^2 - 32 s2) equals s1*(s1 - eps*rho)/4,
+# and den^2 * that * 4 = gamma_eps = s1n*(s1n - eps*z).  Verified symbolically:
+Rsym.<s1v,s2v,rhov> = PolynomialRing(QQ, 3)
+Isym = Rsym.ideal(rhov^2 - (9*s1v^2 - 32*s2v))
+for eps, lbl in [(1, "plus"), (-1, "minus")]:
+    x0 = (3*s1v + eps*rhov)/8
+    Bq = 2*x0 - s1v
+    Cq = s2v + 3*x0^2 - 2*s1v*x0
+    crit = 4*x0^2 - 3*s1v*x0 + 2*s2v
+    print("CHECK D%s_critical_point: %s" % (lbl, crit.reduce(Isym) == 0))
+    lin_ok = (x0^2*Bq - 2*x0*Cq + (4*x0^3 - 3*s1v*x0^2 + 2*s2v*x0)).reduce(Isym) == 0
+    const_ok = (x0^2*Cq + (x0^4 - s1v*x0^3 + s2v*x0^2)).reduce(Isym) == 0
+    print("CHECK D%s_factorization: %s" % (lbl, lin_ok and const_ok))
+    disc = Bq^2 - 4*Cq
+    print("CHECK D%s_disc_identity: %s" % (lbl, (disc - s1v*(s1v - eps*rhov)/4).reduce(Isym) == 0))
+Rden.<s1v2,rhov2,denv> = PolynomialRing(QQ, 3)
+clearing = denv^2 * (s1v2*(s1v2 - rhov2)) - (denv*s1v2)*(denv*s1v2 - denv*rhov2)
+print("CHECK Dpm_gamma_clearing: %s" % (clearing == 0))
 print("DONE")

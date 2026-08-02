@@ -94,8 +94,6 @@ jobs:
   deploy:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # Pages not yet enabled on this repository: do not fail the workflow on deploy.
-    continue-on-error: true
     runs-on: ubuntu-24.04
     permissions:
       pages: write

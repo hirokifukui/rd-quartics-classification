@@ -1,4 +1,4 @@
-terrain_crosscheck.sage -- Sage 10.8 -- 2026-08-02, logos (rerun incl. S-integrality inputs)
+terrain_crosscheck.sage -- Sage 10.8 -- 2026-08-02, logos (rerun: radicand-derivation checks + True-normal witness lines, review-12)
 CHECK I1_18Q4: True
 CHECK I2_funnel: True
 CHECK Q4_eq_F1F2F3: True
@@ -32,8 +32,15 @@ CHECK pairing_F3: True
 CHECK Rq_odd_nonconst_factors: 1
 CHECK Sq_odd_nonconst_factors: 1
 CHECK RqSq_odd_nonconst_factors: 2
-CHECK Rq_value_2_3: 2480 square: False
-CHECK Sq_value_1_2: 876 square: False
-CHECK RqSq_value_1_2: 171696 square: False
+CHECK Rq_value_2_3_nonsquare: 2480 verdict: True
+CHECK Sq_value_1_2_nonsquare: 876 verdict: True
+CHECK RqSq_value_1_2_nonsquare: 171696 verdict: True
 CHECK witness_Q4_negative: True
+CHECK Dplus_critical_point: True
+CHECK Dplus_factorization: True
+CHECK Dplus_disc_identity: True
+CHECK Dminus_critical_point: True
+CHECK Dminus_factorization: True
+CHECK Dminus_disc_identity: True
+CHECK Dpm_gamma_clearing: True
 DONE
