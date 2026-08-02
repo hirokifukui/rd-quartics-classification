@@ -129,6 +129,16 @@ WP1/WP3 splice docstring — 全て historical/superseded 標記へ）。**定�
 - README: 主結果の除外集合・affine 点の精密化／certificates の網羅主張を CERTIFICATES.md 参照へ／ADJUDICATION パス修正＋STEPS.md 言及／Result hierarchy 三層の明示
 - CI: pull_request トリガ追加＋ Certificate hash audit step（表の全 md5 照合・未収載検出、ローカル実走 18 件 PASS 確認済み）
 
+## 追記 2026-08-02g（裁定 (a): Ch5 分割 — W2–W5 を research-notes/ へ移設）
+
+Dr. Fukui 裁定。blueprint Ch5 は intro（改稿）＋ W1（形式化天井、恒久）＋「Dated computational
+records」節（移設先ポインタ）＋ Reading the map（微修正）に縮約。W2–W5（時点依存の計算記録:
+測定 fibre・進行中 descent・cover 機構調査・companion の公理 footprint）は
+`research-notes/2026-08-02-arithmetic-walls.md` へ日付付きで逐語移設（LaTeX→md 変換、\ref は
+定理名直書き化、reopening gate 全保持）。W4 の数学的内容は Ch4 に残存（移設は wall 形式のみ）。
+Conjecture1_normal の定義ノードは 04_boundary 在住で参照無傷を確認。lean ノード機構の損失ゼロ
+（leanok/lean{} は Ch5 に元々不在）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴
