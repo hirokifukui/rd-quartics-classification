@@ -247,6 +247,35 @@ theorem map 三行追加／CI axiom audit 対象に NormCriterion／checkdecls 1
 **便6 誤指摘の記録**: research-notes の stale 残存指摘は旧 revision 閲覧によるもの——HEAD は 88c5c74
 時点で修正済み（grep 0 件）、manifest と実ファイルは一致。badge 追加で今後の閲覧齟齬を予防。
 
+## 追記 2026-08-02m（便7 = 92/100 への対応・第一便: 精度と正規化橋の散文）
+
+**(1) radicand 記述の訂正（便7 指摘2 =「文字通りには偽」）**: Ch4 対応表の radicand 欄を実 radicand
+γ± に改め、obstruction を「norm class −2Q4」と明記。本文「share the single radicand class」を全面削除し、
+「γ± は共役、その積＝layer norm が類 −2Q4（I2）、kernel が消費するのはこの norm class」に置換。
+
+**(2) 旧段落三箇所の掃討（指摘4）**: [M/C] 同定文 →「K(S) は定義により多二次拡大」＋ C0/C±/整の
+定理三点参照へ／「function field of the terrain」→ K(B) と明記／Hilbert 段落を「thin は type II で
+ほぼ定義的、Hilbert が制御するのは補集合」＋ C0=multiquad_verdicts・C±=gamma_verdicts の正参照へ。
+
+**(3) kernel 境界の明確化（指摘3）**: prop:geomint の ℚ̄ 議論を「特殊化定理の base change ではなく、
+抽象 kernel 補題 step_over_layer / layer_square_norm（任意標数0体で [K]）の ℚ̄(a,b) への新規適用 [M]」
+と正確化。**(4) Squarefree base change 補題新設（指摘5）**: lem:sqfree_basechange（perfect field・
+reduced 保存・奇 valuation 保存）、prop:S_integral の ℚ̄ 部がこれを消費（Rq⊥Sq の gcd [C] 込み）。
+
+**(5) 正規化橋 Proposition（指摘1 の散文完全版）**: prop:normalization_bridge——Conjecture 1
+（{0,1,a,b} 正規形）⟺ terrain の非退化有理点不存在。両方向を全条件追跡で証明（⇐: e₃=0 構成・
+Rq/den²=(z/den)² の明示根・affine 輸送／⇒: 臨界点は非根（相異根で f′(r)≠0）・平行移動で全根非零・
+den=0 なら AB=0 で矛盾＝den≠0 自動・z:=4den(r₊−r₋) 等）。結語「Conjecture~1 itself」を
+「equivalent by the bridge」に修正。**Lean 版 Gap/BMThm7Terrain.lean を凍結（md5 6ac28097、9宣言）し
+CC 委譲中**——完了後に leanok 昇格予定。
+
+**(6) CI（指摘6）**: deploy に continue-on-error（Pages 有効化までワークフロー全体を赤にしない）＋
+新三定理（Q4_not_square_multiquadratic / gamma_not_square_multiquadratic / RqSq_not_square)の
+exact footprint 検査追加。**(7) README（指摘7）**: kernel/transcript 境界文を「human-audited formal
+transcription ＋ kernel certificates（transcribed assumption の循環と reconstructed bridge の反例）」へ。
+**却下（既裁定の再確認）**: historical rank route の別ディレクトリ分離・Master 分割（指摘8）——
+Dr. Fukui 裁定により本体保持、依存範囲は CI が監査。release metadata（指摘9）= Phase F。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

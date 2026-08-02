@@ -70,6 +70,9 @@ jobs:
           if ! echo "$out" | grep -qF "'Thm7Statement.thm7prime' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: thm7prime footprint"; exit 1; fi
           if ! echo "$out" | grep -qF "'Thm7Fidelity.rd211_iff_natural' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: rd211_iff_natural footprint"; exit 1; fi
           if ! echo "$out" | grep -qF "'Thm7Classification.classification_by_curve' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: classification_by_curve footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'BMThm7SquareClass.Q4_not_square_multiquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: Q4_not_square_multiquadratic footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'BMThm7NormCriterion.gamma_not_square_multiquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: gamma_not_square_multiquadratic footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'BMThm7NormCriterion.RqSq_not_square' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: RqSq_not_square footprint"; exit 1; fi
           echo "AXIOM AUDIT PASS"
 
       - name: Assemble site
@@ -85,6 +88,8 @@ jobs:
   deploy:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Pages not yet enabled on this repository: do not fail the workflow on deploy.
+    continue-on-error: true
     runs-on: ubuntu-24.04
     permissions:
       pages: write
