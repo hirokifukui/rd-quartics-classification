@@ -139,6 +139,24 @@ records」節（移設先ポインタ）＋ Reading the map（微修正）に縮
 Conjecture1_normal の定義ノードは 04_boundary 在住で参照無傷を確認。lean ノード機構の損失ゼロ
 （leanok/lean{} は Ch5 に元々不在）。
 
+## 追記 2026-08-02h（裁定 (b): Gap/BMThm7FunctionField.lean 新設 — Ch4 [MC] 段の kernel 化）
+
+Dr. Fukui の「先延ばしのメリットは？」への偵察が着工判断に転化した件。偵察の決め手 = Boundary.lean
+ヘッダー自身が σ₃=0 チャート（c = -ab/den が (a,b) に有理従属）と明記 → ℚ(S) = ℚ(a,b) は定義的で、
+私の「Fidelity 級以上」見積りは中央値的過大だった。実測: statement 設計〜監査完了まで一時間弱。
+
+16 宣言、全 std-3。構成: ℚ[a,b] = Polynomial (Polynomial ℚ)、evalAB 環準同型（specialization 原理 =
+map_pow + sq_nonneg）、UFD 整閉性による平方降下（square_descent）、Boundary 負値証明書八本を橋渡しで
+消費する八つの非平方性定理。レビュー三便の「特に危険な箇所1」への恒久回答。
+
+| file | 来歴 | md5 |
+|---|---|---|
+| Gap/BMThm7FunctionField.lean | 凍結 = FunctionField.STATEMENT_FREEZE_20260802.lean（md5 f90b27e6）／CC job functionfield_20260802（単線・約7分）／独立監査 = kernel_audit/20260802_functionfield_audit.md。凍結照合 17 セグメント逐語・宣言 26=26 | e228005c7562e4e49efb5c7f88d84efe |
+| Gap/BMThm7Boundary.lean | ヘッダー「remains [MC]」→「kernel-proved in BMThm7FunctionField.lean」（裁定済みコメント修正区分、再監査 footprint 不変） | 2f94c36ce43349bd0b90a6b5988a0a72 |
+| Gap.lean / blueprint/lean_decls | import 追加／+16（90→106、checkdecls 全通過） | - |
+| blueprint 04 | 本日の scoping 段落を kernel 化後の記述へ上書き＋ノード 3 追加（spec_principle・sq_descent・covers_nonsquare、全 leanok） | - |
+| .github/workflows | axiom audit 対象に FunctionField 追加 | - |
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

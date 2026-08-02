@@ -8,8 +8,8 @@ of the terrain map of session_2026-07-16c (RESULTS.md, [MC] Magma+Sage):
 the sigma3 = 0 chart of BM sec 2.2.3, the funnel polynomial Q4, its factorisation into
 the three symmetric-pairing curves, the identities (I1)/(I2), and negativity
 certificates anchoring the cover-nontriviality verdicts.
-Full function-field non-squareness remains [MC] (two-system); the negativity witnesses
-below are its kernel-certified anchors: a square in Q(a,b) is nonnegative at every
+Full function-field non-squareness, formerly [MC] (two-system), is kernel-proved in
+BMThm7FunctionField.lean (2026-08-02); the negativity witnesses below are its anchors: a square in Q(a,b) is nonnegative at every
 rational point of its domain of definition.
 -/
 

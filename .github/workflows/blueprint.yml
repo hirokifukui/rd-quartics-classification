@@ -61,7 +61,7 @@ jobs:
         run: |
           set -uo pipefail
           out=""
-          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean; do
+          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean; do
             o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
             out="$out$o"$'\n'
           done
