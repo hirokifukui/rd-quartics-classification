@@ -59,7 +59,7 @@ jobs:
         run: |
           set -uo pipefail
           out=""
-          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean Gap/BMThm7SquareClass.lean Gap/BMThm7NormCriterion.lean; do
+          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean Gap/BMThm7FunctionField.lean Gap/BMThm7SquareClass.lean Gap/BMThm7NormCriterion.lean Gap/BMThm7Terrain.lean; do
             o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
             out="$out$o"$'\n'
           done
@@ -73,6 +73,7 @@ jobs:
           if ! echo "$out" | grep -qF "'BMThm7SquareClass.Q4_not_square_multiquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: Q4_not_square_multiquadratic footprint"; exit 1; fi
           if ! echo "$out" | grep -qF "'BMThm7NormCriterion.gamma_not_square_multiquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: gamma_not_square_multiquadratic footprint"; exit 1; fi
           if ! echo "$out" | grep -qF "'BMThm7NormCriterion.RqSq_not_square' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: RqSq_not_square footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'BMThm7Terrain.conjecture1_iff_terrain' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: conjecture1_iff_terrain footprint"; exit 1; fi
           echo "AXIOM AUDIT PASS"
 
       - name: Assemble site

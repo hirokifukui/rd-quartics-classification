@@ -276,6 +276,20 @@ transcription ＋ kernel certificates（transcribed assumption の循環と reco
 **却下（既裁定の再確認）**: historical rank route の別ディレクトリ分離・Master 分割（指摘8）——
 Dr. Fukui 裁定により本体保持、依存範囲は CI が監査。release metadata（指摘9）= Phase F。
 
+## 追記 2026-08-02n（便7 対応・第二便: 正規化橋の kernel 化 = 本丸の決着）
+
+**Gap/BMThm7Terrain.lean 新設（9 宣言、全 std-3、凍結 md5 6ac28097、監査
+kernel_audit/20260802_terrain_audit.md）** — 便7 最大指摘「Conjecture 1（{0,1,a,b} 正規形）と
+σ₃=0 terrain の有理点問題を同一視する定理が文にもコードにもない」への完全回答。
+`conjecture1_iff_terrain`: Conjecture1_normal ℚ ⟺ ∀点 ¬NondegTerrainPoint。支持定理:
+rootQuartic_expand／二次分裂判定の双方向／KDerived 輸送三種（定数倍・平行移動・スケール）／
+kderived_of_terrain（terrain→正規形: z,w から明示分裂根）／terrain_of_kderived（正規形→terrain:
+有理臨界点・相異根による非根論証四場合・shift/scale・e₃ 抽出・**den≠0 は非零根から自動**・
+根差から z,w 再構成）。blueprint の prop:normalization_bridge を \lean+\leanok に昇格、
+結語を「sufficiency と bridge の双方が kernel 定理」に更新。CI に conjecture1_iff_terrain の
+exact footprint 追加・audit 対象に Terrain。checkdecls 128。本日の kernel 新設は
+Classification 14＋FunctionField 16＋SquareClass 4＋NormCriterion 8＋Terrain 9 = **51 宣言**。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

@@ -60,6 +60,7 @@ The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Clas
 | Rₔ, Sₔ, RₔSₔ non-square in ℚ(a,b) (splitting-cover integrality) | `Rq_not_square`, `Sq_not_square`, `RqSq_not_square` | `Gap/BMThm7NormCriterion.lean` |
 | Layer quadratic step and coordinate norm passage | `step_over_layer`, `layer_square_norm` | `Gap/BMThm7NormCriterion.lean` |
 | C±-exclusion in the layer (γ± not a square) | `gamma_not_square_multiquadratic` | `Gap/BMThm7NormCriterion.lean` |
+| Normalization bridge: Conjecture 1 ⇔ no nondegenerate terrain point | `conjecture1_iff_terrain` (+ transport lemmas) | `Gap/BMThm7Terrain.lean` |
 
 (Line-pinned links to be added at release freeze.)
 
