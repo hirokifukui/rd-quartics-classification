@@ -100,6 +100,21 @@ WP1/WP3 splice docstring — 全て historical/superseded 標記へ）。**定�
 一字も不変**。凍結ヘッダに修正来歴を追記。md5: a1b1d54566481b50bd0ce3667c2ee509 →
 4966eaaf05a610ed5039a3a06f539412。再監査: 全宣言 footprint 従前と同一（std-3 ＋ 開示公理 2 宣言のみ）。
 
+## 追記 2026-08-02e（Option ii 第二弾: Thm7Prime/Classification.lean 新設）
+
+一般 (2,1,1) 分解四次式の大域アフィン分類橋を kernel 化（12 宣言、全 std-3）。頂点 =
+`classification`（RDPoly f <-> <X*> 同値で Q a, RD211 a）と `classification_by_curve`
+（thm7prime 経由で 576i2 の有理点表示）。gpt5.6 レビュー Point 1（最重要ブロッカー）への恒久回答。
+
+| file | 来歴 | md5 |
+|---|---|---|
+| Thm7Prime/Classification.lean | statement 凍結 = claude.ai（金庫 Classification.STATEMENT_FREEZE_20260802.lean, md5 24da89e1）／tactic = CC job classification_20260802（単線・約11分）／独立監査 = claude.ai（記録 kernel_audit/20260802_classification_audit.md）。凍結照合: statement 層 13 セグメント逐語一致・宣言 15=15。逸脱記録: 証明 2 本が項形式（:= by の字義から逸脱、命題は無傷 — 精密化した検査器で検出） | ad676da3726f2968554b3d17c31438d2 |
+| Thm7Prime.lean | import Thm7Prime.Classification 追加 | - |
+| blueprint/lean_decls | Thm7Classification 12 名追加（77→89、checkdecls 89/89 pass） | - |
+| blueprint 03_repair.tex | 「The affine classification」節追加（def:affequiv/isp211/rdpoly・thm:classification・thm:classcurve、全 \leanok） | - |
+| README.md | repair 節を大域分類の kernel 化後の文面へ、対応表 2 行追加 | - |
+| .github/workflows | axiom audit の対象に Classification 追加＋classification_by_curve footprint assert | - |
+
 ## TODO（未転記・未更新）
 
 - CITATION.cff 更新（新タイトル・URL。version/DOI は release 凍結時）

@@ -39,7 +39,7 @@ jobs:
         run: |
           set -uo pipefail
           out=""
-          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean; do
+          for f in Thm7Prime/Master.lean Thm7Prime/Fidelity.lean Thm7Prime/Classification.lean Gap/BMThm7Gap.lean Gap/BMThm7GapK.lean Gap/BMThm7Transcript.lean Gap/BMThm7Boundary.lean; do
             o=$(~/.elan/bin/lake env lean "$f") || { echo "FAIL: $f did not compile"; exit 1; }
             out="$out$o"$'\n'
           done
@@ -49,6 +49,7 @@ jobs:
           if [ -n "$bad" ]; then echo "FAIL: unexpected axioms:"; echo "$bad"; exit 1; fi
           if ! echo "$out" | grep -qF "'Thm7Statement.thm7prime' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: thm7prime footprint"; exit 1; fi
           if ! echo "$out" | grep -qF "'Thm7Fidelity.rd211_iff_natural' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: rd211_iff_natural footprint"; exit 1; fi
+          if ! echo "$out" | grep -qF "'Thm7Classification.classification_by_curve' depends on axioms: [propext, Classical.choice, Quot.sound]"; then echo "FAIL: classification_by_curve footprint"; exit 1; fi
           echo "AXIOM AUDIT PASS"
 
       - name: Assemble site
