@@ -1,4 +1,4 @@
-terrain_crosscheck.sage -- Sage 10.8 -- 2026-08-02, logos
+terrain_crosscheck.sage -- Sage 10.8 -- 2026-08-02, logos (rerun incl. S-integrality inputs)
 CHECK I1_18Q4: True
 CHECK I2_funnel: True
 CHECK Q4_eq_F1F2F3: True
@@ -29,5 +29,11 @@ CHECK gcd_Fi_RqSq_one: True True True
 CHECK pairing_F1: True
 CHECK pairing_F2: True
 CHECK pairing_F3: True
+CHECK Rq_odd_nonconst_factors: 1
+CHECK Sq_odd_nonconst_factors: 1
+CHECK RqSq_odd_nonconst_factors: 2
+CHECK Rq_value_2_3: 2480 square: False
+CHECK Sq_value_1_2: 876 square: False
+CHECK RqSq_value_1_2: 171696 square: False
 CHECK witness_Q4_negative: True
 DONE

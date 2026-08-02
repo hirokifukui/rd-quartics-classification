@@ -1,8 +1,8 @@
 # https://github.com/pyinvoke/invoke/issues/891
 invoke==2.2.0
-plasTeX @ git+https://github.com/plastex/plastex.git
-plastexdepgraph @ git+https://github.com/PatrickMassot/plastexdepgraph.git
-plastexshowmore @ git+https://github.com/PatrickMassot/plastexshowmore.git
-leanblueprint @ git+https://github.com/PatrickMassot/leanblueprint.git
+plasTeX @ git+https://github.com/plastex/plastex.git@4fe23e25565a4788f07077076211d21630a81cb0
+plastexdepgraph @ git+https://github.com/PatrickMassot/plastexdepgraph.git@e06ff826ebf0ce9d1e137b25b3ce7e3d5fbcc8f4
+plastexshowmore @ git+https://github.com/PatrickMassot/plastexshowmore.git@95e833703915b33413f57eca856f7c06d40204b1
+leanblueprint @ git+https://github.com/PatrickMassot/leanblueprint.git@56e066d30fb7b608a63f4241fee80982d7eae3ef
 watchfiles==0.16.1
 pandoc==2.3

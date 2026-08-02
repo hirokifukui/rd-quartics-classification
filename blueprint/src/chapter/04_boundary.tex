@@ -20,11 +20,12 @@ $K(B)=\Q(a,b)$.  $S$ denotes the \emph{splitting cover} of $B$: the double-doubl
 cover obtained by adjoining $z$ with $z^{2}=R_{q}$ (the $f'$-splitting datum) and
 $w$ with $w^{2}=S_{q}$ (the $f''$-splitting datum); its function field is, by
 definition, $K(S)=\Q(a,b)(z,w)$ --- the multiquadratic extension.  Every element
-of $K(S)$ is a $K(B)$-combination of the basis $\{1,z,w,zw\}$ [M: standard basis
-of the quadratic tower].  Kernel statements about $K(S)$ below are proved in span
+of $K(S)$ is a $K(B)$-combination of the spanning set $\{1,z,w,zw\}$ [M: the quadratic tower is
+spanned by these four products; it is a basis once Proposition~\ref{prop:S_integral}
+is in place].  Kernel statements about $K(S)$ below are proved in span
 form --- Theorem~\ref{multiquad_verdicts} quantifies over \emph{any} field
 equipped with an embedding of $K(B)$ and square roots of $R_{q}$, $S_{q}$ --- and
-reach all of $K(S)$ through that basis [M].  Throughout, $\Q(a,b)$ is the base
+reach all of $K(S)$ through that spanning set [M].  Throughout, $\Q(a,b)$ is the base
 field of $B$ and $\Q(S)=K(S)$ the splitting extension; the two are never
 identified.
 
@@ -33,20 +34,41 @@ The three disjuncts of Theorem~7 and their covers of $S$:
 \begin{center}\begin{tabular}{llll}
 disjunct & cover & radicand & exclusion \\ \hline
 $x_{0}=0$ & $C_{0}\colon v^{2}=\sigma_{1}^{2}-4\sigma_{2}$ & $Q_{4}$ (identity I1) & [K] Thm~\ref{multiquad_verdicts} \\
-$x_{0}=\tfrac{3\sigma_{1}+r}{8}$ & $C_{+}\colon v^{2}=s_{1n}(s_{1n}-z)$ & $-2Q_{4}$ (norm criterion) & [K] Thm~\ref{multiquad_verdicts} \\
-$x_{0}=\tfrac{3\sigma_{1}-r}{8}$ & $C_{-}\colon v^{2}=s_{1n}(s_{1n}+z)$ & $-2Q_{4}$ (norm criterion) & [K] Thm~\ref{multiquad_verdicts} \\
+$x_{0}=\tfrac{3\sigma_{1}+r}{8}$ & $C_{+}\colon v^{2}=s_{1n}(s_{1n}-z)$ & $-2Q_{4}$ (norm criterion) & [K] Thm~\ref{gamma_verdicts} \\
+$x_{0}=\tfrac{3\sigma_{1}-r}{8}$ & $C_{-}\colon v^{2}=s_{1n}(s_{1n}+z)$ & $-2Q_{4}$ (norm criterion) & [K] Thm~\ref{gamma_verdicts} \\
 \end{tabular}\end{center}
 
 For $C_{0}$: $\mathrm{den}^{2}(\sigma_{1}^{2}-4\sigma_{2})=Q_{4}$ is the kernel
 identity I1, so the $C_{0}$-radicand has square class $Q_{4}$ [K].  For
-$C_{\pm}$: if $\gamma=s_{1n}(s_{1n}\mp z)$ were a square in $K(S)$, its
-$K(B)$-norm from $K(B)(z)$, namely
-$N(\gamma)=s_{1n}^{2}(s_{1n}^{2}-R_{q})=-8\,s_{1n}^{2}\,Q_{4}$ --- the kernel
-identity I2 --- would have to be a square where relevant, which is the statement
-that $-2Q_{4}$ is a square [M: norm criterion for quadratic extensions; the
-identity itself is K].  The two $C_{\pm}$ covers thus share the single radicand
+$C_{\pm}$: the exclusion is a kernel theorem (Theorem~\ref{gamma_verdicts}).
+The radicand $\gamma_{\pm}=s_{1n}(s_{1n}\mp\zeta)$ is an element of the layer
+$K(\zeta)$, not of the base field, so the biquadratic transfer does not apply to
+it directly; instead a layer quadratic step (\texttt{step\_over\_layer}) reduces
+a hypothetical square root to a square in the layer or its $S_{q}$-multiple, and
+the coordinate norm passage (\texttt{layer\_square\_norm}:
+$g_{0}^{2}-g_{1}^{2}R_{q}=(p^{2}-q^{2}R_{q})^{2}$, computed in coordinates, no
+Galois action) turns either case, via the kernel identity (I2), into the
+statement that $-2Q_{4}$ is a square in $\Q(a,b)$ --- contradicting
+\texttt{n2Q4\_not\_square} [K].  The two $C_{\pm}$ covers thus share the single radicand
 class $-2Q_{4}$, and $C_{0}$ the class $Q_{4}$: three covers, two square classes,
-one sextic.  In normalised form the conjecture asserts that no
+one sextic.
+
+\begin{proposition}[Integrality of the splitting cover]\label{prop:S_integral}
+$R_{q}$, $S_{q}$ and $R_{q}S_{q}$ are nonsquares in $\Q(a,b)$, and remain
+nonsquares in $\overline{\Q}(a,b)$.  Consequently $[K(S):K(B)]=4$, the spanning
+set $\{1,z,w,zw\}$ is a basis, and the splitting cover $S$ is geometrically
+integral of generic degree four over $B$.
+\end{proposition}
+\begin{proof}[Proof {[K]}+{[C]}+{[M]}]
+Over $\Q$: kernel theorems \texttt{Rq\_not\_square}, \texttt{Sq\_not\_square},
+\texttt{RqSq\_not\_square} (\texttt{Gap/BMThm7NormCriterion.lean}), by value
+specialisation at witness points ($R_{q}(2,3)=2480$, $S_{q}(1,2)=876$,
+$(R_{q}S_{q})(1,2)=171696$, none a rational square) [K].  Over $\overline{\Q}$:
+each of the three has a nonconstant factor of odd multiplicity
+($R_{q}$ irreducible; $S_{q}=3\cdot(\text{irreducible})$) [C:
+\texttt{terrain\_crosscheck}, \texttt{terrain\_class12}], so none is a constant
+multiple of a square.  Degree four and integrality follow [M].
+\end{proof}  In normalised form the conjecture asserts that no
 quartic $x(x-1)(x-a)(x-b)$ with four distinct roots is $K$-derived; the unnormalised
 conjecture is equivalent to this via the affine group $\langle X^{*}\rangle$, and only
 this direction is used here.
@@ -229,9 +251,23 @@ The transfer lemma reduces to the eight base-field exclusions of
 Theorem~\ref{covers_nonsquare}.
 \end{proof}
 
-Since every element of $K(S)$ lies in the span [M: basis of the quadratic tower],
+Since every element of $K(S)$ lies in the span [M: quadratic-tower spanning],
 the theorem excludes squares in all of $K(S)$; the kernel boundary is exactly the
-span statement, the basis fact is ordinary mathematics.
+span statement, the spanning fact is ordinary mathematics.
+
+\begin{theorem}[$C_{\pm}$-exclusion in the layer]\label{gamma_verdicts}\lean{BMThm7NormCriterion.gamma_not_square_multiquadratic}\leanok
+\uses{covers_nonsquare}
+For either sign, $\gamma_{\pm}=s_{1n}(s_{1n}\mp\zeta)$ --- an element of the
+layer $K(\zeta)$ --- is not the square of any element of the span of
+$\{1,\zeta,\sigma,\zeta\sigma\}$ over any field containing $\Q(a,b)$ together
+with square roots of $R_{q}$ and $S_{q}$
+(\texttt{gamma\_not\_square\_multiquadratic};
+supporting kernel lemmas \texttt{step\_over\_layer}, \texttt{layer\_square\_norm},
+\texttt{I2\_R2}, \texttt{Rq\_not\_square}).
+\end{theorem}
+\begin{proof}\leanok
+Layer step, coordinate norm, (I2), then \texttt{n2Q4\_not\_square}.
+\end{proof}
 
 \begin{proposition}[Geometric integrality of the covers]\label{prop:geomint}
 Neither $Q_{4}$ nor $-2Q_{4}$ is a square in $\overline{\Q}(S)$; each cover
@@ -247,7 +283,11 @@ $\overline{\Q}(B)$.  Since $\gcd(F_{i},R_{q}S_{q})=1$ [C], these components are
 disjoint from the branch divisors of $S\to B$; ramification indices over them
 are $1$, so the valuations stay odd in $\overline{\Q}(S)$ and
 $Q_{4}\notin\overline{\Q}(S)^{\times2}$.  The divisor argument applies verbatim
-to $-2Q_{4}$ (same zero divisor).  Dominance and generic degree two are
+to $-2Q_{4}$ (same zero divisor).  For $C_{\pm}$, the layer-and-norm chain of
+Theorem~\ref{gamma_verdicts}, read over $\overline{\Q}$ --- its inputs, $R_{q}$
+nonsquare and the odd $Q_{4}$-divisor, hold over $\overline{\Q}$ by
+Proposition~\ref{prop:S_integral} and the factorisation data [C] --- reduces
+geometric squareness of $\gamma_{\pm}$ to that of $-2Q_{4}$, excluded above.  Dominance and generic degree two are
 immediate: the radicands are nonzero elements of $K(S)$.
 \end{proof}
 

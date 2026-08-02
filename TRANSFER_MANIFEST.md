@@ -221,6 +221,32 @@ Classification ヘッダー（relation 表現・RDPoly 記述）修正＋三 Lea
 14/16/4 std-3）／PROVENANCE の kernel 役割文を正確化。却下（既裁定・記録）: span の Lean 拡大体化は
 Phase W 選択肢、line-pinned links・CITATION/DOI は Phase F。
 
+## 追記 2026-08-02l（便6 = 90/100 への対応: Ch4 最後の二橋の kernel 化）
+
+**(1) Gap/BMThm7NormCriterion.lean 新設（8 宣言、全 std-3、凍結 md5 52bfa4fe、監査
+kernel_audit/20260802_normcriterion_audit.md）** — 便6 中心指摘「γ± ∈ K(z) は基礎体の元でないため
+biquadratic_transfer を直接適用できない」への定理による回答。step_over_layer（r 非平方仮定下の layer
+二次判定・退化吸収）＋ layer_square_norm（座標ノルム: g₀²−g₁²r=(p²−q²r)²、Galois 不要）＋
+gamma_not_square_multiquadratic（両符号一括、I2_R2 と n2Q4_not_square を消費）。併せて S 自体の
+ℚ-level 幾何学的既約性入力を kernel 化: Rq/Sq/RqSq_not_square（値特殊化 not_square_of_value 経由、
+witness 2480/876/171696）。**設計上の発見: チャート上で Rq, Sq は半正定値**（四実根→判別式非負）のため
+FunctionField の負値技法は原理的に不可、値非平方への切替が必須だった。
+
+**(2) blueprint 04**: prop:S_integral 新設（[K] ℚ-level 三定理＋[C] 奇因子 1/1/2 → 次数4・basis・
+幾何学的整）／basis→spanning set 三箇所（S_integral 成立後に basis と明記）／C± 段落と対応表を
+gamma_verdicts ノード参照へ全面更新／prop:geomint に C± の ℚ̄-level 連鎖を追記。
+
+**(3) terrain 二系統の完全公開化**: terrain_class12.m 新規（Magma V2.29-7 実走、md5 61b8b85c、
+captured log 付き・実行経路明記）が sixconics2 の未保存 source を置換——CERTIFICATES で sixconics2 log
+を「preserved transcript / superseded」へ正直に格下げ、claim map を両 script 公開の two-system に更新。
+S-integrality 行追加。terrain_crosscheck.sage 拡張再走（S-integrality・値 witness 込み全 CHECK True）。
+
+**(4) 依存・CI・README**: requirements.txt の git 依存四本を commit SHA pin／README に CI badge＋
+theorem map 三行追加／CI axiom audit 対象に NormCriterion／checkdecls 119。
+
+**便6 誤指摘の記録**: research-notes の stale 残存指摘は旧 revision 閲覧によるもの——HEAD は 88c5c74
+時点で修正済み（grep 0 件）、manifest と実ファイルは一致。badge 追加で今後の閲覧齟齬を予防。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

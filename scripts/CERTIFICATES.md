@@ -41,9 +41,10 @@ guarantee.  SHA-256 is authoritative; md5 retained for continuity.
 | each Fi genus 0, rational parametrisation | terrain_crosscheck.sage; bm_thm7_Q4_genus.m | terrain_crosscheck.captured.log; bm_thm7_Q4_genus.log | two-system |
 | S meet {Q4=0}: six components, dim 1 | bm_thm7_Q4_terrain.m | bm_thm7_Q4_terrain.log | Magma (primary decomposition); component count also forced by genus-log split 3x2 |
 | Rq square on each component | terrain_crosscheck.sage; bm_thm7_Q4_genus.m | logs as above | two-system |
-| Sq square class 12 on each component | terrain_crosscheck.sage; bm_thm7_sixconics2 | logs as above | two-system |
-| no admissible rational points (all Sq-zeros degenerate) | terrain_crosscheck.sage; bm_thm7_sixconics2 | logs as above | two-system; invariant form (den=0 / pole; F1: none) |
-| gcd(Fi, Rq Sq) = 1 (geom.-integrality input) | terrain_crosscheck.sage | terrain_crosscheck.captured.log | Sage (fresh) |
+| Sq square class 12 on each component | terrain_crosscheck.sage; terrain_class12.m | captured logs of both | two-system (both scripts public) |
+| no admissible rational points (all Sq-zeros degenerate) | terrain_crosscheck.sage; terrain_class12.m | captured logs of both | two-system (both scripts public); invariant form (den=0 / pole; F1: none) |
+| S-integrality: Rq, Sq, RqSq nonsquare (odd-factor counts 1/1/2; value witnesses 2480/876/171696) | terrain_crosscheck.sage; terrain_class12.m | captured logs of both | two-system; Q-level also kernel (BMThm7NormCriterion) |
+| gcd(Fi, Rq Sq) = 1 (geom.-integrality input) | terrain_crosscheck.sage; terrain_class12.m | captured logs of both | two-system |
 | eight non-squares in Q(a,b) | terrain_crosscheck.sage; bm_thm7_Q4_terrain.m | logs as above | two-system; kernel-superseded (BMThm7FunctionField) |
 
 ## File hashes and status
@@ -74,7 +75,9 @@ guarantee.  SHA-256 is authoritative; md5 retained for continuity.
 | `scripts/terrain/bm_thm7_Q4_genus.m` | `a9e0f4bb73a98a35223e99fdc0598e5706e48e802cc7efb274f95f713256b39c` | `17967f011245f17a89947e828cf92b0c` | rigorous input script (per-factor irreducibility, genus, Rq/Sq square tests on components; Magma) |
 | `scripts/terrain/bm_thm7_Q4_terrain.log` | `3632d44d9d2b94ef8fbd0902b8fc8442e093e2ab84e1465cf8edd7236c9bc216` | `5582c6756784691577ce99bb1c6205e6` | rigorous unconditional (exact polynomial computations; six components dim 1) |
 | `scripts/terrain/bm_thm7_Q4_terrain.m` | `538fc59ff4fda590f16d9959999a229d3119dff356635417a307dd112ef8047f` | `f958663173d1396524dd15917ab117b4` | rigorous input script (Q4 identities, factorization, eight square tests, primary decomposition; Magma, session 2026-07-16c) |
-| `scripts/terrain/bm_thm7_sixconics2.captured.log` | `a18225e7b29227027247e75fe14567fb5272186b20c4a8086c2abf05a3ae63d2` | `02f2bd3e0b11a59b5e6f6edb0b969716` | rigorous unconditional (square class 12 of Sq per component; admissibility of Sq-zeros) |
-| `scripts/terrain/terrain_crosscheck.captured.log` | `851ec6a14a0efdc9a8fe24b77afb9b7b842c65fccc42389f742186d2fc14212b` | `d37b946da1fdac39c67fb4f909ba742c` | rigorous unconditional (all CHECK lines True) |
-| `scripts/terrain/terrain_crosscheck.sage` | `ce30f807cf33659815f62856b6e6f97fcb20433a00bd62afa6f81073f45ec5e1` | `32a0c71ffb61295fc84fb300b60fd59d` | rigorous verification script (fresh second system, Sage 10.8, 2026-08-02: all Ch.4 [C] claims incl. gcd(Fi,RqSq)=1 and invariant-form zero analysis) |
+| `scripts/terrain/bm_thm7_sixconics2.captured.log` | `a18225e7b29227027247e75fe14567fb5272186b20c4a8086c2abf05a3ae63d2` | `02f2bd3e0b11a59b5e6f6edb0b969716` | preserved transcript only: the generating Magma source was not retained (session 2026-07-16c). Its claims are established two-system by terrain_class12.m + terrain_crosscheck.sage below; this file is historical corroboration, not a reproducibility artifact |
+| `scripts/terrain/terrain_class12.captured.log` | `78714eda8ba963a672375cf4f5d5308ba22e6a156fcac1293b8ec0a3548cc9c5` | `2994df5b4667b99a90aff1ce62fc159d` | rigorous unconditional (all checks; agrees with the Sage leg line-by-line) |
+| `scripts/terrain/terrain_class12.m` | `06e5047a210adf810ea403f604fdfc18f665124920c33d3b178baf735df15280` | `61b8b85c71bee97c67065a7b1a6e0626` | rigorous input script (fresh Magma leg 2026-08-02, V2.29-7 on A9: class 12, admissibility, S-integrality inputs, value witnesses; replaces the unpreserved sixconics2 source) |
+| `scripts/terrain/terrain_crosscheck.captured.log` | `810910f9fe3b98aa668f8faa1356bcff9cc247e33e97ddba2433bff4ca685cb9` | `cad5307e0a1c622817f6fc3eea482c1d` | rigorous unconditional (all CHECK lines True) |
+| `scripts/terrain/terrain_crosscheck.sage` | `be6670f3d5112cc3f21d5a6093a1f09ab3a9dc80af05f0faa2fa6b5fb8350392` | `23a5576a08fb6ce5e5238a5027e30b11` | rigorous verification script (fresh second system, Sage 10.8, 2026-08-02: all Ch.4 [C] claims incl. gcd(Fi,RqSq)=1, S-integrality odd-factor counts, nonsquare value witnesses, invariant-form zero analysis) |
 | `scripts/wp3_stage3_certs.txt` | `eda247f0f2d660570e8c7d88a182b03a4b56a85fe95cb0f62e768d6aa94b9904` | `8eebdcf498b04560796afa5a6609995b` | rigorous certificate store (cofactors reproduced verbatim in the Lean source and kernel-checked) |

@@ -1,0 +1,28 @@
+// terrain_class12.captured.log -- Magma V2.29-7 on A9 (Linux), 2026-08-02.
+// Execution channel: the mcp run_magma bridge (script text transmitted verbatim;
+// byte-identical to scripts/terrain/terrain_class12.m, md5 61b8b85c71bee97c67065a7b1a6e0626).
+CHECK Q4_eq_F1F2F3: true
+CHECK Rq_odd_nonconst_factors: 1
+CHECK Sq_odd_nonconst_factors: 1
+CHECK RqSq_odd_nonconst_factors: 2
+CHECK Rq_value_2_3: 2480 square: false
+CHECK Sq_value_1_2: 876 square: false
+CHECK RqSq_value_1_2: 171696 square: false
+F1 on_curve: true
+F1 Rq_square_on_component: true
+F1 Sq_square: false  Sq_over_12_square(class12): true
+F1 Sq_rational_zero_count: 0
+F1 gcd_with_RqSq_trivial: true
+F2 on_curve: true
+F2 Rq_square_on_component: true
+F2 Sq_square: false  Sq_over_12_square(class12): true
+F2 Sq_rational_zero_count: 1
+F2 zero t = 0 : point 0 0 den=0 -- inadmissible
+F2 gcd_with_RqSq_trivial: true
+F3 on_curve: true
+F3 Rq_square_on_component: true
+F3 Sq_square: false  Sq_over_12_square(class12): true
+F3 Sq_rational_zero_count: 1
+F3 zero t = 0 : point 0 0 den=0 -- inadmissible
+F3 gcd_with_RqSq_trivial: true
+DONE

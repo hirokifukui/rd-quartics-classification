@@ -1,5 +1,7 @@
 # rd-quartics-classification
 
+[![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
+
 Lean 4 formalization and computational certificates for:
 
 **The classification of rational-derived quartics with a repeated root: a proof gap, its unconditional repair, and the formalization that found both** (Hiroki Fukui, 2026 — manuscript in preparation; will appear in `paper/`).
@@ -55,6 +57,9 @@ The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Clas
 | Eight non-squareness verdicts in ℚ(a,b) | `Q4_not_square` … `n2Q4RqSq_not_square` | `Gap/BMThm7FunctionField.lean` |
 | Biquadratic square-class transfer | `biquadratic_transfer` | `Gap/BMThm7SquareClass.lean` |
 | Q₄, −2Q₄ non-square in the multiquadratic extension | `Q4_not_square_multiquadratic`, `n2Q4_not_square_multiquadratic` | `Gap/BMThm7SquareClass.lean` |
+| Rₔ, Sₔ, RₔSₔ non-square in ℚ(a,b) (splitting-cover integrality) | `Rq_not_square`, `Sq_not_square`, `RqSq_not_square` | `Gap/BMThm7NormCriterion.lean` |
+| Layer quadratic step and coordinate norm passage | `step_over_layer`, `layer_square_norm` | `Gap/BMThm7NormCriterion.lean` |
+| C±-exclusion in the layer (γ± not a square) | `gamma_not_square_multiquadratic` | `Gap/BMThm7NormCriterion.lean` |
 
 (Line-pinned links to be added at release freeze.)
 

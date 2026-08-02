@@ -67,6 +67,15 @@ cf = -af*bf/denf
 print("CHECK pairing_F1:", denf*(1 + cf - af - bf) == Fr(F1)*(-af-bf))
 print("CHECK pairing_F2:", denf*(1 + af - bf - cf) == Fr(F2)*(af+1))
 print("CHECK pairing_F3:", denf*(1 + bf - af - cf) == Fr(F3)*(-bf-1))
+# S-integrality inputs: odd-multiplicity nonconstant factors of Rq, Sq, RqSq
+def odd_nonconst(f): return len([1 for pp,e in f.factor() if e%2==1 and pp.degree()>0])
+print("CHECK Rq_odd_nonconst_factors:", odd_nonconst(Rq))
+print("CHECK Sq_odd_nonconst_factors:", odd_nonconst(Sq))
+print("CHECK RqSq_odd_nonconst_factors:", odd_nonconst(Rq*Sq))
+# nonsquare-value witnesses (feed the kernel theorems of BMThm7NormCriterion)
+print("CHECK Rq_value_2_3:", Rq(a=2,b=3), "square:", QQ(Rq(a=2,b=3)).is_square())
+print("CHECK Sq_value_1_2:", Sq(a=1,b=2), "square:", QQ(Sq(a=1,b=2)).is_square())
+print("CHECK RqSq_value_1_2:", (Rq*Sq)(a=1,b=2), "square:", QQ((Rq*Sq)(a=1,b=2)).is_square())
 # K-witness sanity
 w = (QQ(-51)/13, QQ(-17)/7)
 print("CHECK witness_Q4_negative:", Q4(a=w[0], b=w[1]) < 0)
