@@ -1,0 +1,17 @@
+E = Elliptic Curve defined by y^2 = x^3 + 12*x^2 - 108*x over Rational Field   rk[E/Q]= 1
+
+E_33 (twist by 33): Elliptic Curve defined by y^2 = x^3 - x^2 - 2097*x + 28305 over Rational Field
+  minimal model: Elliptic Curve defined by y^2 = x^3 - x^2 - 2097*x + 28305 over Rational Field
+  rank (rigorous): 1
+  rank_bounds: (1, 1)
+  analytic_rank: 1
+  gens: [(-35 : 240 : 1)]
+  torsion: (2, 2)
+   gen order: +Infinity  height: 2.83231955211472
+
+Direct over K=Q(sqrt33):
+  EK.rank() = 2
+  EK.gens() = ((-3*s + 3 : -12*s + 36 : 1), (-12 : 36 : 1))
+
+Birch decomposition: rk[E/K] = rk[E/Q] + rk[E_33/Q] = 1 + 1 = 2
+BM Table 5 records rk[E/Q(sqrt33)] = 1

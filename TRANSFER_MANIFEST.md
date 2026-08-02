@@ -157,6 +157,14 @@ map_pow + sq_nonneg）、UFD 整閉性による平方降下（square_descent）�
 | blueprint 04 | 本日の scoping 段落を kernel 化後の記述へ上書き＋ノード 3 追加（spec_principle・sq_descent・covers_nonsquare、全 leanok） | - |
 | .github/workflows | axiom audit 対象に FunctionField 追加 | - |
 
+## 追記 2026-08-02i（Certificate hash audit 初回 CI が実在の穴を検出）
+
+新設の Certificate hash audit が初回 CI 走行で fail — 原因は LaTeX 用の包括 `*.log` ignore 規則が
+`scripts/rank/` の Magma 証明書ログ三本（m33.log / rank_tables.log / rank_unruly.log）を未追跡にして
+いたこと。table はローカル現物から生成済みで三本を収載、CI checkout に実体なし → MISSING。
+門が「repo が主張する証明書の実在」を機械検問した最初の実例。処置: `.gitignore` に
+`!scripts/**/*.log` の再包含を追加し、三本を追跡下へ（md5 は収載値と一致、内容変換なし）。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

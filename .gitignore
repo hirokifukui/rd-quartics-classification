@@ -3,6 +3,7 @@ blueprint/web/
 blueprint/print/
 *.aux
 *.log
+!scripts/**/*.log
 *.out
 *.synctex.gz
 .DS_Store

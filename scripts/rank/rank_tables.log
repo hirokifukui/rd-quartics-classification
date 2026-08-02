@@ -1,0 +1,21 @@
+PASS rk[E/Q]=1
+
+== Table 4 (complex quadratic, class number 1) ==
+  m=   -1: rk[E_m/Q]=0  pred=1  BM=1  OK
+  m=   -2: rk[E_m/Q]=0  pred=1  BM=1  OK
+  m=   -3: rk[E_m/Q]=0  pred=1  BM=1  OK
+  m=   -7: rk[E_m/Q]=0  pred=1  BM=1  OK
+  m=  -11: rk[E_m/Q]=2  pred=3  BM=3  OK
+  m=  -19: rk[E_m/Q]=2  pred=3  BM=3  OK
+  m=  -43: rk[E_m/Q]=2  pred=3  BM=3  OK
+Unable to compute the rank with certainty (lower bound=0).
+This could be because Sha(E/Q)[2] is nontrivial.
+Try calling something like two_descent(second_limit=13) on the
+curve then trying this command again.  You could also try rank
+with only_use_mwrank=False.
+Traceback (most recent call last):
+  File "/private/tmp/cc_bmaudit/rank_tables.sage.py", line 28, in <module>
+    r=Etw.rank(); pred=r+_sage_const_1 ; good=(pred==T4[m])
+  File "/var/tmp/sage-10.8-current/local/lib/python3.13/site-packages/sage/schemes/elliptic_curves/ell_rational_field.py", line 2195, in rank
+    raise RuntimeError('rank not provably correct (lower bound: {})'.format(rank))
+RuntimeError: rank not provably correct (lower bound: 0)

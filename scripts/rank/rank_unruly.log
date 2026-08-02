@@ -1,0 +1,23 @@
+== BM's 4 unruly fields (Table 4: -67,-163 ; Table 5: 57,73) ==
+Unable to compute the rank with certainty (lower bound=0).
+This could be because Sha(E/Q)[2] is nontrivial.
+Try calling something like two_descent(second_limit=13) on the
+curve then trying this command again.  You could also try rank
+with only_use_mwrank=False.
+m=-67: rigorous=None bounds=(0, 2) analytic=0  =>pred rk[E/Q(sqrt m)]=1  BM=1
+Unable to compute the rank with certainty (lower bound=0).
+This could be because Sha(E/Q)[2] is nontrivial.
+Try calling something like two_descent(second_limit=13) on the
+curve then trying this command again.  You could also try rank
+with only_use_mwrank=False.
+m=-163: rigorous=None bounds=(0, 2) analytic=0  =>pred rk[E/Q(sqrt m)]=1  BM=1
+Unable to compute the rank with certainty (lower bound=0).
+This could be because Sha(E/Q)[2] is nontrivial.
+Try calling something like two_descent(second_limit=13) on the
+curve then trying this command again.  You could also try rank
+with only_use_mwrank=False.
+m=57: rigorous=None bounds=(0, 2) analytic=0  =>pred rk[E/Q(sqrt m)]=1  BM=1
+m=73: rigorous=1 bounds=(1, 3) analytic=1  =>pred rk[E/Q(sqrt m)]=2  BM=2
+
+(For these, BM used Birch's twist method with apecs; modern Sage 2-descent
+ leaves Sha[2] ambiguity on some, analytic rank (BSD, cond. on nondegeneracy) confirms.)
