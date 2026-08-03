@@ -1,6 +1,6 @@
 # REVIEW_HISTORY — external AI review rounds (2026-08-01 .. 2026-08-03)
 
-Fifteen external AI review rounds were conducted on this repository between
+Sixteen external AI review rounds were conducted on this repository between
 2026-08-01 and 2026-08-03.  Scores assigned by reviewers are external opinions
 and are not recorded here or anywhere in this repository as evidence; what
 follows is the substantive arc.
@@ -57,6 +57,16 @@ follows is the substantive arc.
   checks the working tree fail-closed on every branch and tag build.  The
   branch-divisor phrasing was corrected to odd-valuation ramification, and the
   release wording to "no changes to Lean statements or kernel proofs".
+
+- **Round 16**: the round-15 line-number critique was retracted by the
+  reviewer after re-reading the tag-pinned sources (656 lines, `thm7prime` at
+  L619 confirmed), closing that dispute in agreement with the raw/SHA-256
+  adjudication.  The round's remaining findings were release engineering, two
+  of them valid and fixed: the round-15 audit and exposition corrections
+  postdated the v1.0.2 tag (resolved by v1.0.3), and the pin audit did not use
+  the extracted tag on branch builds --- it now verifies each link against its
+  tag's actual content via `git show`, fail-closed, with the atomic
+  commit-plus-tag push making the tag visible to its own release build.
 
 Reviewer misreadings corrected along the way (stale revision, live-state
 claims, two rounds of line-number claims) are recorded in `TRANSFER_MANIFEST.md`; the

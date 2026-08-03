@@ -65,25 +65,33 @@ jobs:
           EOF
 
       - name: Line-pin audit
-        # Fail-closed: pins are checked against the working tree (on tag builds the
-        # tree IS the tag content; on branch builds this forces pin regeneration
-        # whenever a pinned file drifts). No network fetch, no SKIP path.
+        # Fail-closed against the URL's actual target: each pinned link's tag is
+        # fetched and the pinned line is checked inside that tag's content via
+        # git show. An unresolvable tag is a failure, not a skip. (Release flow:
+        # commit + tag are pushed atomically, so the tag is available to the CI
+        # run of its own release commit.)
         run: |
           python3 - << 'PYEOF'
-          import re, sys, pathlib
+          import re, sys, pathlib, subprocess
           s = pathlib.Path("README.md").read_text(encoding="utf-8")
           pins = re.findall(r"\[`([A-Za-z0-9_.]+)`\]\(https://github\.com/[^/]+/[^/]+/blob/(v[\d.]+)/([^#)]+)#L(\d+)\)", s)
           if not pins:
               print("FAIL: no pins found"); sys.exit(1)
           ok = True
+          fetched = set()
           for full, tag, fp, ln in pins:
+              if tag not in fetched:
+                  subprocess.run(["git","fetch","--depth=1","origin","tag",tag,"--no-tags"], capture_output=True)
+                  fetched.add(tag)
+              show = subprocess.run(["git","show","%s:%s" % (tag, fp)], capture_output=True, text=True)
+              if show.returncode != 0:
+                  print("FAIL: pin %s -> tag %s unresolvable (or %s absent in it)" % (full, tag, fp)); ok = False; continue
+              lines = show.stdout.splitlines(); i = int(ln) - 1
               short = full.split(".")[-1]
-              lines = pathlib.Path(fp).read_text(encoding="utf-8").splitlines()
-              i = int(ln) - 1
               if i >= len(lines) or not re.match(r"^(?:@\[[^\]]*\]\s*)?(?:private\s+)?(?:noncomputable\s+)?(?:theorem|def)\s+%s(?=[\s(:{])" % re.escape(short), lines[i]):
-                  print("FAIL: pin %s -> %s#L%s does not start that declaration in the tree" % (full, fp, ln)); ok = False
+                  print("FAIL: pin %s -> %s:%s#L%s does not start that declaration" % (full, tag, fp, ln)); ok = False
               else:
-                  print("pin OK:", full, "%s#L%s" % (fp, ln))
+                  print("pin OK:", full, "%s:%s#L%s" % (tag, fp, ln))
           sys.exit(0 if ok else 1)
           PYEOF
 
