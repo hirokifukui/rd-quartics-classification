@@ -1,6 +1,6 @@
 # REVIEW_HISTORY — external AI review rounds (2026-08-01 .. 2026-08-03)
 
-Fourteen external AI review rounds were conducted on this repository between
+Fifteen external AI review rounds were conducted on this repository between
 2026-08-01 and 2026-08-03.  Scores assigned by reviewers are external opinions
 and are not recorded here or anywhere in this repository as evidence; what
 follows is the substantive arc.
@@ -42,6 +42,21 @@ follows is the substantive arc.
   that this class of dispute is settled mechanically.  The splitting surface
   received an explicit scheme model and a generic-to-global integrality
   argument; the review-response manifest entries were archived.
+
+- **Round 15**: the line-number table was repeated against v1.0.2 and a
+  retraction of the round-14 record demanded.  Adjudicated against the public
+  artifact itself: for the immutable v1.0.2 tag, the local objects and the
+  files served by GitHub raw are byte-identical (matching SHA-256), with
+  `Master.lean` at 656 lines (`theorem thm7prime` beginning exactly at L619),
+  `fibre_correspondence` at L293 and `not_T9_bridge_Q` at L489 --- exactly the
+  pinned values; the round's table matches a much older revision of the files.
+  Anyone may verify in one click:
+  `https://raw.githubusercontent.com/hirokifukui/rd-quartics-classification/v1.0.2/<path>`.
+  The round's valid finding is credited and fixed: the pin-audit CI had a
+  fail-open path (SKIP when a tag was unfetchable) and no tag trigger; it now
+  checks the working tree fail-closed on every branch and tag build.  The
+  branch-divisor phrasing was corrected to odd-valuation ramification, and the
+  release wording to "no changes to Lean statements or kernel proofs".
 
 Reviewer misreadings corrected along the way (stale revision, live-state
 claims, two rounds of line-number claims) are recorded in `TRANSFER_MANIFEST.md`; the

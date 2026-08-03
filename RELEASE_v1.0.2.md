@@ -1,8 +1,9 @@
 # v1.0.2 — identity synchronisation and audit hygiene (2026-08-03 JST)
 
-No mathematical content changes relative to v1.0.1 (whose kernel closure of the
-fibre correspondence stands); this release makes the frozen artifact and its
-own self-description agree.
+No changes to the Lean theorem statements or kernel proofs relative to v1.0.1
+(whose kernel closure of the fibre correspondence stands); the ordinary
+mathematical exposition was strengthened, and this release makes the frozen
+artifact and its own self-description agree.
 
 - README, `CITATION.cff` (version 1.0.2), release notes and all line-pinned
   theorem references now point at **this** tag; the v1.0.1 tag's internal
