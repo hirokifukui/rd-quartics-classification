@@ -1,6 +1,6 @@
 # REVIEW_HISTORY — external AI review rounds (2026-08-01 .. 2026-08-03)
 
-Sixteen external AI review rounds were conducted on this repository between
+Seventeen external AI review rounds were conducted on this repository between
 2026-08-01 and 2026-08-03.  Scores assigned by reviewers are external opinions
 and are not recorded here or anywhere in this repository as evidence; what
 follows is the substantive arc.
@@ -67,6 +67,16 @@ follows is the substantive arc.
   the extracted tag on branch builds --- it now verifies each link against its
   tag's actual content via `git show`, fail-closed, with the atomic
   commit-plus-tag push making the tag visible to its own release build.
+
+- **Round 17 (closure)**: the reviewer confirmed that every substantive
+  finding of the arc is closed at v1.0.3 --- the fail-closed tag-content pin
+  audit succeeding on the tag's own push, the hardened CAS gates, and the
+  identity synchronisation --- and assessed the release at the top of its own
+  declared scope, with the limitation stated exactly as this repository states
+  it: the score concerns the mathematical, formal and computational claims
+  actually made, together with their audit, reproducibility and release
+  integrity; it does not mean Conjecture 1 is resolved, which the release
+  itself declares open.
 
 Reviewer misreadings corrected along the way (stale revision, live-state
 claims, two rounds of line-number claims) are recorded in `TRANSFER_MANIFEST.md`; the
