@@ -1,6 +1,6 @@
 # rd-quartics-classification
 
-**Frozen release: [v1.0.1](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.0.1)** (2026-08-03; v1.0.0 remains as the annotated earlier freeze; citation data in `CITATION.cff`; release notes in `RELEASE_v1.0.1.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/<path>`.
+**Frozen release: [v1.0.2](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.0.2)** (2026-08-03 JST; v1.0.0 and v1.0.1 remain as annotated earlier freezes; citation data in `CITATION.cff`; release notes in `RELEASE_v1.0.2.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/<path>`.
 
 [![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
 
@@ -65,18 +65,18 @@ The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Clas
 | Normalization bridge: Conjecture 1 ⇔ no nondegenerate terrain point | `conjecture1_iff_terrain` (+ transport lemmas) | `Gap/BMThm7Terrain.lean` |
 | Fibre correspondence: the three disjuncts ⇔ the three cover fibres (radicand derivation D± ⇔ γ±; chart cover ⇔ cleared model) | `fibre_correspondence`, `Dplus_iff`, `Dminus_iff`, `cleared_model_iff` | `Gap/BMThm7Fibre.lean` |
 
-### Line-pinned references (v1.0.1)
+### Line-pinned references (v1.0.2)
 
-- [`Thm7Statement.thm7prime`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Thm7Prime/Master.lean#L619)
-- [`Thm7Fidelity.rd211_iff_natural`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Thm7Prime/Fidelity.lean#L173)
-- [`Thm7Classification.classification_by_curve`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Thm7Prime/Classification.lean#L188)
-- [`BMThm7FunctionField.Q4_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7FunctionField.lean#L134)
-- [`BMThm7SquareClass.Q4_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7SquareClass.lean#L293)
-- [`BMThm7NormCriterion.gamma_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7NormCriterion.lean#L272)
-- [`BMThm7NormCriterion.RqSq_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7NormCriterion.lean#L76)
-- [`BMThm7Terrain.conjecture1_iff_terrain`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7Terrain.lean#L394)
-- [`BMThm7Fibre.fibre_correspondence`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7Fibre.lean#L294)
-- [`BMThm7Transcript.not_T9_bridge_Q`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.1/Gap/BMThm7Transcript.lean#L489)
+- [`Thm7Statement.thm7prime`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Thm7Prime/Master.lean#L619)
+- [`Thm7Fidelity.rd211_iff_natural`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Thm7Prime/Fidelity.lean#L173)
+- [`Thm7Classification.classification_by_curve`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Thm7Prime/Classification.lean#L188)
+- [`BMThm7FunctionField.Q4_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7FunctionField.lean#L134)
+- [`BMThm7SquareClass.Q4_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7SquareClass.lean#L293)
+- [`BMThm7NormCriterion.gamma_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7NormCriterion.lean#L272)
+- [`BMThm7NormCriterion.RqSq_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7NormCriterion.lean#L76)
+- [`BMThm7Terrain.conjecture1_iff_terrain`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7Terrain.lean#L394)
+- [`BMThm7Fibre.fibre_correspondence`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7Fibre.lean#L293)
+- [`BMThm7Transcript.not_T9_bridge_Q`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.2/Gap/BMThm7Transcript.lean#L489)
 
 ## Lineage
 

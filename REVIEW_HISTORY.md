@@ -1,6 +1,6 @@
 # REVIEW_HISTORY — external AI review rounds (2026-08-01 .. 2026-08-03)
 
-Thirteen external AI review rounds were conducted on this repository between
+Fourteen external AI review rounds were conducted on this repository between
 2026-08-01 and 2026-08-03.  Scores assigned by reviewers are external opinions
 and are not recorded here or anywhere in this repository as evidence; what
 follows is the substantive arc.
@@ -33,7 +33,17 @@ follows is the substantive arc.
   release-identity synchronisation, audit-document hygiene (this file is part
   of the response), and prose precision in Chapter 4 — all addressed.
 
+- **Round 14**: the release-provenance split was correctly identified (the
+  v1.0.1 tag predates the round-13 fixes): resolved by v1.0.2, with all
+  references re-synchronised.  The round's table of "wrong" line-pinned
+  numbers was refuted by direct measurement against the tag content (all ten
+  pins exact; e.g. `Master.lean` has 656 lines, not 604) --- the fourth
+  reviewer misreading of artifact state; a line-pin audit was added to CI so
+  that this class of dispute is settled mechanically.  The splitting surface
+  received an explicit scheme model and a generic-to-global integrality
+  argument; the review-response manifest entries were archived.
+
 Reviewer misreadings corrected along the way (stale revision, live-state
-claims, one line-number claim) are recorded in `TRANSFER_MANIFEST.md`; the
+claims, two rounds of line-number claims) are recorded in `TRANSFER_MANIFEST.md`; the
 standing rule is that deployment and artifact state are established only by
 direct measurement.

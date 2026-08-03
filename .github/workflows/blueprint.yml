@@ -63,6 +63,25 @@ jobs:
           print("CERTIFICATE AUDIT PASS (%d files)" % len(rows))
           EOF
 
+      - name: Line-pin audit
+        run: |
+          python3 - << 'PYEOF'
+          import re, subprocess, sys, pathlib
+          s = pathlib.Path("README.md").read_text(encoding="utf-8")
+          pins = re.findall(r"\[`([A-Za-z0-9_.]+)`\]\(https://github\.com/[^/]+/[^/]+/blob/(v[\d.]+)/([^#)]+)#L(\d+)\)", s)
+          if not pins: print("no pins found"); sys.exit(1)
+          for full, tag, fp, ln in pins:
+              r = subprocess.run(["git","fetch","--depth=1","origin","tag",tag,"--no-tags"], capture_output=True)
+              show = subprocess.run(["git","show","%s:%s" % (tag, fp)], capture_output=True, text=True)
+              if show.returncode != 0:
+                  print("SKIP %s: tag %s not available at this commit (pre-release build)" % (full, tag)); continue
+              lines = show.stdout.splitlines(); i = int(ln) - 1
+              short = full.split(".")[-1]
+              if i >= len(lines) or not re.match(r"^(?:@\[[^\]]*\]\s*)?(?:private\s+)?(?:noncomputable\s+)?(?:theorem|def)\s+%s(?=[\s(:{])" % re.escape(short), lines[i]):
+                  print("FAIL: pin %s -> %s:%s#L%s does not start that declaration" % (full, tag, fp, ln)); sys.exit(1)
+              print("pin OK:", full, "%s#L%s" % (fp, ln))
+          PYEOF
+
       - name: Axiom footprint audit
         run: |
           set -uo pipefail

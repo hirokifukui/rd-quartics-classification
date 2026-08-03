@@ -59,7 +59,10 @@ the class $Q_{4}$: three covers, one sextic, two obstruction routes.
 \begin{definition}[The cover models]\label{def:cover_models}
 Let $U_{B}\subset B$ be the complement of $\{\mathrm{den}=0\}$ and of the
 degeneracy divisors (coincident or vanishing roots), and $U\subset S$ its
-preimage in the splitting surface.  \emph{The covers} are the affine models
+preimage in the splitting surface; concretely, the splitting surface over the
+chart is the affine model
+$S_{U}:=\operatorname{Spec}\bigl(\mathcal O(U_{B})[z,w]/(z^{2}-R_{q},\,w^{2}-S_{q})\bigr)$,
+and $U$ is its open part over $U_{B}$.  \emph{The covers} are the affine models
 $\widetilde C_{0}:=\operatorname{Spec}\bigl(\mathcal O(U)[v]/(v^{2}-Q_{4})\bigr)$
 and $C_{\pm}:=\operatorname{Spec}\bigl(\mathcal O(U)[v]/(v^{2}-\gamma_{\pm})\bigr)$,
 together with the chart model $C_{0}\colon t^{2}=\sigma_{1}^{2}-4\sigma_{2}$
@@ -199,6 +202,17 @@ one odd nonconstant factor; they are coprime [C: gcd data], so $R_{q}S_{q}$
 retains both).  Degree four, the basis, and integrality now follow from
 Lemma~\ref{lem:biquad_criterion} applied over $\Q(a,b)$ and, via
 Lemma~\ref{lem:sqfree_basechange}, over $\overline{\Q}(a,b)$ [M].
+Scheme-theoretically (Definition~\ref{def:cover_models}): the coordinate ring
+$\mathcal O(U_{B})[z,w]/(z^{2}-R_{q},w^{2}-S_{q})$ is generated as an
+$\mathcal O(U_{B})$-module by $\{1,z,w,zw\}$ (reduce by the two relations), and
+freely so --- a nontrivial $\mathcal O(U_{B})$-relation would specialise to one
+in the generic fibre, contradicting the basis property there.  A free module
+over the domain $\mathcal O(U_{B})$ is torsion-free, so the ring injects into
+its generic localisation, which is the degree-four \emph{field}
+$K(B)(\sqrt{R_{q}},\sqrt{S_{q}})$ of Lemma~\ref{lem:biquad_criterion}; a ring
+embedding into a field is a domain.  Hence $S_{U}$ is integral, and
+geometrically so (the same chain over $\overline{\Q}$, whose hypotheses hold by
+Lemma~\ref{lem:sqfree_basechange}) [M].
 \end{proof}  In normalised form the conjecture asserts that no
 quartic $x(x-1)(x-a)(x-b)$ with four distinct roots is $K$-derived; the unnormalised
 conjecture is equivalent to this via the affine group $\langle X^{*}\rangle$, and only
@@ -521,7 +535,7 @@ Hilbert-property statement for $S$ itself, which is not proved here (what is
 proved is geometric integrality, Proposition~\ref{prop:geomint}).
 (Irreducibility over $K(S)$: Theorem~\ref{multiquad_verdicts} for $C_{0}$ and
 Theorem~\ref{gamma_verdicts} for $C_{\pm}$; dominance, degree two, and geometric
-integrality away from the branch locus are Proposition~\ref{prop:geomint}.)
+integrality are Proposition~\ref{prop:geomint}.)
 Thinness bounds what a generic-point argument can see, not what
 rational points exist; we found no geometric mechanism that decides the lifting, and no
 descent route achieving finiteness (the naive twist family is unbounded, and none of the
