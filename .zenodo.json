@@ -1,0 +1,30 @@
+{
+  "title": "rd-quartics-classification: rational-derived quartics with a repeated root - proof gap, unconditional repair (Theorem 7'), and Lean 4 formalization",
+  "description": "Machine-verified analysis of Buchholz-MacDougall (J. Number Theory 81 (2000)) Theorem 7: a human-audited formal transcription of the printed proof with kernel certificates of the gap; an unconditional repair (Theorem 7'); the classification restated via rational points of the elliptic curve 576i2; and the boundary analysis in which the kernel theorem conjecture1_iff_terrain identifies Conjecture 1 with the nonexistence of nondegenerate rational points on the splitting terrain, whose three covers are obstructed in the kernel. 137 checked declarations on the standard three axioms; two-system computer-algebra evidence re-executed in CI inside a digest-pinned container; fail-closed release and line-pin audits. Conjecture 1 itself remains open: this repository maps its boundary, it does not resolve it.",
+  "creators": [
+    {
+      "name": "Fukui, Hiroki",
+      "orcid": "0009-0008-7122-522X"
+    }
+  ],
+  "license": "Apache-2.0",
+  "upload_type": "software",
+  "access_right": "open",
+  "keywords": [
+    "rational-derived polynomials",
+    "Lean 4",
+    "mathlib",
+    "formal verification",
+    "elliptic curves",
+    "computer algebra",
+    "reproducibility",
+    "human-AI collaboration"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://hirokifukui.github.io/rd-quartics-classification/blueprint/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-softwaredocumentation"
+    }
+  ]
+}
