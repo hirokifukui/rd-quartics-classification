@@ -379,6 +379,18 @@ README に permanent references 節（tag pin URL 規約）。旧ブートスト
 （968aef9 指し・remote 未 push）を削除の上、凍結 commit に annotated tag を打ち直し。GitHub Release 作成。
 残（要 Dr. Fukui）: Zenodo 連携＋webhook → DOI 発行 → CITATION.cff へ追記。blueprint PDF は後日添付。
 
+## 追記 2026-08-02t(便12 = 91 への対応・第二便: fibre correspondence の kernel 閉鎖 = v1.0.1)
+
+**Gap/BMThm7Fibre.lean 新設(9 宣言、全 std-3、凍結 md5 0d1cd18c、監査
+kernel_audit/20260802_fibre_audit.md)** — 便12 最大指摘「"granted" のままの radicand 導出」への
+定理による回答。D0/Dplus/Dminus を transcript 自身の bmTranslate で定義(指摘2 の定義欠如も同時解決)、
+cleared_model_iff が C0/C~0 分離を v=den·t 全単射として命題化(指摘3)、Dplus/Dminus_iff が
+(X−x0)² 分解・q′(x0)=0・disc=σ1(σ1∓ρ)/4・4den² clearing を kernel で通し、fibre_correspondence が
+三同値を束ねる。CAS 独立裏書き 7 CHECK。CC 一便目は 64k 出力上限で死亡(ファイル無傷)→
+逐次編集規律を焼き込み再起動で完走(SWARM_PLAYBOOK 追記事項)。blueprint は def:disjuncts 新設＋
+fibre 命題を kernel 参照で全面書換え("granted"/"session artifacts" 完全消滅)。README に line-pins
+10 本(v1.0.1 tag 前提)＋fibre 行。checkdecls 137。**v1.0.1 release へ**(notes は自己評価数値なし)。
+
 ## TODO（未転記・未更新）
 
 - ~~CITATION.cff 更新~~ → 済 2026-08-02c（version/DOI のみ release 凍結時）。第三者監査の operative な根拠は本 repo の public hash；金庫参照は補助来歴

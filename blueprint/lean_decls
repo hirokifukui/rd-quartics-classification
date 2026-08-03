@@ -126,3 +126,12 @@ BMThm7Terrain.KDerived_scale_iff
 BMThm7Terrain.kderived_of_terrain
 BMThm7Terrain.terrain_of_kderived
 BMThm7Terrain.conjecture1_iff_terrain
+BMThm7Fibre.chartQuartic
+BMThm7Fibre.D0
+BMThm7Fibre.Dplus
+BMThm7Fibre.Dminus
+BMThm7Fibre.D0_iff_disc
+BMThm7Fibre.cleared_model_iff
+BMThm7Fibre.Dplus_iff
+BMThm7Fibre.Dminus_iff
+BMThm7Fibre.fibre_correspondence

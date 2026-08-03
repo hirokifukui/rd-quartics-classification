@@ -56,31 +56,53 @@ $\gamma_{+}\gamma_{-}=s_{1n}^{2}(s_{1n}^{2}-z^{2})=-8s_{1n}^{2}Q_{4}$ by (I2), a
 it is this \emph{norm class} that the kernel obstruction consumes.  $C_{0}$ carries
 the class $Q_{4}$: three covers, one sextic, two obstruction routes.
 
-\begin{proposition}[Fibre correspondence on the nondegenerate locus]\label{prop:fibre_correspondence}
-Let $U\subset S$ be the open locus $\mathrm{den}\neq0$ with the four roots
-$\{1,a,b,c\}$ pairwise distinct and nonzero.  At every rational point $P$ of
-$U$, each disjunct of Theorem~7 is equivalent to the existence of a rational
-point in the corresponding fibre:
-$D_{0}(P)\iff\exists\,v\in\Q,\ (P,v)\in C_{0}$, and
-$D_{\pm}(P)\iff\exists\,v\in\Q,\ (P,v)\in C_{\pm}$.
+\begin{definition}[The three disjuncts]\label{def:disjuncts}
+Let $q$ be the chart quartic (roots $\{1,a,b,c\}$, $c=-ab/\mathrm{den}$, so
+$\sigma_{3}=0$).  For a critical point $x_{0}$ of $q$, \emph{the disjunct at
+$x_{0}$} is the statement that the vertical translate $q-q(x_{0})$ --- the
+transcript's \texttt{bmTranslate}, the very operation the printed proof
+performs --- splits over $\Q$.  The critical points are $0$ and
+$(3\sigma_{1}\pm\rho)/8$ with $\rho=z/\mathrm{den}$; the corresponding
+disjuncts are $D_{0}$, $D_{+}$, $D_{-}$ (formal definitions
+\texttt{BMThm7Fibre.D0/Dplus/Dminus}, with $x_{0}=(3s_{1n}\pm z)/(8\,
+\mathrm{den})$ in cleared coordinates).  Exchanging the sign of the square
+root $\rho$ exchanges $D_{+}$ and $D_{-}$; no conditions beyond
+$\mathrm{den}\neq0$ and the splitting witness $z^{2}=R_{q}$ are folded into
+the predicates.
+\end{definition}
+
+\begin{proposition}[Fibre correspondence on the nondegenerate locus]\label{prop:fibre_correspondence}\lean{BMThm7Fibre.fibre_correspondence}\leanok
+Over $\mathrm{den}\neq0$ with $z^{2}=R_{q}$: $D_{0}$ holds iff the fibre of the
+cleared model $\widetilde C_{0}\colon v^{2}=Q_{4}$ has a rational point, and
+$D_{\pm}$ holds iff the fibre of $C_{\pm}\colon v^{2}=\gamma_{\pm}$ has a
+rational point.
 \end{proposition}
-\begin{proof}[Proof {[M]} with {[K]} identities; every condition listed]
-Conditions in force: $\mathrm{den}(P)\neq0$ (chart); roots distinct and nonzero
-(nondegeneracy); at a rational point of $S$ the splitting witnesses $z,w$ are
-rational numbers, so $\gamma_{\pm}(P)=s_{1n}(s_{1n}\mp z)(P)\in\Q$.
-$D_{0}$: the first disjunct asks that $\sigma_{1}^{2}-4\sigma_{2}$ be a rational
-square.  The kernel identity (I1),
-$\mathrm{den}^{2}(\sigma_{1}^{2}-4\sigma_{2})=Q_{4}$, gives the substitution
-$v=\mathrm{den}\cdot t$ between $t^{2}=\sigma_{1}^{2}-4\sigma_{2}$ and
-$v^{2}=Q_{4}(P)$; since $\mathrm{den}(P)\neq0$ this is a bijection on solutions
---- clearing the denominator multiplies by the nonzero square
-$\mathrm{den}^{2}$ and introduces no spurious solutions.
-$D_{\pm}$: the reduction of the disjunct at $x_{0}=(3\sigma_{1}\pm r)/8$ to the
-single condition ``$\gamma_{\pm}(P)$ is a rational square'' is the terrain-map
-computation (session artifacts, cross-checked [C]; its governing identity (I2)
-is kernel); granted the radicand derivation, the fibre statement
-$v^{2}=\gamma_{\pm}(P)$ is definitional, the correspondence $v\leftrightarrow-v$
-being the only multiplicity.  No further denominators are cleared in this case.
+\begin{proof}[Proof {[K]}, with an independent {[C]} certification]\leanok
+Kernel theorems, \texttt{Gap/BMThm7Fibre.lean}, all standard-axiom.
+$D_{0}$ (\texttt{D0\_iff\_disc}): $q-q(0)=X^{2}(X^{2}-\sigma_{1}X+\sigma_{2})$
+using $\sigma_{3}=0$, so $D_{0}$ holds iff $\sigma_{1}^{2}-4\sigma_{2}$ is a
+rational square --- the fibre of the \emph{chart} cover
+$C_{0}\colon t^{2}=\sigma_{1}^{2}-4\sigma_{2}$.  The chart cover and the
+cleared model are then identified by \texttt{cleared\_model\_iff}: over
+$\mathrm{den}\neq0$ the substitution $v=\mathrm{den}\,t$ is a bijection on
+rational solutions between $t^{2}=\sigma_{1}^{2}-4\sigma_{2}$ and
+$v^{2}=Q_{4}$ (multiplication by the nonzero square $\mathrm{den}^{2}$; the
+identity $18\,Q_{4}=3R_{q}-S_{q}$ is consumed definitionally), so clearing the
+denominator introduces no spurious solutions and loses none.
+$D_{\pm}$ (\texttt{Dplus\_iff}, \texttt{Dminus\_iff} --- the radicand
+derivation): at $x_{0}=(3s_{1n}\pm z)/(8\,\mathrm{den})$ the translate factors
+as $(X-x_{0})^{2}(X^{2}+BX+C)$ with $B=2x_{0}-\sigma_{1}$,
+$C=\sigma_{2}+3x_{0}^{2}-2\sigma_{1}x_{0}$, the linear-coefficient match being
+exactly $q'(x_{0})=0$ (available from $z^{2}=R_{q}$); the discriminant identity
+$B^{2}-4C=\sigma_{1}(\sigma_{1}\mp\rho)/4$ and the clearing
+$4\,\mathrm{den}^{2}(B^{2}-4C)=s_{1n}(s_{1n}\mp z)=\gamma_{\pm}$ (solution
+bijection $v=2\,\mathrm{den}\,d$) convert the splitting of the quadratic
+cofactor into ``$\gamma_{\pm}$ is a rational square'' --- the fibre of
+$C_{\pm}$.  Signs, denominators and the direction of clearing are all carried
+inside the kernel statements.  The same identities are certified independently
+in CAS (\texttt{terrain\_crosscheck}:
+\texttt{Dplus/Dminus\_critical\_point}, \texttt{\_factorization},
+\texttt{\_disc\_identity}, \texttt{Dpm\_gamma\_clearing}).
 \end{proof}
 
 \begin{lemma}[Squarefree base change]\label{lem:sqfree_basechange}
