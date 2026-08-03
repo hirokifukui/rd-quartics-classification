@@ -2,7 +2,7 @@
 
 **Frozen release: [v1.0.4](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.0.4)** (2026-08-03 JST; v1.0.0–v1.0.3 remain as annotated earlier freezes; citation data in `CITATION.cff`; release notes in `RELEASE_v1.0.4.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/<path>`.
 
-[![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21766032.svg)](https://doi.org/10.5281/zenodo.21766032) [![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
 
 Lean 4 formalization and computational certificates for:
 
