@@ -56,6 +56,19 @@ $\gamma_{+}\gamma_{-}=s_{1n}^{2}(s_{1n}^{2}-z^{2})=-8s_{1n}^{2}Q_{4}$ by (I2), a
 it is this \emph{norm class} that the kernel obstruction consumes.  $C_{0}$ carries
 the class $Q_{4}$: three covers, one sextic, two obstruction routes.
 
+\begin{definition}[The cover models]\label{def:cover_models}
+Let $U_{B}\subset B$ be the complement of $\{\mathrm{den}=0\}$ and of the
+degeneracy divisors (coincident or vanishing roots), and $U\subset S$ its
+preimage in the splitting surface.  \emph{The covers} are the affine models
+$\widetilde C_{0}:=\operatorname{Spec}\bigl(\mathcal O(U)[v]/(v^{2}-Q_{4})\bigr)$
+and $C_{\pm}:=\operatorname{Spec}\bigl(\mathcal O(U)[v]/(v^{2}-\gamma_{\pm})\bigr)$,
+together with the chart model $C_{0}\colon t^{2}=\sigma_{1}^{2}-4\sigma_{2}$
+over $U$.  Throughout, ``cover'' refers to these models: their generic fibres
+are the function-field extensions studied below; the branch divisor of each is
+the zero divisor of its radicand on $U$; and the rational fibre over
+$P\in U(\Q)$ is the solution set $\{v\in\Q:\,v^{2}=(\text{radicand})(P)\}$.
+\end{definition}
+
 \begin{definition}[The three disjuncts]\label{def:disjuncts}
 Let $q$ be the chart quartic (roots $\{1,a,b,c\}$, $c=-ab/\mathrm{den}$, so
 $\sigma_{3}=0$).  For a critical point $x_{0}$ of $q$, \emph{the disjunct at
@@ -71,11 +84,13 @@ $\mathrm{den}\neq0$ and the splitting witness $z^{2}=R_{q}$ are folded into
 the predicates.
 \end{definition}
 
-\begin{proposition}[Fibre correspondence on the nondegenerate locus]\label{prop:fibre_correspondence}\lean{BMThm7Fibre.fibre_correspondence}\leanok
+\begin{proposition}[Fibre correspondence on the pole-free splitting chart]\label{prop:fibre_correspondence}\lean{BMThm7Fibre.fibre_correspondence}\leanok
 Over $\mathrm{den}\neq0$ with $z^{2}=R_{q}$: $D_{0}$ holds iff the fibre of the
 cleared model $\widetilde C_{0}\colon v^{2}=Q_{4}$ has a rational point, and
 $D_{\pm}$ holds iff the fibre of $C_{\pm}\colon v^{2}=\gamma_{\pm}$ has a
-rational point.
+rational point.  (The kernel hypotheses are exactly these two ---
+$\mathrm{den}\neq0$ and $z^{2}=R_{q}$; no further nondegeneracy is needed, so
+the formal statement is slightly stronger than the chart discussion requires.)
 \end{proposition}
 \begin{proof}[Proof {[K]}, with an independent {[C]} certification]\leanok
 Kernel theorems, \texttt{Gap/BMThm7Fibre.lean}, all standard-axiom.
@@ -112,16 +127,23 @@ for any algebraic extension $k'/k$ --- in particular not in $\overline{k}(a,b)$.
 \end{lemma}
 \begin{proof}[Proof {[M]}]
 Write $f=u\prod_{j}g_{j}^{m_{j}}$ with the $g_{j}$ distinct $k$-irreducible.
-(1)~For each $j$ the algebra $k[a,b]/(g_{j})$ is reduced and of finite type, and
-$k$ is perfect, so it is \emph{geometrically} reduced (a finite-type reduced
-algebra over a perfect field stays reduced under any field extension; see
-e.g.\ G\"ortz--Wedhorn, \emph{Algebraic Geometry~I}, \S5.13, or Bourbaki,
-\emph{Alg\`ebre} V \S15).  Hence over any algebraic $k'/k$ each $g_{j}$ factors
-into \emph{distinct} irreducibles, i.e.\ every geometric component of
-$g_{j}=0$ occurs in $g_{j}$ with multiplicity one.  (2)~Distinct $g_{j}$ are
-coprime in $k[a,b]$, and coprimality persists under field extension (a common
-component would make the resultant vanish), so no component is shared between
-different $g_{j}$; every geometric component of $f=0$ therefore carries the
+(1)~For each $j$, choose a variable --- say $b$ --- in which $g_{j}$ is
+nonconstant, and regard $g_{j}$ as a univariate polynomial over $K=k(a)$.
+Squarefreeness over any extension of $K$ is detected by
+$\gcd_{b}(g_{j},\partial g_{j}/\partial b)$, and the Euclidean algorithm
+computing this gcd is unchanged by extension of the coefficient field; in
+characteristic zero the derivative is nonzero and an irreducible $g_{j}$ is
+coprime to it.  Hence $g_{j}$ stays squarefree over $k'(a)$ for every
+algebraic $k'/k$: every geometric component of $g_{j}=0$ occurs with
+multiplicity one.  (This self-contained argument is the elementary face of
+geometric reducedness over perfect fields, cf.\ G\"ortz--Wedhorn,
+\emph{Algebraic Geometry~I}, the section on geometrically reduced schemes;
+over an imperfect field one would additionally exclude $p$-th powers.)  (2)~Distinct $g_{i},g_{j}$ are coprime in $k[a,b]$; if they had a common
+irreducible factor $h$ over some algebraic extension, the product of the
+finitely many Galois conjugates of $h$ (over a normal closure containing its
+coefficients) would be a polynomial with coefficients in $k$ dividing both ---
+contradicting coprimality over $k$.  So no geometric component is shared
+between different $g_{j}$; every geometric component of $f=0$ therefore carries the
 multiplicity $m_{j}$ of its unique parent factor.  (3)~If some nonconstant
 $g_{j_0}$ has $m_{j_0}$ odd, pick a geometric component $D$ of $g_{j_0}=0$: the
 divisorial valuation of $f$ along $D$ is $m_{j_0}$, odd.  (4)~A square in
@@ -382,8 +404,8 @@ Layer step, coordinate norm, (I2), then \texttt{n2Q4\_not\_square}.
 \begin{proposition}[Geometric integrality of the covers]\label{prop:geomint}
 Neither $Q_{4}$ nor $\gamma_{+}$ nor $\gamma_{-}$ is a square in
 $\overline{\Q}(S)$; consequently $C_{0}$, $C_{+}$ and $C_{-}$ are dominant,
-geometrically integral degree-two covers of the stated open subset of $S$
-(integrality comes from the generic nonsquareness; removing the branch locus
+geometrically integral degree-two covers of $U$ (Definition~\ref{def:cover_models};
+integrality comes from the generic nonsquareness; removing the branch locus
 yields \'etaleness, not integrality).  ($-2Q_{4}$ is not itself a radicand: it enters as
 the layer-norm obstruction class of $\gamma_{\pm}$.)
 \end{proposition}

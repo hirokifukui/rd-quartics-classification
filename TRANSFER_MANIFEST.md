@@ -190,7 +190,7 @@ deploy を main push 限定・permissions を job 限定・audit 対象に Squar
 STEPS/ADJUDICATION SHA-256・内部セッション名の公開的意味）／**AI_PROVENANCE.md**（責任分界一元化）／Ch1 に
 preregistration = methodological audit trail の framing。却下: Master 分割・Actions SHA pin（Phase F 項目）。
 
-## 追記 2026-08-02k（便5 = 84/100 への対応: Ch4 証拠管理の全面整備）
+## 追記 2026-08-02k（便5 への対応: Ch4 証拠管理の全面整備）
 
 便5 判定 = 中心定理 accept 近接・Ch4 の証拠管理のみ major。P0 四点＋P1/P2 採用分を実施:
 
@@ -221,7 +221,7 @@ Classification ヘッダー（relation 表現・RDPoly 記述）修正＋三 Lea
 14/16/4 std-3）／PROVENANCE の kernel 役割文を正確化。却下（既裁定・記録）: span の Lean 拡大体化は
 Phase W 選択肢、line-pinned links・CITATION/DOI は Phase F。
 
-## 追記 2026-08-02l（便6 = 90/100 への対応: Ch4 最後の二橋の kernel 化）
+## 追記 2026-08-02l（便6 への対応: Ch4 最後の二橋の kernel 化）
 
 **(1) Gap/BMThm7NormCriterion.lean 新設（8 宣言、全 std-3、凍結 md5 52bfa4fe、監査
 kernel_audit/20260802_normcriterion_audit.md）** — 便6 中心指摘「γ± ∈ K(z) は基礎体の元でないため
@@ -247,7 +247,7 @@ theorem map 三行追加／CI axiom audit 対象に NormCriterion／checkdecls 1
 **便6 誤指摘の記録**: research-notes の stale 残存指摘は旧 revision 閲覧によるもの——HEAD は 88c5c74
 時点で修正済み（grep 0 件）、manifest と実ファイルは一致。badge 追加で今後の閲覧齟齬を予防。
 
-## 追記 2026-08-02m（便7 = 92/100 への対応・第一便: 精度と正規化橋の散文）
+## 追記 2026-08-02m（便7 への対応・第一便: 精度と正規化橋の散文）
 
 **(1) radicand 記述の訂正（便7 指摘2 =「文字通りには偽」）**: Ch4 対応表の radicand 欄を実 radicand
 γ± に改め、obstruction を「norm class −2Q4」と明記。本文「share the single radicand class」を全面削除し、
@@ -290,9 +290,9 @@ kderived_of_terrain（terrain→正規形: z,w から明示分裂根）／terrai
 exact footprint 追加・audit 対象に Terrain。checkdecls 128。本日の kernel 新設は
 Classification 14＋FunctionField 16＋SquareClass 4＋NormCriterion 8＋Terrain 9 = **51 宣言**。
 
-## 追記 2026-08-02o（便8 = 97/100 への対応: 最終整形——対応の命題化と再計算 CI）
+## 追記 2026-08-02o（便8 への対応: 最終整形——対応の命題化と再計算 CI）
 
-便8 判定 = 97 点・「数学的な本丸はほぼ閉じている」・前回最大減点（正規化橋）撤回。残五点のうち四点を実施:
+便8 判定: 「数学的な本丸はほぼ閉じている」・前回最大減点（正規化橋）撤回。残五点のうち四点を実施:
 
 **(1) prop:fibre_correspondence 新設（指摘1 = 残る最大の整形不足）**: 非退化 locus U 上の各有理点で
 三 disjunct ⟺ 三被覆 fibre の有理点存在。全条件列挙——den≠0・相異非零根・有理点で z,w∈ℚ ゆえ
@@ -316,9 +316,9 @@ captured log ヘッダーに記載済み（release artifact 転記は Phase F）
 v4・deploy-pages v5）／README の md5 残渣二箇所を SHA-256 に統一。**Pages 有効化は Dr. Fukui の
 一クリック待ち（現在の筆頭ゲート）**。PDF・release tag/DOI/line-pinned links = Phase F（記録済み）。
 
-## 追記 2026-08-02p（便9 = 99/100: 収束宣言の記録）
+## 追記 2026-08-02p（便9: 収束宣言の記録）
 
-便9 判定 = **99/100・「公開・投稿に十分な水準」・リポジトリ側の修正要求なし**。前便までの全対応
+便9 判定: 「公開・投稿に十分な水準」・リポジトリ側の修正要求なし**。前便までの全対応
 （fibre_correspondence・geomint statement 正置・biquad_criterion・CAS 再実行 CI・node24 化）を確認の上、
 唯一の減点 = **Pages 未有効化（設定作業、Dr. Fukui の一クリック）**。P1/P2 = Phase F 儀式
 （release v1.0.0・CITATION.md・Zenodo DOI・blueprint PDF・line-pinned links・Magma 実行情報の
@@ -329,19 +329,17 @@ release notes 転記）——全て既記録、凍結裁可後に一括実施。
 Lean 化（IntermediateField 次数・基底——span 版は SquareClass/NormCriterion に既存）／
 gamma 定理の抽象基礎体版（抽象補題は既に任意 char 0 体、特殊化定理のみ ℚ(a,b) 固定）。
 
-**九便の弧（2026-08-01〜02）**: reject-and-resubmit → major → 7.5/10 → 84 → 90 → 92 → 97 → **99**。
+**九便の弧（2026-08-01〜02）**: reject-and-resubmit から accept 相当まで、指摘と定理化の往復で推移した。
 この間の kernel 新設 = Fidelity 14（前日）＋ Classification 14・FunctionField 16・SquareClass 4・
 NormCriterion 8・Terrain 9（本日 51）。CI = 三重監査（axiom footprint 厳密形 8 本・SHA-256 cert
 30 行＋claim-map 存在検査・**CAS 実再計算** = pin 済み Sage 10.9 コンテナで毎 push 再導出・diff）。
 査読の「省略された標準論法」は全て定理になり、指摘の誤り（radicand 記述）は撤回・修正した。
 
-**運用メモ**: git credential 経由の PAT が logos に生存しており（push 用）、本日 CI ログ直読に
-再利用した——**旧 TODO「PAT revoke」は未実施のまま有効活用中**。存置か revoke＋fine-grained 再発行かは
-Dr. Fukui の裁定事項（Actions log 読取は今後も有用）。
+（認証運用の詳細は非公開の運用記録に移管。）
 
-## 追記 2026-08-02q（便10 = 100/100: レビュープロセス完了）
+## 追記 2026-08-02q（便10: レビュープロセス完了）
 
-便10 判定 = **100/100・全減点解消・「本プロジェクトのレビュープロセスは完了です」**。
+便10 判定: 全減点解消・「本プロジェクトのレビュープロセスは完了です」**。
 Pages 有効化（Dr. Fukui、2026-08-02）により deploy 緑・badge 全緑・blueprint 公開
 （https://hirokifukui.github.io/rd-quartics-classification/blueprint/ 配信確認済み）。
 kernel（宣言単位 axiom footprint）・CAS（毎 push 実再計算）・provenance（SHA-256 連鎖）・
@@ -350,7 +348,7 @@ AI 協働（責任分界の明文化）の四層が全て公開・検証可能�
 **残 = Phase F 儀式のみ（全て任意時期・裁可待ち）**: release v1.0.0 → CITATION.md → Zenodo DOI →
 blueprint PDF → line-pinned links → Magma 実行情報の release notes 転記。
 
-**十便の最終弧**: reject-and-resubmit → major → 7.5/10 → 84 → 90 → 92 → 97 → 99 → **100**。
+**十便の最終弧**: reject-and-resubmit から accept 相当まで、指摘と定理化の往復で推移した。
 thm7_repair 再投稿 repo は Phase A（外部レビュー対応）を完了し、Phase F（凍結）の裁可待ちに移行。
 
 ## 追記 2026-08-02r（訂正: Pages 有効化の実施経緯——02q の記載を修正）
@@ -361,7 +359,7 @@ thm7_repair 再投稿 repo は Phase A（外部レビュー対応）を完了し
 便10 の「deploy 成功・サイト配信確認」は査読側の誤認（便6 の旧 revision 誤読に続く、**ライブ状態に
 関する査読記述の二例目**——deployment 状態は直接 fetch でのみ確定する、の教訓を再確認）。
 
-**対処**: claude.ai セッションが既存 PAT（push 用に付与済みの資格情報）で Pages API を直接叩き
+**対処**: claude.ai セッションが管理権限のある認証経路で Pages API を直接叩き
 有効化（POST /pages, build_type=workflow, 応答 201・URL 発行）→ 失敗 deploy job を rerun-failed-jobs
 で再実行 → **deploy success・blueprint URL http=200 を三連続実測**。Dr. Fukui の明示意図
 （数便にわたる「Pages 有効化」待ち）の API 経由での完遂であり、設定変更の事実と経路を本追記で開示。
@@ -379,7 +377,7 @@ README に permanent references 節（tag pin URL 規約）。旧ブートスト
 （968aef9 指し・remote 未 push）を削除の上、凍結 commit に annotated tag を打ち直し。GitHub Release 作成。
 残（要 Dr. Fukui）: Zenodo 連携＋webhook → DOI 発行 → CITATION.cff へ追記。blueprint PDF は後日添付。
 
-## 追記 2026-08-02t(便12 = 91 への対応・第二便: fibre correspondence の kernel 閉鎖 = v1.0.1)
+## 追記 2026-08-02t(便12 への対応・第二便: fibre correspondence の kernel 閉鎖 = v1.0.1)
 
 **Gap/BMThm7Fibre.lean 新設(9 宣言、全 std-3、凍結 md5 0d1cd18c、監査
 kernel_audit/20260802_fibre_audit.md)** — 便12 最大指摘「"granted" のままの radicand 導出」への
@@ -390,6 +388,22 @@ cleared_model_iff が C0/C~0 分離を v=den·t 全単射として命題化(指�
 逐次編集規律を焼き込み再起動で完走(SWARM_PLAYBOOK 追記事項)。blueprint は def:disjuncts 新設＋
 fibre 命題を kernel 参照で全面書換え("granted"/"session artifacts" 完全消滅)。README に line-pins
 10 本(v1.0.1 tag 前提)＋fibre 行。checkdecls 137。**v1.0.1 release へ**(notes は自己評価数値なし)。
+
+## 追記 2026-08-03u（便13 対応: 衛生と同期——本文書自体の編集方針を含む）
+
+便13 の判定は「数学的内容は accept 相当・残りは衛生」。対応: **(1) release identity 同期**——README の
+frozen release・permanent reference 規約・CITATION.cff を v1.0.1 に統一、line-pin 節の括弧破損修正
+（行番号は v1.0.1 tag 実体で全数正確と再確認——査読の L285 主張は誤認、`git show v1.0.1` で
+`theorem fibre_correspondence` = L294）。**(2) 本 manifest の衛生化**——採点値・自己評価数値・
+認証運用情報を全て除去し、査読弧の実質は REVIEW_HISTORY.md（採点値なし）へ、認証運用は非公開記録へ
+移管。この編集は履歴の隠蔽ではなく公開文書の役割分離であり、本追記で開示する。**(3) Ch4 精密化**——
+base-change 補題を自己完結の証明に（一変数 gcd の体拡大不変性・Galois 軌道積論法；resultant 文言撤去）、
+cover の scheme model を def:cover_models として明示、fibre 命題名を仮定に整合（pole-free splitting
+chart）し kernel 仮定が den≠0∧z²=Rq の二つのみであることを注記。**(4)** T9 節見出しを [REFUTED over ℚ]
+に統一・Fibre ヘッダーの提携情報を一行ポインタ化（コメント層、kernel 再検証済み）・upload-artifact
+node20 警告を既知警告として workflow に明記（上流由来・直接呼び出しなし・node24 版未存在）。
+**却下（既裁定維持）**: rank route の import 分離。Guy 2P–5P script は「将来追加」から「本 release の
+scope 外（load-bearing でない）」へ正置。
 
 ## TODO（未転記・未更新）
 

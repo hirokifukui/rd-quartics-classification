@@ -2,8 +2,7 @@
 Gap/BMThm7Fibre.lean -- the fibre correspondence: the three disjuncts of the
 terrain analysis, formally defined via the transcript's own vertical-translate
 operator, are equivalent to the square conditions of the three covers
-(2026-08-02; statements FROZEN by claude.ai, tactics delegated; division of
-labour and responsibility: AI_PROVENANCE.md at the repository root)
+(2026-08-02; AI-assisted development: see AI_PROVENANCE.md)
 
 The disjunct at a critical point x0 of the chart quartic q (roots {1,a,b,c},
 sigma_3 = 0) is: the vertical translate q - q(x0) -- the transcript's

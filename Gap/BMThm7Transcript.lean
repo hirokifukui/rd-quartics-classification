@@ -219,7 +219,7 @@ namespace BMThm7Transcript
 
 open Polynomial
 
-/-! ## Phase C, increment 2: coefficient bridge, honest T6, T9 scaffold (P2, P3)
+/-! ## Phase C, increment 2: coefficient bridge, honest T6, T9 reconstructed bridge [REFUTED over ℚ] (P2, P3)
 
 P3 note (kernel-visible): no lemma or definition in this file takes any hypothesis
 about the SECOND derivative of the quartic beyond what `KDerived` packages; the

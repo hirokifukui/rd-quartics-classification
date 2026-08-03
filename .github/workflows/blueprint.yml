@@ -10,6 +10,9 @@ on:
 permissions:
   contents: read
 
+# Known warning: an upstream-bundled actions/upload-artifact (node20) is forced onto node24
+# by a pinned third-party action (not invoked directly here); no node24 variant exists upstream
+# at pin time. Tracked; harmless to the verification chain.
 jobs:
   build:
     runs-on: ubuntu-24.04
