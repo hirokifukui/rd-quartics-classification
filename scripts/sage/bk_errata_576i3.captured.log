@@ -1,0 +1,6 @@
+[printed n=2 point == -2Q] True  == +2Q: False
+[a at printed n=2 point] 77/90  printed a = 167167/497610  a(+2Q) = 167167/497610
+[printed n=2 roots ratio] 497610/167167  in a-class of +2Q: True
+[printed n=3 point == -3Q] True  == +3Q: False
+[a at printed n=3 point] 497610/167167  a(+3Q) = -128665027260/69283212011
+[printed n=3 roots ratio] -69283212011/128665027260  in a-class of +3Q: True

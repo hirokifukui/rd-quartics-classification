@@ -11,7 +11,11 @@ Buchholz, R. H. and MacDougall, J. A., *When Newton met Diophantus: a study of
 rational-derived polynomials and their extension to quadratic fields*,
 J. Number Theory 81 (2000), 210-233.  Section 2.2 (Theorem 7 and its proof) is
 the audited passage; blueprint line anchors (l.553-558, l.568, l.606, l.611,
-l.615-623) refer to the working plain-text layout extraction of that paper.
+l.615-623) refer to the working plain-text layout extraction; that layout
+derives from the authors' revised version of the paper dated June 21, 2009
+(available from the first author's website), whose Section 2.2.4 differs from
+the published version only typographically, and all quotations in the
+blueprint and the companion manuscript are given in the published wording.
 The source text itself is not redistributed here (copyright); the layout
 extraction is pinned by md5 `a177e2e673705c0d68cc5fdf3a6626ce` in the working
 archive, and every quoted anchor is verifiable against any copy of the paper.

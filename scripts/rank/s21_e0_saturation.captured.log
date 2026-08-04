@@ -1,0 +1,7 @@
+[curve] (0, 0, 0, -156, 560) conductor 576
+[rank_bounds] (1, 1)
+[rank rigorous] 1
+[gens] [(2 : 16 : 1)]
+[torsion] (2, 2)
+[saturation of (-8,36)] index = 1  saturated gens = [(-8 : 36 : 1)]
+[analytic rank] 1

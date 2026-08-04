@@ -1,6 +1,6 @@
 # rd-quartics-classification
 
-**Frozen release: [v1.0.4](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.0.4)** (2026-08-03 JST; v1.0.0–v1.0.3 remain as annotated earlier freezes; citation data in `CITATION.cff`; release notes in `RELEASE_v1.0.4.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/<path>`.
+**Frozen release: [v1.1.0](https://github.com/hirokifukui/rd-quartics-classification/releases/tag/v1.1.0)** (2026-08-04 JST; v1.0.0–v1.0.4 remain as annotated earlier freezes; citation data in `CITATION.cff`; release notes in `RELEASE_v1.1.0.md`). Permanent file references should use the tag: `https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/<path>`.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21766032.svg)](https://doi.org/10.5281/zenodo.21766032) [![CI](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml/badge.svg?branch=main)](https://github.com/hirokifukui/rd-quartics-classification/actions/workflows/blueprint.yml)
 
@@ -12,7 +12,7 @@ A monic polynomial over ℚ is *rational-derived* if it and all of its derivativ
 
 1. **The gap** (`Gap/`): a human-audited formal transcription of the printed proof of Theorem 7, with kernel certificates establishing circularity in the transcribed assumption and a counterexample to the reconstructed bridge, exhibited by an explicit quartic over two base fields (`BMThm7Gap.lean`, `BMThm7Transcript.lean`; adjudication record in `Gap/ADJUDICATION.md`, pre-registration frozen before any Lean build in `Gap/STEPS.md`).
 2. **The repair** (`Thm7Prime/`): Theorem 7′ — an unconditional, rank-free repair of the classification statement of BM2000 Theorem 7: the exact characterisation of the normalised repeated-root parameters (`RD211`) as the image, under the parameter map, of the affine rational points of the Weierstrass model `z² = w³+12w²−108w` (Cremona 576i2) away from the pole locus of the map (`aDen ≠ 0`) and the degenerate values `a ∈ {0,1}`, in both directions. The reduction of a general p(2,1,1) quartic to the normalised family is a kernel theorem as well: `Thm7Prime/Classification.lean` defines the equivalence relation induced by ⟨X*⟩ (`AffineEquiv`; reflexivity, symmetry and transitivity proved, packaged as a `Setoid`) and proves the packaged classification — `classification` (a split (2,1,1) quartic is rational-derived iff ⟨X*⟩-equivalent to `Q a` with `RD211 a`) and `classification_by_curve` (iff ⟨X*⟩-equivalent to `Q (aMap w z)` for an affine rational point `(w,z)` of the Weierstrass model of 576i2 with `aDen ≠ 0` and `aMap ∉ {0,1}`, via `thm7prime`); the underlying identity layer is `caseA_scale` / `caseA_normalized`. Both directions reduce to explicit polynomial certificates together with elementary field and order reasoning, consuming no Mordell–Weil input; the completeness direction uses an explicit rational reconstruction of a curve point from the two gate witnesses. Main statement: `theorem thm7prime : Thm7Prime` in `Thm7Prime/Master.lean`.
-3. **Computational certificates** (`scripts/`): Magma and Sage scripts and logs for the load-bearing CAS-derived facts — coverage and documented exceptions are inventoried in `scripts/CERTIFICATES.md` (rank corrections to BM2000 Table 5 and Stroeker Ex. 4.1; the curve E₀ = 576i2 identifications; all Gröbner/elimination/Nullstellensatz cofactors, which are additionally reproduced verbatim in the Lean source and checked by the kernel; the Guy-1989 multiples 2P–5P scripts are out of scope of the present release: they are not load-bearing for any claim here and belong to the manuscript).
+3. **Computational certificates** (`scripts/`): Magma and Sage scripts and logs for the load-bearing CAS-derived facts — coverage and documented exceptions are inventoried in `scripts/CERTIFICATES.md` (rank corrections to BM2000 Table 5 and Stroeker Ex. 4.1; the curve E₀ = 576i2 identifications; all Gröbner/elimination/Nullstellensatz cofactors, which are additionally reproduced verbatim in the Lean source and checked by the kernel; the Guy-1989 multiples 2P–5P identification, the BK-1995 table errata check (`scripts/sage/`), and the generator-saturation checks behind the corrected ranks (`scripts/rank/`) accompany the companion manuscript and are indexed there as well).
 
 ## Verification
 
@@ -65,18 +65,18 @@ The kernel reports the axiom footprint of `thm7prime` as exactly `[propext, Clas
 | Normalization bridge: Conjecture 1 ⇔ no nondegenerate terrain point | `conjecture1_iff_terrain` (+ transport lemmas) | `Gap/BMThm7Terrain.lean` |
 | Fibre correspondence: the three disjuncts ⇔ the three cover fibres (radicand derivation D± ⇔ γ±; chart cover ⇔ cleared model) | `fibre_correspondence`, `Dplus_iff`, `Dminus_iff`, `cleared_model_iff` | `Gap/BMThm7Fibre.lean` |
 
-### Line-pinned references (v1.0.4)
+### Line-pinned references (v1.1.0)
 
-- [`Thm7Statement.thm7prime`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Thm7Prime/Master.lean#L619)
-- [`Thm7Fidelity.rd211_iff_natural`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Thm7Prime/Fidelity.lean#L173)
-- [`Thm7Classification.classification_by_curve`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Thm7Prime/Classification.lean#L188)
-- [`BMThm7FunctionField.Q4_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7FunctionField.lean#L134)
-- [`BMThm7SquareClass.Q4_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7SquareClass.lean#L293)
-- [`BMThm7NormCriterion.gamma_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7NormCriterion.lean#L272)
-- [`BMThm7NormCriterion.RqSq_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7NormCriterion.lean#L76)
-- [`BMThm7Terrain.conjecture1_iff_terrain`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7Terrain.lean#L394)
-- [`BMThm7Fibre.fibre_correspondence`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7Fibre.lean#L293)
-- [`BMThm7Transcript.not_T9_bridge_Q`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.0.4/Gap/BMThm7Transcript.lean#L489)
+- [`Thm7Statement.thm7prime`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Thm7Prime/Master.lean#L619)
+- [`Thm7Fidelity.rd211_iff_natural`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Thm7Prime/Fidelity.lean#L173)
+- [`Thm7Classification.classification_by_curve`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Thm7Prime/Classification.lean#L188)
+- [`BMThm7FunctionField.Q4_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7FunctionField.lean#L134)
+- [`BMThm7SquareClass.Q4_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7SquareClass.lean#L293)
+- [`BMThm7NormCriterion.gamma_not_square_multiquadratic`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7NormCriterion.lean#L272)
+- [`BMThm7NormCriterion.RqSq_not_square`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7NormCriterion.lean#L76)
+- [`BMThm7Terrain.conjecture1_iff_terrain`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7Terrain.lean#L394)
+- [`BMThm7Fibre.fibre_correspondence`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7Fibre.lean#L293)
+- [`BMThm7Transcript.not_T9_bridge_Q`](https://github.com/hirokifukui/rd-quartics-classification/blob/v1.1.0/Gap/BMThm7Transcript.lean#L489)
 
 ## Lineage
 
