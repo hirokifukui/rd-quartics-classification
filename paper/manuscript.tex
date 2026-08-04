@@ -1,0 +1,2052 @@
+% manuscript.tex — AFM 合体稿骨格 (Phase W, 2026-08-03)
+% Title/abstract: 裁定済み 2026-08-03 (SKELETON.md §1–§2, md5 6e8758a6 時点)
+% Source of truth: repo rd-quartics-classification, frozen tag v1.0.4 (commit 6c123af).
+% The Lean artifact wins on any discrepancy. Mathematics is FROZEN; only
+% arrangement and narration move (SKELETON §5).
+% Line-pin convention: blob/v1.0.4/<path>#L<n>.
+% Forbidden phrases (grep must be 0 before any freeze; DISCIPLINE §2):
+%   mutatis mutandis / we believe / trivially / machine-checked / grevlex /
+%   analogous combinatorial expansion / standard binomial identity / obvious /
+%   clearly / easy to see / automatic
+% (use "kernel-verified" / "kernel-certified", never "machine-checked")
+
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Rational-derived quartics in Lean: a corrected
+repeated-root classification and the boundary of Conjecture 1},
+pdfauthor={Hiroki Fukui},
+pdfsubject={Rational-derived polynomials, elliptic curves, formal
+verification in Lean 4}}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{listings}
+% Engine split for Lean Unicode in listings: under XeTeX (tectonic) the
+% literate mechanism does not fire for non-ASCII, so use a system
+% monospace font with the required glyphs; under pdfLaTeX keep literate.
+\ifdefined\XeTeXrevision
+  \usepackage[no-math]{fontspec}
+  \newfontfamily\leanmono{Menlo}[Scale=MatchLowercase]
+  \lstset{basicstyle=\leanmono\footnotesize}
+\else
+  \lstset{basicstyle=\ttfamily\footnotesize}
+\fi
+\lstset{columns=fullflexible, keepspaces=true, escapeinside={(*@}{@*)},
+  literate={ℚ}{{\ensuremath{\mathbb{Q}}}}1 {∀}{{\ensuremath{\forall}}}1
+    {∃}{{\ensuremath{\exists}}}1 {∧}{{\ensuremath{\wedge}}}1
+    {≠}{{\ensuremath{\neq}}}1 {→}{{\ensuremath{\to}}}1
+    {⟨}{{\ensuremath{\langle}}}1 {⟩}{{\ensuremath{\rangle}}}1
+    {σ}{{\ensuremath{\sigma}}}1 {γ}{{\ensuremath{\gamma}}}1
+    {ρ}{{\ensuremath{\rho}}}1 {ζ}{{\ensuremath{\zeta}}}1
+    {'}{{\textquotesingle}}1}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+
+% ---- artifact reference macros (all pins to the frozen tag) ----
+\newcommand{\repourl}{https://github.com/hirokifukui/rd-quartics-classification}
+\newcommand{\repotag}{v1.1.0}
+\newcommand{\repocommit}{a5cf446}
+\newcommand{\conceptdoi}{10.5281/zenodo.21766032}
+\newcommand{\blueprinturl}{https://hirokifukui.github.io/rd-quartics-classification/blueprint/}
+% \leanfile{path} -> hyperlinked path at the frozen tag
+\newcommand{\leanfile}[1]{\href{\repourl/blob/\repotag/#1}{\texttt{#1}}}
+% \leanline{path}{line}{name} -> declaration name pinned to file+line
+\newcommand{\leanline}[3]{\href{\repourl/blob/\repotag/#1\#L#2}{\texttt{#3}}}
+
+\title[Rational-derived quartics in Lean]{Rational-derived quartics in
+Lean:\\ a corrected repeated-root classification\\ and the boundary of
+Conjecture~1}
+
+\author{Hiroki Fukui}
+\address{Research Institute of Criminal Psychiatry / Sex Offender Medical
+Center, Tokyo, Japan; and Department of Neuropsychiatry, Kyoto University,
+Kyoto, Japan. ORCID: 0009-0008-7122-522X}
+\email{fukui@somec.org}
+
+% MSC: 候補 68V20 + 11D41 + 11G05 — 凍結前に三重確認 (SKELETON §4;
+% Manthe の front-matter 事故に学ぶ)
+\subjclass[2020]{Primary 68V20; Secondary 11G05, 11D41}
+\keywords{rational-derived polynomials, elliptic curves, formal
+verification, Lean, mathlib, proof auditing, proof repair}
+
+\begin{document}
+
+\begin{abstract}
+% 裁定済み v2 (2026-08-03). 結語一文 = release 結語と同文・不動.
+A polynomial over $\Q$ is \emph{rational-derived} if it and all of its
+derivatives split completely over $\Q$.  Buchholz and MacDougall
+(J.~Number Theory 81 (2000)) presented a classification of
+rational-derived quartics, their Theorem~7, whose four-distinct-root
+clause is entangled with their Conjecture~1.  We report a three-part
+study of this classification, conducted through a Lean~4 formalization.
+First, an \emph{audit}: the published proof of Theorem~7 contains a
+circularity and a quantifier gap --- the argument assumes that the
+critical vertical translate is rational-derived, an assumption
+equivalent to the splitting it is required to prove (the equivalence is
+kernel-certified), and then concludes universally without discharging
+it; a single quartic, read over two base fields, refutes over $\Q$
+the implication left once the circular assumption is removed, and over
+$\Q(\sqrt{3441})$ the statement's natural analogue under the full
+$K$-derived hypothesis.  Second, a \emph{repair}: Theorem~$7'$, a
+rank-free image theorem identifying the normalised $p(2,1,1)$ sector
+exactly with the image of the rational points of the elliptic curve
+$E\colon z^{2}=w(w-6)(w+18)$ (Cremona \texttt{576i2}) under an
+explicit rational map --- which, together with a kernel-verified affine
+normalisation and the elementary multiplicity cases, yields an
+unconditional classification of all repeated-root quartics; both
+directions reduce to explicit polynomial
+certificates together with elementary field and order arguments, and
+\emph{no rank computation enters}
+--- a proof found because the library lacked Mordell--Weil rank.  The
+main statement compiles with axiom footprint exactly
+\texttt{[propext, Classical.choice, Quot.sound]}.  Third, a
+\emph{boundary}: a kernel-verified bridge identifies the normalised
+form of Conjecture~1 with the nonexistence of nondegenerate rational
+points on an explicit splitting surface; the three double covers
+governing the vertical-translate route are proved nontrivial over the
+splitting extension, with the kernel boundary of each claim marked in
+the text, and the fibre correspondence between the disjuncts of
+Theorem~7 and those covers is closed in the kernel.  Conjecture~1
+itself remains open: this development maps its boundary, it does not
+resolve it.  The formalization detected the gap, sharpened the
+statements, and certified the repair; we record the mathematics
+together with the lessons of the formalization.
+\end{abstract}
+
+\maketitle
+
+%% ================================================================
+%% §1 INTRODUCTION (~4–5p; 最後に書く — SKELETON §8 執筆順序 6)
+%% SOURCE: 新規 + jnt Intro + RNT Intro + READING_NOTES 総合章 §D
+%% ================================================================
+\section{Introduction}\label{sec:intro}
+
+Around 1950, M.~S.~Klamkin exhibited a quartic polynomial,
+$(x-193)(x-141)(x+167)^2$, with the property that it and all of its
+derivatives have integer roots.  For decades it stood as a curiosity:
+Carroll, writing in the Monthly in 1989, conjectured that it was
+essentially the only quartic of its kind with three or more distinct
+roots \cite{Carroll1989}; in the same year Richard Guy's problem column
+printed four pairs of roots of further examples, each pair larger than
+the last, the fourth running to twenty digits \cite{Guy1989}.  In 1995
+Buchholz and Kelly organized the family by an elliptic curve
+\cite{BK1995}, and in 2000 Buchholz and MacDougall presented a
+classification of all such \emph{rational-derived} quartics, their
+Theorem~7, reducing what remained to a conjecture \cite{BM2000}.  One
+outcome of the present study (Theorem~\ref{thm:curve}) is that the
+scattered record has a single organizing point: Guy's four printed
+pairs are, in order and up to one root exchange, the images of the
+consecutive multiples $2P$, $3P$, $4P$, $5P$ of a single point $P$ on a
+single elliptic curve of conductor $576$ --- with Klamkin's quartic the
+first of them.  The examples, scattered over a seventy-six-year record, can be
+identified --- across the different models used in the literature ---
+with consecutive multiples of a single point on a single curve.
+
+Call $f\in\Q[x]$ \emph{rational-derived} if $f$ and every derivative of
+$f$ split completely over $\Q$; for a field $K\supseteq\Q$, call $f$
+\emph{$K$-derived} if $f$ and all its positive-degree derivatives split
+completely over $K$, and \emph{properly} $K$-derived if it is
+$K$-derived but not rational-derived.  Linear, quadratic and cubic
+rational-derived polynomials are completely understood; for quartics,
+sorting by root multiplicities, the types $p(4)$ and $p(3,1)$ are
+always rational-derived, the type $p(2,2)$ never is, the type
+$p(2,1,1)$ --- one double root, two simple --- is the substantial
+positive theory, and the type $p(1,1,1,1)$ is the subject of
+Conjecture~1 of \cite{BM2000}, which asserts that no quartic with four
+distinct roots is rational-derived and which remains open.  (For
+quintics with a triple root the corresponding nonexistence was settled
+by Flynn \cite{Flynn2001}.)  Theorem~7 of \cite{BM2000} presents the
+full classification, and subsequent constructions
+\cite{BC2016,Carrillo2019} cite it as the classification of the
+quartic case.
+
+\subsection{What this paper does}\label{sec:intro:parts}
+
+This paper reports a three-part study of that classification, conducted
+through a Lean~4 \cite{Lean} formalization, and its results sort the quartic
+picture into three strata.  \emph{The repeated-root stratum is now
+classified unconditionally}: Part~II states and proves Theorem~$7'$ in
+image form --- the normalised $p(2,1,1)$ sector is exactly the image of
+the rational points of the curve \texttt{576i2} under an explicit map,
+with no subgroup or coset restriction --- closes the statement-level
+links (gate form against natural form, normalised family against
+arbitrary split quartics) in the kernel, and assembles the
+unconditional classification of all repeated-root quartics
+(Theorem~\ref{thm:assembled}).  \emph{The four-distinct-root stratum is mapped to its
+boundary}: Part~I locates, by a unit-by-unit transcription of the
+published proof, the exact step of \cite{BM2000} that is not
+established --- a printed assumption equivalent to the conclusion it
+should deliver, followed by a universal claim the preceding analysis
+does not cover --- and refutes the reconstructed implication with a
+single quartic read over two base fields; Part~III then proves, in the
+kernel, that Conjecture~1 is equivalent to the nonexistence of
+nondegenerate rational points on an explicit splitting surface, and
+shows that all three routes the printed argument could take are
+governed by double covers that are nontrivial over the splitting
+extension.  \emph{Conjecture~1 itself remains open}: nothing in this
+paper resolves it, and \S\ref{sec:open} displays it, deliberately
+unproved, in the exact form it takes in the development.  Along the
+way the audit corrects two Mordell--Weil ranks in the sources
+(\S\ref{sec:ranks}) and yields the historical unification above.
+
+Throughout, ``the formalization'' names the whole program --- the
+verbatim transcription and audit of the published text, the
+computer-algebra gating of every statement-level definition, the statement-level
+design pressure, and the kernel verification --- not the kernel alone.
+The arc of the paper is that this program \emph{detects, sharpens, and
+certifies}: the audit detected a gap that twenty-six years of use had
+not surfaced; the discipline of writing formal statements sharpened
+loose ones (the coset restriction of the 1995 model, the excluded
+parameters $a\in\{0,1\}$, the degenerate loci of the $a$-map, all now
+exactly delimited); and the kernel certified the repair,
+unconditionally, with the standard three-axiom footprint
+(\S\ref{sec:formal:axioms}).  Attribution is kept
+at that resolution deliberately: it would be inaccurate to say simply
+that ``Lean found the gap.''
+
+\subsection{What we learned}\label{sec:lessons}
+
+The lesson we consider most transferable is that a limitation of the
+library produced a better theorem.  The published route to Theorem~7
+runs through the Mordell--Weil rank of the curve; mathlib \cite{mathlib},
+at the pinned commit, did not provide the Mordell--Weil rank machinery
+required by the published route, so the conditional
+first version of our development carried the rank as a disclosed axiom.
+The pressure to remove it forced a different question --- what do the
+two gate witnesses alone determine? --- and the answer
+(\S\ref{sec:repair:forward}) is an explicit rational reconstruction of
+a point of the curve from the witnesses, discovered by Gr\"obner
+elimination and certified by the kernel, which proves the completeness
+direction with \emph{no rank input at all}.  The repaired theorem is
+not merely formalized; it is unconditional in a way Theorem~7's own statement was not (the
+coset-form classification of \cite{BK1995}, in the repeated-root
+sector, was itself unconditional; the conditionality sat in
+Theorem~7's exhaustion claim), and the disclosed axiom, deliberately retained,
+marks in the kernel's own per-declaration report the point where the
+condition was removed (\S\ref{sec:formal:axioms}).
+
+This experience composes three lessons already recorded in the
+Annals of Formalized Mathematics.  Loeffler and Stoll describe how a formal statement of the
+Riemann hypothesis nearly slipped at its edge --- a junk value that,
+had it been zero, would have made the displayed statement a false
+proposition superficially resembling RH --- and warn that
+statement-level slips are the failure mode to fear
+\cite{LoefflerStoll}; the present paper is the same failure type
+located in the informal literature, where it appears to have gone
+unnoted through twenty-six years of citation, and the statement-fidelity gates of
+\S\ref{sec:fidelity} are our systematic response.  Best, Birkbeck,
+Brasca and their coauthors describe formalizability driving the choice
+of proof, back to older and more elementary arguments
+\cite{BrascaEtAl}; here the drive went further, to a rank-free proof
+absent from the cited record.  Ludwig and Merten describe formalization changing
+the mathematics --- generalizations forced by the formal setting
+\cite{LudwigMerten}; here the change is the unconditional two-gate
+form of the statement itself.
+The type of the present paper --- the audit, repair and certification
+of a published, peer-reviewed classification --- combines the three in
+a single audit-and-repair arc: the slip at the
+statement's edge is its subject, the return to the sound 1995 kernel
+its method, and the sharpened, rank-free theorem its outcome.
+
+\subsection{The artifact}\label{sec:intro:artifact}
+
+Every kernel-verified statement cited in this paper is hyperlinked, at
+theorem level, to a specific declaration at the frozen release
+\repotag{} (commit \texttt{\repocommit}) of \url{\repourl};
+load-bearing computer-algebra claims are indexed to their scripts and
+captured logs (\S\ref{sec:formal:artifact}); the dependency graph
+with per-node kernel status is the blueprint at \url{\blueprinturl},
+and the archived snapshot carries concept DOI \texttt{\conceptdoi}.
+The live development comprises 4{,}347 lines of Lean across twelve
+files in two components --- \texttt{Gap/} (the audit and the boundary)
+and \texttt{Thm7Prime/} (the repair) --- with 209 theorems, one
+disclosed axiom off the main line, and no \texttt{sorry}; toolchain,
+pins, continuous verification and quantitative details are
+\S\ref{sec:formal}.  Part~I is \S\S\ref{sec:gap}--\ref{sec:ranks};
+Part~II is \S\S\ref{sec:repair}--\ref{sec:fidelity}; Part~III is
+\S\ref{sec:boundary}; \S\ref{sec:formal} records the formalization and
+the division of labour, and \S\ref{sec:open} the open sector.
+
+%% ================================================================
+%% PART I — THE AUDIT
+%% ================================================================
+\part*{Part I. The audit}
+
+%% ----------------------------------------------------------------
+%% §2 THE GAP (~5p)
+%% SOURCE: jnt §2 ほぼ全量 + blueprint Ch1–2 (v1.0.4)
+%% 四段・非感情的: reconstructed statement → formal consequence →
+%% counterexample → replacement
+%% ----------------------------------------------------------------
+\section{The gap}\label{sec:gap}
+
+The object of this part is a single section of \cite{BM2000}:
+\S2.2.4, ``Vertical translation of a quartic,'' which supplies the last
+inferential step of that paper's Theorem~7.  The audit is a survey of
+one section, not a verdict on the paper: the identities established
+there are exact and are re-proved in the kernel below, and
+typographical errors and inferential gaps are distinct phenomena, kept
+distinct throughout.  For the audit the section was segmented into
+eleven inferential units $\mathrm{T0}$--$\mathrm{T10}$ covering it with
+no residue; each unit is transcribed as a Lean object in
+\leanfile{Gap/BMThm7Transcript.lean}, over a general field (linearly
+ordered where an order is needed), so that a published $K$-derived
+quartic can act as a transparent negative control below.  Line
+references $\ell.n$ are to the archived working layout of the text
+(hash in \texttt{Gap/PROVENANCE.md}); that layout derives from the
+authors' 2009 revision, whose \S2.2.4 differs from the published
+version only typographically, and all quotations below are given in the
+published wording.
+
+\subsection{The promise and the assumption, quoted}\label{sec:gap:quotes}
+
+The section opens with its promise ($\ell$.529--534):
+
+\begin{quote}\small
+``If we now allow our rational-derived quartics to undergo a vertical
+translate by a rational distance, so that the (highest) local minimum,
+$x_{\min}$ say, is moved up to become a double root, then the remaining
+two roots, $r$ and $s$ say, of the quartic could possibly lie in a
+quadratic extension of $\Q$. Certainly, we have no a priori reason to
+expect the extra roots to be rational (see Fig. 2). None-the-less, in
+this section we show that the latter is precisely the case.''
+\end{quote}
+
+\noindent This is the terminus of the transcript: the proposition the
+section undertakes to prove, transcribed as
+\leanline{Gap/BMThm7Transcript.lean}{201}{T0\_claim}.  The argument
+then names its standing datum.  Having introduced
+$f(x)=x(x-1)(x-a)(x-b)$ and a rational translate amount $c$, it writes
+($\ell$.553--558):
+
+\begin{quote}\small
+``We assume that the resulting quartic, $F(x)$ say, given by
+\[
+F(x) = x(x-1)(x-a)(x-b) + c \tag{4}
+\]
+is rational-derived and has a double root. As before, we require
+$\Delta(F)=0$\dots''
+\end{quote}
+
+\noindent (The equation is displayed there with tag (4); nothing else
+is elided.)  The verb is \emph{assume}; the assumption is transcribed
+as \leanline{Gap/BMThm7Transcript.lean}{83}{T2\_assumption}.  And,
+having excluded the degenerate cases and established the discriminant
+identities recalled below, the section concludes verbatim
+($\ell$.615--620):
+
+\begin{quote}\small
+``Previously one may have thought that the class of rational derived
+quartics with four distinct roots split into two types: those
+obtainable by a rational vertical translate from a p(2,1,1) quartic and
+those not so obtainable. The result of all the previous work shows that
+the latter class is empty and so any rational-derived quartic with four
+distinct roots can be vertically translated into a rational-derived
+quartic with a double root.''
+\end{quote}
+
+\subsection{The formal consequence: a circle and a quantifier jump}
+\label{sec:gap:circle}
+
+The content of the printed assumption is fixed by a one-line
+observation.
+
+\begin{lemma}[\leanline{Gap/BMThm7Transcript.lean}{89}{KDerived\_translate\_iff}]
+\label{lem:circ}
+Let $x_0\in K$ be a critical point of the quartic $f\in K[x]$, and put
+$g(x)=f(x)-f(x_0)$.  Vertical translation leaves every positive-degree
+derivative unchanged.  Consequently, if $f$ is $K$-derived, then $g$ is
+$K$-derived if and only if $g$ itself splits over $K$ (the pinned
+kernel statement; equivalently, since $(x-x_0)^2$ always splits, if and
+only if the residual quadratic $q$ in $g(x)=(x-x_0)^2 q(x)$ splits over
+$K$).
+\end{lemma}
+
+Under the standing hypothesis of the section, the printed assumption is
+therefore \emph{equivalent} to the missing splitting assertion for the
+selected critical translate --- and in particular it already implies
+the existential conclusion asserted at the end of the section.  The
+pointwise equivalence is kernel-certified
+(\leanline{Gap/BMThm7Transcript.lean}{106}{T2\_iff\_conclusion}).  The
+structure of the argument is thus: (1) translate at the selected
+critical point (the highest local minimum); (2) assume the translate is
+rational-derived --- by Lemma~\ref{lem:circ}, assume the required
+splitting for that translate; (3) analyse, under that assumption, the
+resulting repeated-root family; (4) conclude, in the sentence quoted
+above, that the class not covered by the assumption ``is empty'',
+without an argument.  The gap is a circularity together with a
+quantifier jump: the exhaustion is asserted for all rational-derived
+quartics, while the preceding analysis covers exactly those satisfying
+the assumption.  The kernel transcript records this structurally: no
+lemma of the transcribed chain takes the splitting of $f''$ as a
+hypothesis --- the full derived condition enters only through the
+assumption, which is precisely the pointwise splitting assertion
+required for the selected translate --- and the concluding universal
+statement is derivable from the chain precisely when that assumption is
+supplied (\leanline{Gap/BMThm7Transcript.lean}{316}{T9\_via\_T2}).  The
+implication the section actually asserts --- from the hypotheses
+consumed by the transcribed chain to the splitting of the translate ---
+is transcribed, \emph{as a definition and not a theorem}, as
+\leanline{Gap/BMThm7Transcript.lean}{308}{T9\_bridge}; it is refuted in
+\S\ref{sec:gap:onequartic} below.
+
+The origin of the slip is instructive.  For \emph{cubics} the analogous
+bridging step is a theorem: after forcing a double root, a single root
+remains, and its rationality is free from the rationality of the root
+sum --- this is exactly the argument of \S2.1 of \cite{BM2000}, which
+is sound.  For quartics two roots remain, the root sum fixes only their
+sum, and the published argument carries the cubic conclusion across by
+analogy.
+
+The correspondence between the published passages and the transcribed
+chain is summarized in the following table; the axiom footprint of
+every node is the standard three (\S\ref{sec:formal}).
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.24\textwidth}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.11\textwidth}@{}}
+\toprule
+Published passage & Formal node & Hypotheses consumed & Output & Role \\
+\midrule
+assumption preceding (4) &
+\leanline{Gap/BMThm7Transcript.lean}{106}{T2\_iff\_conclusion} &
+quartic is $K$-derived; selected critical point $x_0$ &
+printed assumption $\Leftrightarrow$ splitting of the residual quadratic at $x_0$ &
+missing bridge \\[2pt]
+discriminant identities &
+\leanline{Gap/BMThm7Transcript.lean}{157}{deltaF\_eq\_sym\_mul\_deltaFp\_cubed};
+\leanline{Gap/BMThm7Transcript.lean}{258}{D6\_eq\_sq\_of\_vieta},
+\leanline{Gap/BMThm7Transcript.lean}{278}{D6\_nonneg\_of\_vieta} &
+root and critical-point identities (Vieta data) &
+the displayed identities; $D_6\ge 0$ &
+non-circular chain \\[2pt]
+concluding paragraph &
+\leanline{Gap/BMThm7Transcript.lean}{316}{T9\_via\_T2} &
+the printed assumption &
+splitting at the selected translate &
+quantifier jump \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{One quartic over two base fields}\label{sec:gap:onequartic}
+
+\begin{theorem}[One quartic, two base fields]\label{thm:gap}
+Let
+\[
+f(x)=x(x-136)(x-52)(x+312),\qquad
+F(X)=448^{-4}\,f(448X-312),
+\]
+so that
+$F(X)=X(X-1)\bigl(X-\tfrac{39}{56}\bigr)\bigl(X-\tfrac{13}{16}\bigr)$,
+and let $K=\Q(\sqrt{3441})$.  Then:
+
+\textup{(a)} over $\Q$, $f$ has four distinct rational roots, $f'$
+splits, $f$ avoids every symmetric configuration excluded in
+{\cite[\S2.2.4]{BM2000}}, and no critical vertical translate of $f$
+splits over $\Q$; hence the algebraic hypotheses actually used by the
+non-circular portion of the argument do not imply its concluding claim
+(\leanline{Gap/BMThm7Transcript.lean}{489}{not\_T9\_bridge\_Q});
+
+\textup{(b)} $F$ is properly $K$-derived with four distinct roots, and
+no critical vertical translate of $F$ splits over $K$; hence the
+natural $K$-analogue of the bridging claim is false
+(\leanline{Gap/BMThm7Transcript.lean}{977}{not\_T0\_claim\_K} at the
+critical point selected by the published argument);
+
+\textup{(c)} $F$ is the affine normalisation of the $K$-derived quartic
+exhibited by Stroeker {\cite[Ex.~5.2]{Stroeker2006}} at $t=-7/17$.
+\end{theorem}
+
+The identity
+$F(X)=448^{-4}\,f(448X-312)$
+carries the roots $0,136,52,-312$ of $f$ to
+$\tfrac{39}{56},1,\tfrac{13}{16},0$; the two parts of the theorem are
+two readings of this single affine class.  (Different normalisations of
+the class appear in the artifact: dividing the roots of $f$ by $136$
+gives parameters $(13/34,\,-39/17)$ with selected critical point
+$x_0=13/17$, the coordinates used in the kernel certificates; the
+normalisation $(39/56,\,13/16)$ used in the text is the one matching
+Stroeker's example.  Throughout, ``highest local minimum'' abbreviates
+the transcript's algebraic second-derivative critical-point predicate,
+stated over a linearly ordered field; over $\R$, under the
+nondegeneracy hypotheses in force, it coincides with the higher of the
+two local minima.)
+
+\emph{Over $\Q$.}  The roots $0,136,52,-312$ of $f$ are distinct
+rationals, and
+\[
+f'(x)=4x^3+372x^2-103168x+2206464=4(x+221)(x-24)(x-104)
+\]
+splits over $\Q$.  In the normalised coordinates $(a,b)=(39/56,\,13/16)$,
+\[
+a-b-1=-\tfrac{125}{112},\qquad a-b+1=\tfrac{99}{112},\qquad
+a+b-1=\tfrac{57}{112},
+\]
+all nonzero, so $f$ avoids every symmetric configuration excluded in
+the argument, and the discriminant identities of
+\S\ref{sec:gap:circle} hold for it as identities.  Since $f'(x_0)=0$,
+each $f(x)-f(x_0)$ has a double root at $x_0$; dividing by $(x-x_0)^2$
+leaves a quadratic $q_{x_0}$:
+\[
+\begin{array}{llll}
+x_0=-221: & q(x)=x^2-318x+40131, & \operatorname{disc}=-59400&=-66\cdot 30^2;\\[2pt]
+x_0=24: & q(x)=x^2+172x-43904, & \operatorname{disc}=205200&=57\cdot 60^2;\\[2pt]
+x_0=104: & q(x)=x^2+332x+6656, & \operatorname{disc}=83600&=209\cdot 20^2.
+\end{array}
+\]
+Neither $57$ nor $209$ is a square, and the first discriminant is
+negative; hence no critical translation of $f$ has rational remaining
+roots.  Each identity above is a polynomial identity over $\Z$ and can
+be checked directly; the full chain (the factorization of $f'$, the
+three divisions, the three discriminants, and the non-squareness
+assertions) is certified by the kernel under the standard three axioms
+(\leanfile{Gap/BMThm7Gap.lean}), unconditionally over $\Q$.  We note
+that $f$ itself is not rational-derived:
+$\operatorname{disc}(f'')=40^2\cdot 3441$.  This is exactly what part
+(a) requires --- the counterexample must live outside the circular
+assumption while satisfying all algebraic premises actually invoked
+after its removal --- and it is what part (b) turns to advantage.
+
+\emph{Over $K=\Q(\sqrt{3441})$.}  Over $K$ the second derivative also
+splits:
+\[
+F''(X)=\frac{5376X^2-6744X+1859}{448},\qquad
+\text{with roots}\ \frac{843\pm 5\sqrt{3441}}{1344}\in K,
+\]
+so $F$ is $K$-derived, and properly so, since it is not
+rational-derived.  Its critical points are given by
+\[
+F'(X)=\frac{(4X-3)(14X-13)(64X-13)}{896},\qquad
+X_0\in\Bigl\{\tfrac{13}{64},\ \tfrac34,\ \tfrac{13}{14}\Bigr\},
+\]
+and the residual discriminants of the three critical translates are
+\[
+-66\Bigl(\tfrac{15}{224}\Bigr)^2,\qquad
+57\Bigl(\tfrac{15}{112}\Bigr)^2,\qquad
+209\Bigl(\tfrac{5}{112}\Bigr)^2
+\]
+--- the same square classes as over $\Q$, as they must be, this being
+the same quartic.  Now $K$ is real, so the first is not a square in
+$K$; and a rational number $r$ is a square in $K$ only if $r$ or
+$3441r$ is a square in $\Q$, which fails for $57$ and $209$ (neither
+$57\cdot 3441=196137$ nor $209\cdot 3441=719169$ is a square).  Hence
+\emph{no} critical vertical translate of $F$ splits over $K$, although
+$F$ satisfies the full $K$-derived hypothesis.  The statement at the
+critical point selected by the argument ($X_0=13/14$, the highest local
+minimum, with residual quadratic
+$X^2-\tfrac{73}{112}X+\tfrac{13}{6272}$) is kernel-certified over an
+explicit subfield model of $K$
+(\leanline{Gap/BMThm7Transcript.lean}{977}{not\_T0\_claim\_K}); the
+failure at the remaining two critical points is by the direct
+computation above.  Both refutations, over $\Q$ and over $K$, funnel
+through the same square class $209$.
+
+Two statements should be kept separate.
+Theorem~\ref{thm:gap} does not assert that the statement of
+{\cite[Thm.~7]{BM2000}} over $\Q$ is false --- a counterexample over
+$\Q$ would refute Conjecture~1 of the same paper, which is open
+(\S\ref{sec:open}).  What fails is the passage from the reduction to
+the stated exhaustion; whether that passage holds over $\Q$ under the
+full rational-derived hypothesis is precisely the unresolved
+classification question, entangled with Conjecture~1.  Part (b) shows
+that in the quadratic-field setting to which the paper extends the
+theory, the analogous passage fails as such.  As a statement about the
+literature: we found no independent proof or published repair in the
+sources and citation chains examined through July 2026; the exhaustion
+over $\Q$ must accordingly be regarded as unproved.\footnote{A
+revised version of the paper, dated June 21, 2009, is available from
+the first author's website
+(\url{https://www.ralphthetriangle.com/papers/rational-derived-polynomials};
+accessed July 2026); its \S2.2.4 is unchanged.}
+
+\subsection{Provenance, the surviving parts, and the replacements}
+\label{sec:gap:provenance}
+
+The affine class of the counterexample is not new.  In
+{\cite[Ex.~5.2]{Stroeker2006}} Stroeker exhibits proper $K$-derived
+quartics with parameter $U(t)=(2t^2+2t-1)/(5t+4)$; at $t=-7/17$ (listed
+there with $D=3\cdot 31\cdot 37=3441$) one has $U=-13/17$ and roots
+$1,\,-51/13,\,-17/7,\,-3$, which the affine map $X=13(1-u)/64$ carries
+to $0,\,1,\,39/56,\,13/16$ --- the quartic $F$ of
+Theorem~\ref{thm:gap}.  What is new here is the observation that this
+known $K$-derived quartic, read over $\Q$, satisfies all algebraic
+premises actually invoked by the non-circular portion of
+{\cite[\S2.2.4]{BM2000}} after the printed assumption is removed, while
+falsifying the concluding implication of that portion; and that over
+$K$ it refutes the natural $K$-analogue of the bridge outright.  A
+witness to the gap in the proof of the family's central classification
+was thus already present in the family's own literature.
+
+The audit is a survey, not a demolition, and it closes with an
+accounting of what survives and what was replaced.  The translate setup
+is sound.  The displayed discriminant identities are exact: the identity
+$\Delta(f')=-16\,D_6(a,b)$ at $\ell$.606 and the $-2^{12}$ form of
+$\Delta F$ at $\ell$.568 hold as printed (here $\Delta$ denotes the
+resultant-normalised convention of that paper, to be distinguished from
+the ordinary polynomial discriminant, which satisfies
+$\operatorname{disc}(f')=+4\,D_6$ --- kernel-proved at the level of the
+closed formulas, with the coefficient bridge; the resultant-convention
+identifications themselves are certified in both computer-algebra
+systems [C]).  Within the kernel the closed forms are reconciled:
+\leanline{Gap/BMThm7Transcript.lean}{157}{deltaF\_eq\_sym\_mul\_deltaFp\_cubed}
+proves that the closed form of $\Delta F$ equals
+$\mathrm{sym}\cdot(\text{closed form of }\Delta(f'))^3$ with prefactor
+exactly $1$ --- a tower nowhere printed with that prefactor.  Of the two
+mutually inconsistent printed prefactors ($-2^{12}$ against $D_6^3$ at
+$\ell$.568 and $2^8$ against $\Delta(f')^3$ at $\ell$.611, which with
+$\Delta(f')=-16D_6$ contradict one another), the reconciliation
+adjudicates the $2^8$ as a typographical error, immaterial to the
+argument.  Three further local
+repairs are recorded, each replacing a printed argument by a stronger,
+kernel-checked one.  First, the printed stationary-point analysis of
+the surface $z=D_6(a,b)$ inspects three stationary points and two
+sample values and cannot by itself establish global non-negativity on
+an unbounded domain; the conclusion $D_6\ge 0$ is nonetheless exact and
+is re-proved in analysis-free form, valid over any linearly ordered
+field: on the Vieta locus $D_6$ is $64$ times a square
+(\leanline{Gap/BMThm7Transcript.lean}{258}{D6\_eq\_sq\_of\_vieta},
+\leanline{Gap/BMThm7Transcript.lean}{278}{D6\_nonneg\_of\_vieta}).
+Second, the disposal of the three symmetric configurations, attributed
+in the paper to a closed-access source, is replaced by a self-contained
+proof: in each symmetric case $K$-derivedness forces a rational point
+on the conic $r^2=3(p^2+q^2)$, which has only the trivial solution by
+$3$-adic descent
+(\leanline{Gap/BMThm7Transcript.lean}{636}{symF\_zero\_not\_KDerived}),
+eliminating the external citation from the load path.  Third, a
+``Conversely'' assertion in the same section does not follow from the
+preceding identities; it is not used in the sequel, and no repair is
+required.
+
+Finally, the audit was conducted under a pre-registration discipline:
+the segmentation into units, the classification of each unit, and seven
+numbered predictions about where the argument would and would not
+formalise were fixed in a document whose hash was frozen before any
+Lean build was attempted, and the adjudication record postdates it in
+full.  All seven predictions were confirmed; two were confirmed in a
+form stronger than predicted.  Predictions and confirmations were both
+produced within this project, so the record is presented as procedural
+transparency, not as independent verification.
+
+%% ----------------------------------------------------------------
+%% §3 RANKS AND E₀ (~2.5p)
+%% SOURCE: jnt §3–4
+%% ----------------------------------------------------------------
+\section{Two corrected ranks and the curve $E_0$}\label{sec:ranks}
+
+The audit also recomputed the numerical curve data of \cite{BM2000} and
+\cite{Stroeker2006}.  Two entries required correction; a single curve
+turned out to organize the family's whole record.  The computations of
+this section are retained as scripts and logs in the archived
+development (\texttt{scripts/rank/}, a SageMath~10.8 audit; the rank of
+$E$ itself is additionally certified in Magma,
+\texttt{scripts/magma/}).  The rank statements of
+Theorem~\ref{thm:ranks} are unconditional ($2$-descent; no analytic
+input is consumed by any statement of this paper).
+
+\begin{theorem}[Corrected ranks]\label{thm:ranks}
+Let $E\colon z^2=w(w-6)(w+18)$ be the auxiliary curve of \cite{BM2000}.
+\begin{itemize}
+\item[(a)] $\operatorname{rk} E(\Q(\sqrt{33}))=2$, not $1$ as recorded
+in {\cite[Table~5]{BM2000}}.
+\item[(b)] The elliptic curve underlying Example~4.1 of
+\cite{Stroeker2006} (identical in the earlier report
+\cite{Stroeker2002}) has Mordell--Weil rank $1$ over $\Q$, not $2$ as
+stated there.
+\end{itemize}
+\end{theorem}
+
+\emph{(a) Table 5, $m=33$.}  With $E_m$ the quadratic twist of $E$ by
+$m$ (for $m=33$, minimal model $y^2=x^3-x^2-2097x+28305$), and the
+twist identity
+$\operatorname{rk}E(\Q(\sqrt m))=
+\operatorname{rk}E(\Q)+\operatorname{rk}E_m(\Q)$ used throughout
+{\cite[\S4]{BM2000}}: unconditional two-descent gives
+$\operatorname{rk}E(\Q)=1$ and $\operatorname{rk}E_{33}(\Q)=1$, the
+latter with explicit generator $(-35,240)$ on the minimal model,
+saturation index $1$ (the analytic rank agrees, as an auxiliary check);
+hence $\operatorname{rk}E(\Q(\sqrt{33}))=2$.  A direct computation over
+$\Q(\sqrt{33})$ independently returns rank $2$, with the two
+independent generators $(-12,36)$ and $(3-3s,\,36-12s)$, $s=\sqrt{33}$,
+on $E$.  The $m=33$ entry is the sole discrepancy we assert.  The row-by-row
+audit retained in the artifact is partial and not load-bearing: seven
+of the nine entries of Table~4 are confirmed there by unconditional
+two-descent and the remaining two agree with the analytic ranks
+reported in the source; of Table~5, the $m=73$ row is confirmed
+unconditionally and the $m=57$ row analytically only; the sweep, including
+its aborted run, is preserved as such in \texttt{scripts/rank/}.
+
+\emph{(b) Example 4.1 of \cite{Stroeker2006}.}  The curve of that
+example is the quartic model
+\[
+Z^2 \;=\; 3\,(t^4+4t^3+4t^2+3),
+\]
+with rational points (e.g.\ $(t,Z)=(0,\pm 3)$), whose Jacobian is
+$\Q$-isomorphic to $E_0$ below; by the rank of the curve we mean the
+Mordell--Weil rank of that Jacobian.  Both versions state that this
+curve has rank $2$.  Unconditional two-descent gives rank bounds
+$(1,1)$, hence the Mordell--Weil rank is $1$; the point $(-8,36)$
+generates $E_0(\Q)$ modulo its torsion (saturation index $1$, checked
+unconditionally; log archived with the release accompanying this
+paper).  The analytic rank is also
+$1$, an independent consistency check.  The example's substantive
+conclusion is unaffected: the correspondence asserted there is
+independent of the rank computation, and rank $1$ still makes the
+Mordell--Weil group infinite, so the infinitude of examples is
+preserved.  (The result first circulated as Econometric Institute
+Report EI 2002-30 (2002) and was then published in condensed form as
+\cite{Stroeker2006}; Example~4.1, with the rank-$2$ statement, appears
+identically in both versions.  The correction applies to both; we
+address it primarily to the published version.)
+
+\begin{theorem}[One curve through the family]\label{thm:curve}
+Let $E_0\colon y^2=x^3-156x+560$, of conductor $576$.  Then:
+\begin{itemize}
+\item[(a)] $E_0$ is $\Q$-isomorphic to the auxiliary curve
+$E\colon z^2=w(w-6)(w+18)$ of \cite{BM2000}, so that Tables~4 and~5 of
+that paper are rank tables for the quadratic twists of $E_0$;
+\item[(b)] $E_0$ is $\Q$-isomorphic to the Jacobian of the quartic
+model in Example~4.1 of \cite{Stroeker2006}; in particular the
+corrected rank of Theorem~\ref{thm:ranks}(b) is the rank of $E_0(\Q)$
+itself, which is $1$;
+\item[(c)] let $P=(-12,36)$ on $E\colon z^2=w(w-6)(w+18)$, a point of
+infinite order generating $E(\Q)$ modulo its torsion $(\Z/2\Z)^2$, and
+let $a(w,z)$ be the map \eqref{eq:amap}.  Then
+\[
+\begin{aligned}
+a(2P)&=\frac{90}{77}, &
+a(3P)&=\frac{497610}{167167},\\[2pt]
+a(4P)&=-\frac{128665027260}{69283212011}, &
+a(5P)&=\frac{4173952380480465660}{7010366636418797651},
+\end{aligned}
+\]
+and these are, in order and up to the root-exchange symmetry
+$a\leftrightarrow 1/a$, the normalised parameters of the quartics
+$x^2(x-p)(x-q)$ of the \emph{four} pairs $(p,q)$ printed in Guy's
+problem column \cite{Guy1989} --- the fourth pair after exchanging the
+two simple roots.  The first pair $(308,360)$ yields a translate of
+Klamkin's quartic $(x-193)(x-141)(x+167)^2$ (circa 1950; see
+\cite{Carroll1989}).  (Guy separately credited M.~J.~Miller with a
+refutation of Carroll's uniqueness conjecture; Miller's example is not
+printed there, and we make no identification of it.)
+\end{itemize}
+\end{theorem}
+
+For (a) no computation is needed: the substitution $w=x-4$ carries
+$z^2=w(w-6)(w+18)$ to $y^2=(x-4)(x-10)(x+14)=x^3-156x+560$, an identity
+the reader can check directly; both curves have conductor $576$ ($E_0$
+is \texttt{576i2} in Cremona's tables --- the very curve of
+Theorem~$7'$).  For (b), the quartic $Z^2=g(t)$ with
+$g(t)=3t^4+12t^3+12t^2+9$ has classical invariants
+$I=12ae-3bd+c^2=468$ and $J=72ace+9bcd-27ad^2-27b^2e-2c^3=-15120$
+(writing $g=at^4+bt^3+ct^2+dt+e$; for this convention and the Jacobian
+$y^2=x^3-27Ix-27J$ see, e.g., \cite{Cremona1997}), hence Jacobian
+$y^2=x^3-12636x+408240$; setting $x=9X$, $y=27Y$ and dividing by $3^6$
+gives $Y^2=X^3-156X+560$, i.e.\ $E_0$.  Both steps can be checked by
+hand.  For (c): translating Klamkin's quartic
+$p(x)=(x-193)(x-141)(x+167)^2$ --- whose derivative has the integer
+roots $\{169,-2,-167\}$ and whose second derivative has roots
+$\pm 97$ --- by $167$ gives $x^2(x-308)(x-360)$, the quartic of Guy's
+first printed pair; normalizing to the form $x^2(x-1)(x-a)$ gives
+$a=360/308=90/77$.  Guy's second printed pair $(668668,1990440)$ equals
+$4\cdot(167167,497610)$, and its quartic --- first-derivative roots
+$\{0,423696,1570635\}$, second-derivative roots $\{195624,1133930\}$,
+all integers --- normalizes to $a=497610/167167$ (lowest terms).  With
+$P=(-12,36)$ (equivalently $(-8,36)$ on $E_0$ under $w=x-4$), direct
+computation of the multiples gives the four parameters displayed, with
+both gates of \eqref{eq:gates} satisfied at each of $2P$, $3P$, $4P$,
+$5P$ (script and log archived with the release accompanying this
+paper).  Guy's third printed pair
+$(-277132848044,\,514660109040)$ normalizes to $a(4P)$ exactly; his
+fourth,
+\[
+(16695809521921862640,\ 28041466545675190604),
+\]
+normalizes to $1/a(5P)$, i.e.\ to $a(5P)$ after exchanging the two
+simple roots.  The four printed quartics are thus, up to that symmetry,
+the images of the four consecutive multiples $2P$ through $5P$.
+
+The family's record from 1950 to 2019 --- Klamkin's isolated example,
+Carroll's uniqueness conjecture \cite{Carroll1989}, the pairs printed
+in Guy's column \cite{Guy1989} (with a refutation credited separately
+to M.~J.~Miller, whose example we do not identify), the table of
+\cite{BK1995} --- which already lists these four quartics as the
+consecutive multiples $n\,(75,405)$, $n=1,\dots,4$, on $E_{A}$,
+identifying the first with Carroll's example, the organizing
+observation in print --- the rank tables of \cite{BM2000}, and the
+infinite families of \cite{BC2016,Carrillo2019} --- may be viewed
+retrospectively as the discovery, one multiple at a time, of the images
+of a single point on a single curve.  The steps added here are the
+identification with Guy's printed pairs, the transport to the single
+curve $E_{0}$, and the identification of Stroeker's Jacobian
+(Theorem~\ref{thm:ranks}).
+
+%% ================================================================
+%% PART II — THE REPAIR
+%% ================================================================
+\part*{Part II. The repair}
+
+%% ----------------------------------------------------------------
+%% §4 THEOREM 7′ (~5p)
+%% SOURCE: RNT §2–4 全量 + blueprint Ch3
+%% Dvořák 方式: 定理見出しに formal 宣言名併記
+%% ----------------------------------------------------------------
+\section{Theorem $7'$: the unconditional repair}\label{sec:repair}
+
+Part I located the unproved step; this part states the classification
+that the evidence supports and proves it unconditionally.  The 1995
+kernel of the result --- the description, due to Buchholz and Kelly
+\cite{BK1995}, of the family $x^2(x-1)(x-a)$ --- is sound, and the gap
+lies precisely in the 2000 increment; Theorem~$7'$ below is its
+constructive counterpart.  Two features of the proof are worth
+announcing.  First, \emph{no rank computation enters}: the published
+treatment proceeds via the Mordell--Weil rank of the curve, and we show
+that the rank is needed only to \emph{enumerate} its rational points,
+not to establish the classification itself.  Both directions reduce to
+explicit polynomial certificates together with elementary field and
+order arguments.  Second, the entire theorem is
+formalized: the main statement
+\leanline{Thm7Prime/Master.lean}{619}{thm7prime} compiles against
+mathlib with the standard three-axiom footprint (\S\ref{sec:formal}).  The main text records each identity and the
+logical role of each certificate; the archived development carries the
+complete coefficient lists.
+
+\subsection{The normalised family and the statement}
+\label{sec:repair:statement}
+
+{\sloppy
+A quartic of type $p(2,1,1)$ with double root $c$ and simple roots
+$r_1 \neq r_2$ is carried by the affine substitution
+$x = c + (r_1 - c)u$ to a nonzero multiple of the \emph{normalised
+family}
+\begin{equation}\label{eq:family}
+q_a(x) \;=\; x^{2}(x-1)(x-a), \qquad a = \tfrac{r_2-c}{r_1-c},
+\end{equation}
+with $a \notin \{0,1\}$; rational-derivedness is preserved by such
+substitutions.  (This normalisation identity is itself one of the
+formalized lemmas,
+\leanline{Thm7Prime/Master.lean}{349}{caseA\_normalized}; the full
+bridge from an arbitrary split $(2,1,1)$ quartic is the affine
+classification of \S\ref{sec:fidelity}.)  Since
+$q_a = x^4 - (1{+}a)x^3 + a x^2$, we have
+\[
+q_a' = x\,(4x^2 - 3(1{+}a)x + 2a), \qquad
+q_a'' = 12x^2 - 6(1{+}a)x + 2a,
+\]
+and $q_a'''$ always splits.  Hence $q_a$ is rational-derived if and
+only if the two discriminant \emph{gates}
+\begin{equation}\label{eq:gates}
+G_1(a):\; 9a^{2}-14a+9 = r^{2}, \qquad
+G_2(a):\; 9a^{2}-6a+9 = s^{2}
+\end{equation}
+admit rational solutions $r, s$
+(\leanline{Thm7Prime/Master.lean}{70}{Gate1},
+\leanline{Thm7Prime/Master.lean}{73}{Gate2}).  Write $\mathrm{RD}(a)$
+for the conjunction ``$a \neq 0$, $a \neq 1$, $G_1(a)$, $G_2(a)$''
+(\leanline{Thm7Prime/Master.lean}{77}{RD211}); the equivalence of this
+gate form with the natural derivative-splitting form is itself a kernel
+theorem (\S\ref{sec:fidelity}).\par}
+
+On the curve
+\begin{equation}\label{eq:E}
+E\colon\quad z^{2} \;=\; w^{3}+12w^{2}-108w \;=\; w(w-6)(w+18)
+\qquad(\text{Cremona } \texttt{576i2}),
+\end{equation}
+the identity
+$(z-w-18)(8w+z) = (7w-18)z + (w^3+4w^2-252w)$ holds
+(\leanline{Thm7Prime/Master.lean}{95}{D\_reduce}), and we write
+$D(w,z)$ for this common value of the denominator of the
+Buchholz--MacDougall map
+\begin{equation}\label{eq:amap}
+a(w,z) \;=\; \frac{9\,(2w+z-12)(w+2)}{(z-w-18)(8w+z)}
+\end{equation}
+(\leanline{Thm7Prime/Master.lean}{160}{aMap}).  Here and below,
+$(w,z) \in E(\Q)$ means an affine rational point of \eqref{eq:E}; the
+point at infinity, at which \eqref{eq:amap} is undefined, plays no
+role.
+
+\begin{theorem}[Theorem $7'$, image form (the normalised $p(2,1,1)$
+sector);
+\leanline{Thm7Prime/Master.lean}{619}{thm7prime}]\label{thm:main}
+Let $a \in \Q$.
+\begin{enumerate}
+\item[(i)] \textup{(Backward.)} If $(w,z) \in E(\Q)$ with
+$D(w,z) \neq 0$ and $a := a(w,z) \notin \{0,1\}$, then $\mathrm{RD}(a)$.
+\item[(ii)] \textup{(Forward / completeness.)} If $\mathrm{RD}(a)$, then
+there exists $(w,z) \in E(\Q)$ with $D(w,z) \neq 0$ and $a(w,z) = a$.
+\end{enumerate}
+\end{theorem}
+
+Interchanging the two simple roots of \eqref{eq:family} replaces $a$ by
+$1/a$, so $q_a$ and $q_{1/a}$ represent the same affine-equivalence
+class; Theorem~\ref{thm:main} characterizes the complete set of
+normalised parameters, not a choice of representative for each class.
+The theorem is stated on $E = \texttt{576i2}$ with \emph{no coset
+restriction}; the relation to the coset-restricted 1995 statement is
+\S\ref{sec:repair:bk}.  The Weierstrass model is tied to mathlib's own
+vocabulary inside the development
+(\leanline{Thm7Prime/Master.lean}{288}{OnE\_iff\_equation},
+\leanline{Thm7Prime/Master.lean}{296}{E576i2\_elliptic}).
+
+\subsection{The backward direction: gate identities}
+\label{sec:repair:backward}
+
+The backward direction is a pair of square identities in the function
+field of $E$.  Set $M(w) = w(w+18)(w^2-63w+486)$; note
+$w^2-63w+486 = (w-9)(w-54)$.  On $E$, away from the loci
+$M(w) = 0$ and $D(w,z) = 0$, one has the \emph{exact} identities
+\begin{align}
+9a^2 - 14a + 9 &=
+\Big(\tfrac{3(w-18)(w+6)w(w+18) + (-21w^2+108w-2916)\,z}{M(w)}\Big)^{2},
+\label{eq:g1sq}\\
+9a^2 - 6a + 9 &=
+\Big(\tfrac{3(w-18)(w+6)w(w+18) + (-9w^2-648w+2916)\,z}{M(w)}\Big)^{2},
+\label{eq:g2sq}
+\end{align}
+where $a = a(w,z)$.  Cleared of denominators these are polynomial
+identities modulo the curve equation, verified in Lean by
+\texttt{linear\_combination} with explicit cofactor certificates
+(\leanline{Thm7Prime/Master.lean}{99}{gate1\_cleared},
+\leanline{Thm7Prime/Master.lean}{108}{gate2\_cleared}); the
+certificates were computed exactly in Sage and are reproduced verbatim
+in the formal development, so their correctness is checked by the
+kernel rather than trusted.
+
+The excluded locus is finite and harmless: on $E(\Q)$ the conditions
+$M(w) = 0 \neq D(w,z)$ hold only at $(54,432)$ and $(9,-27)$, both of
+which map to $a = 77/90$, where the gates hold with the explicit
+witnesses $r = 19/10$ and $s = 97/30$
+(\leanline{Thm7Prime/Master.lean}{195}{exceptional\_points}).  This
+proves Theorem~\ref{thm:main}(i)
+(\leanline{Thm7Prime/Master.lean}{255}{thm7\_backward}).
+
+\subsection{The forward direction: an explicit reconstruction from the
+gate witnesses}\label{sec:repair:forward}
+
+Let $a$ satisfy $\mathrm{RD}(a)$, with gate witnesses $r, s$ as in
+\eqref{eq:gates}; note the sign freedom $r \mapsto -r$, $s \mapsto -s$.
+Gr\"obner elimination shows that a point of $E$ above $a$ can be
+reconstructed rationally from the triple $(a,r,s)$.  Concretely: in
+$\Q[z,w,a,r,s]$ with lexicographic order, let $I$ be generated by the
+curve equation, the graph relation $a\,D(w,z) - 9(2w+z-12)(w+2)$, and
+the relations $r\,M(w) - N_1(w,z)$, $s\,M(w) - N_2(w,z)$ tying the
+witnesses to the square roots of \eqref{eq:g1sq}--\eqref{eq:g2sq},
+with $N_1, N_2$ the numerators displayed there.  After saturating $I$
+by $D(w,z)\,M(w)$, its Gr\"obner basis contains the linear relation
+$(3r-7s+12)\,w - 18\,(15a-6r-s-13)$.  The saturated Gr\"obner-basis
+computation was performed in Magma; Sage independently verified the
+resulting reconstruction formulas and the polynomial identities used
+below.  The Gr\"obner computation is used only for \emph{discovery} ---
+correctness of the reconstruction is established by the kernel-checked
+identities.  Set
+\begin{equation}\label{eq:winv}
+W = 18\,(15a - 6r - s - 13), \qquad T = 3r - 7s + 12, \qquad
+w \;=\; \frac{W}{T}
+\end{equation}
+(\leanline{Thm7Prime/Master.lean}{371}{wNp},
+\leanline{Thm7Prime/Master.lean}{374}{wDp}),
+and determine $z$ linearly from $a \cdot D(w,z) = 9(2w+z-12)(w+2)$:
+explicitly $z = z_N/z_D$ with
+\begin{equation}\label{eq:zN}
+\begin{aligned}
+z_N &= 9\,(2W-12T)(W+2T)\,T - a\,\bigl(W^{3}+4W^{2}T-252\,WT^{2}\bigr),\\
+z_D &= 18\,K\,T^{2},
+\end{aligned}
+\end{equation}
+where
+\begin{equation}\label{eq:K}
+K(a,r,s) \;=\; 105a^{2}-45ar-238a+51r+16s+105
+\end{equation}
+(\leanline{Thm7Prime/Master.lean}{382}{zNp},
+\leanline{Thm7Prime/Master.lean}{387}{zDp},
+\leanline{Thm7Prime/Master.lean}{378}{K1p}).  Two polynomial
+consequences are then kernel-checked modulo the two gate relations,
+each by a single \texttt{linear\_combination} step with a Sage-derived
+cofactor certificate:
+\leanline{Thm7Prime/Master.lean}{511}{curve\_cleared} proves that the
+constructed point lies on $E$, and
+\leanline{Thm7Prime/Master.lean}{525}{aden\_cleared} proves the
+pullback identity
+\begin{equation}\label{eq:pullback}
+D(w,z)\cdot T^{3} z_D \;=\; -62208\; P(a,r,s)
+\end{equation}
+for the explicit sextic $P$ of Appendix~\ref{app:data}
+(\leanline{Thm7Prime/Master.lean}{392}{adP6}), so that
+$P(a,r,s) \neq 0$ together with $T \neq 0$ and $z_D \neq 0$ forces
+$D(w,z) \neq 0$.  Independently, the definition of $z$ gives the
+cleared graph identity $a\,D(w,z) = 9(2w+z-12)(w+2)$; once the sign
+choice and \eqref{eq:pullback} establish $D(w,z) \neq 0$, this identity
+yields $a(w,z) = a$.
+
+Three denominators must be controlled, and this is where the sign
+freedom is spent.
+\begin{enumerate}
+\item[(a)] \emph{The $w$-denominator.}  Write
+$Q(a) = 225a^{2}-210a+238 = (15a-7)^{2}+189 > 0$.  An explicit
+elimination certificate gives
+$a^{2}Q(a) \in \langle\, T,\ r^{2}-(9a^{2}-14a+9),\
+s^{2}-(9a^{2}-6a+9) \,\rangle$, so for $a \neq 0$ the gate relations
+force $T \neq 0$, for \emph{every} choice of signs
+(\leanline{Thm7Prime/Master.lean}{424}{wD\_ne}).
+\item[(b)] \emph{The factor $K$.}  A second elimination certificate
+gives
+$(3a-5)(5a-3)\,a^{2}Q(a) \in \langle\, K,\
+r^{2}-(9a^{2}-14a+9),\ s^{2}-(9a^{2}-6a+9) \,\rangle$.  At $a = 5/3$
+the first gate forces $(3r)^{2} = 96$, and at $a = 3/5$ it forces
+$(5r)^{2} = 96$; since $96$ is not a rational square, these branches
+are vacuous, and again $K \neq 0$ for every choice of signs once
+$a \neq 0$ (\leanline{Thm7Prime/Master.lean}{448}{K1\_ne},
+\leanline{Thm7Prime/Master.lean}{405}{sq\_ne\_96}).
+\item[(c)] \emph{The $a$-map denominator at the constructed point.}
+By the pullback identity \eqref{eq:pullback}, this reduces to
+$P(a,r,s) \neq 0$.  The ideal generated by the two gate relations
+together with the four sign conjugates $P(a,\pm r,\pm s)$ is the
+\emph{unit ideal}: a Nullstellensatz certificate (six cofactors,
+reproduced in the formal development) exhibits $1$ as a combination,
+so at least one sign choice keeps $P \neq 0$
+(\leanline{Thm7Prime/Master.lean}{489}{adP6\_cover}).
+\end{enumerate}
+Choosing signs by (c) and applying (a), (b) yields a point of $E(\Q)$
+off the degenerate locus with $a(w,z) = a$
+(\leanline{Thm7Prime/Master.lean}{542}{forward\_core},
+\leanline{Thm7Prime/Master.lean}{597}{thm7\_forward}), proving
+Theorem~\ref{thm:main}(ii).  For example $a = 90/77$, with
+$r = 171/77$, $s = 291/77$, yields
+$(w,z) = (726/25,\, 22176/125)$.
+
+\begin{remark}[No rank input]\label{rem:norank}
+The published treatment of Theorem~7 proceeds through the
+Mordell--Weil rank of $E$ (equal to $1$; re-verified unconditionally by
+$2$-descent in two independent systems).  Theorem~$7'$ consumes no rank
+fact in either direction: rank enters only if one wishes to
+\emph{enumerate} $E(\Q)$ and hence list the rational-derived
+parameters, as in \cite{BK1995}.  In the formal development the
+rank-$1$ statement is present as a single disclosed axiom,
+instance-localized to the curve
+(\leanline{Thm7Prime/Master.lean}{320}{rank\_E576i2}), retained for
+that enumerative purpose and consumed only by auxiliary declarations
+from an earlier conditional architecture; the kernel's per-declaration
+axiom report records that the main theorem does not depend on it
+(\S\ref{sec:formal}).
+\end{remark}
+
+\subsection{Relation to the 1995 classification}\label{sec:repair:bk}
+
+Theorem~$7'$ is not a transport of the theorem of \cite{BK1995} across
+the isogeny of Remark~\ref{rem:isogeny}, for two reasons worth making
+explicit.  First, the 1995 classification runs through the subgroup
+structure of the model curve \texttt{576i3}: the set of points
+corresponding to rational-derived quartics is the index-two subgroup
+generated by $(75,405)$ and $(-6,0)$ (their Theorem~1), the parameter
+map $(X,Y) \mapsto (5X+Y+30)/(9(X+2))$ is injective on the infinite
+cyclic subgroup generated by $(75,405)$ (their Lemma~4), and the
+passage between the two cosets is the substitution symmetry
+$a \mapsto 1/a$ of the family (their Lemma~3).  Neither subgroup
+carries an intrinsic description in the statement; both are identified
+through the $2$-descent and generator computation of that paper, so the
+classification, and any statement transported from it, consumes the
+Mordell--Weil enumeration of the curve.  Theorem~$7'$ consumes no such
+input: on \texttt{576i2} with the map \eqref{eq:amap}, no subgroup or
+coset restriction is needed, and the degenerate locus is finite and
+explicit.  Second, the completeness direction of \cite{BK1995} passes
+through the quartic curve $Y^2 = (9X^2-14X+9)(9X^2-6X+9)$, on which
+only the \emph{product} of the two gates is a square; deciding which of
+its points satisfy each gate individually is again the subgroup
+determination.  The reconstruction \eqref{eq:winv} works directly from
+the pair of gate witnesses and is, to our knowledge, new.  What
+Theorem~$7'$ shares with \cite{BK1995} is the normalised family and the
+two gates; what it removes is the dependence of the classification on
+the arithmetic of the curve.
+
+The closest precursor of the rank-free route, however, is a sketch in
+\cite{BM2000} itself.  Working over quadratic fields, \S3 of that
+paper solves one gate by the chord method, substitutes the resulting
+parametrization into the other, and passes through Mordell's
+transformation to the same curve $E$ and to precisely the map
+\eqref{eq:amap}, asserting that the map provides ``the correspondence
+between all $k$-rational points \dots\ and all $k$-derived quartics''
+before rank determination enters --- for enumeration.  Read literally,
+the asserted correspondence does not hold: the map is undefined where
+$\mathrm{aden}$ vanishes, its values $0$ and $1$ correspond to
+degenerate quartics (the $\Q$-fibres are computed in
+\S\ref{sec:fidelity:excluded}), and neither direction of the correspondence
+is argued there.  Theorem~$7'$ can be read as the proved form of that
+sentence: both directions are established, the exceptional locus is
+exactly characterized, and the certificates are closed-form, hence
+kernel-checkable.  The comparison also sharpens \S\ref{sec:ranks}:
+that the rank should be needed only to \emph{enumerate} is implicit in
+the presentation of \cite{BM2000} itself; what was missing was the
+proof.
+
+\begin{remark}[The two curves]\label{rem:isogeny}
+The Buchholz--Kelly parametrization lives on
+$E_A = \texttt{576i3}\colon Y^2 = X(X-48)(X+6)$ and is stated there
+with a two-coset restriction; the map \eqref{eq:amap} lives on
+$E = \texttt{576i2}$ and, by Theorem~$7'$, needs no restriction.  The
+two are reconciled by the explicit $2$-isogeny $E \to E_A$,
+\[
+(w,z) \;\longmapsto\;
+\Bigl( \frac{(w+6)^{2}}{w-6},\;
+\frac{z\,(w+6)(w-18)}{(w-6)^{2}} \Bigr),
+\]
+with kernel $\{O, (6,0)\}$, verified independently in Magma and Sage.
+The coset restriction appearing in \cite{BK1995} is a phenomenon of
+their model and their parameter map, not of
+\eqref{eq:E}--\eqref{eq:amap}.
+\end{remark}
+
+\begin{remark}[Errata in the sources]\label{rem:errata}
+For the convenience of readers of \cite{BK1995} we record, verified by
+direct recomputation in the computer-algebra layer (script and log
+archived with the release accompanying this paper): rows $n=2,3$ of the table of \cite{BK1995}
+(p.~131) are internally inconsistent --- the printed \emph{points} and
+the printed $a$-values correspond to \emph{opposite} multiples $\pm nQ$
+of the printed generator $Q=(75,405)$: the printed points equal $-2Q$
+and $-3Q$, while the printed $a$-values and root pairs correspond to
+$+2Q$ and $+3Q$; no identification $(X,Y)\equiv(X,-Y)$ that would
+reconcile them is stated in that paper.  The misprinted constant
+of \cite{BM2000} is \S\ref{sec:gap:provenance}; its two corrected
+Mordell--Weil ranks are \S\ref{sec:ranks}.  None of this affects the
+mathematics above.
+\end{remark}
+
+%% ----------------------------------------------------------------
+%% §5 FIDELITY, CLASSIFICATION, ELEMENTARY SECTORS (~3p)
+%% SOURCE: RNT Remark 3.2 + Fidelity/Classification.lean + jnt §2.3–2.4 相当
+%% ----------------------------------------------------------------
+\section{Statement fidelity and the affine classification}
+\label{sec:fidelity}
+
+The kernel guarantees that a formal proposition follows from the
+axioms; whether that proposition models the mathematical problem is
+outside the kernel.  This correspondence --- what the AFM's editorial
+guidance calls \emph{proof auditing} --- was treated in this project as
+a gate: every statement-level definition was cross-checked in Sage and Magma against
+independent reimplementations \emph{before} any proof was attempted,
+and the two links most exposed to a statement-level slip were
+subsequently closed in the kernel as well.  This section records them,
+together with the elementary sectors and the sanity controls.
+
+\subsection{Gate form and natural form}\label{sec:fidelity:gate}
+
+The gate form $\mathrm{RD}(a)$ of \S\ref{sec:repair:statement} was
+chosen at design time as the division-free, verification-friendly
+restatement of rational-derivedness.  Its correspondence with the
+natural form --- the polynomial $Q_a = X^{2}(X-1)(X-\mathrm{C}\,a)$ and
+its first three \texttt{Polynomial.derivative}s split over $\Q$
+(\leanline{Thm7Prime/Fidelity.lean}{27}{NaturalRD}) --- is a kernel
+theorem:
+
+\begin{theorem}[Gate form $\iff$ natural form;
+\leanline{Thm7Prime/Fidelity.lean}{173}{rd211\_iff\_natural}]
+\label{thm:fidelity}
+$\mathrm{RD211}(a) \iff a\neq 0 \wedge a\neq 1 \wedge
+\mathrm{NaturalRD}(a)$.
+\end{theorem}
+
+Forward, the kernel-computed derivatives split explicitly under the
+gates; conversely, a quadratic over $\Q$ with nonzero leading
+coefficient that splits has square discriminant, applied to both
+derivatives.  The CAS statement-fidelity gate remains in the
+development as the independent design-time cross-check
+(\texttt{scripts/sage/wp1\_fidelity.sage}).
+
+\subsection{The affine classification}\label{sec:fidelity:affine}
+
+The reviewer-facing form of the repaired result is the bridge from an
+arbitrary split $(2,1,1)$ quartic to the normalised family, packaged as
+one kernel theorem.  With $f\sim g$ iff $g=\nu\,f(\lambda X+\mu)$ for
+$\lambda,\nu\neq 0$ --- an equivalence relation, kernel-checked
+(\leanline{Thm7Prime/Classification.lean}{30}{AffineEquiv}) --- and
+$f$ a split $(2,1,1)$ quartic
+(\leanline{Thm7Prime/Classification.lean}{35}{IsP211}):
+
+\begin{theorem}[Affine classification;
+\leanline{Thm7Prime/Classification.lean}{175}{classification},
+\leanline{Thm7Prime/Classification.lean}{188}{classification\_by\_curve}]
+\label{thm:classification}
+For a split $(2,1,1)$ quartic $f$: $f$ is rational-derived iff
+$f\sim Q_{a}$ for some $a$ with
+$\mathrm{RD211}(a)$; equivalently, iff $f\sim Q_{a(w,z)}$ for an affine
+rational point $(w,z)$ of the Weierstrass model of \texttt{576i2} with
+$D(w,z)\neq0$ and $a(w,z)\notin\{0,1\}$.
+\end{theorem}
+
+Rational-derivedness is invariant under $\sim$ (chain rule and
+transport of splitting along linear substitutions; $\sim$ is the
+equivalence relation induced by the action of the group
+$\langle X\rangle$ of \cite{BM2000} --- the conservative vertical
+translations extending it to $\langle X^{*}\rangle$ are exactly the
+subject of \S\ref{sec:gap}); the
+normalisation $a=(r_{2}-c)/(r_{1}-c)$ is the kernel form of
+\texttt{caseA\_normalized}; the gates then come from
+Theorem~\ref{thm:fidelity}, and the curve form from
+Theorem~\ref{thm:main}.
+
+\subsection{The excluded parameters and the elementary sectors}
+\label{sec:fidelity:excluded}
+
+The exclusion $a \neq 0$ is genuinely needed and completely understood:
+the fibre $a^{-1}(0) \cap E(\Q)$ consists of the three points $(6,0)$,
+$(-12,36)$, $(-2,-16)$, corresponding to the degeneration of the family
+to the (always rational-derived) type $p(3,1)$.  The exclusion
+$a \neq 1$ is vacuous on rational points: an exact divisor computation
+shows the fibre $a^{-1}(1)$ has \emph{no} rational points (the two
+quadratic factors of its eliminant $(w+2)^2(w^2-36w-108)(w^2-108)$ have
+no rational roots, and at $w=-2$ the graph relation forces $z=16$,
+where $D(-2,16)=0$, outside the domain of the map); independently,
+$a=1$ fails the second gate since $12$ is not a square.  The elementary
+sectors are dispatched directly: types $p(4)$ and $p(3,1)$ are always
+rational-derived (up to the substitutions of
+\S\ref{sec:repair:statement} these are $x^{4}$ and $x^{3}(x-b)$, whose
+derivatives have visibly rational roots), and type $p(2,2)$ never is
+(for $x^2(x-t)^2$ one finds $\operatorname{disc}(q'') = 48t^{2}$, and
+$48$ is not a square).  The pieces assemble into the full statement:
+
+\begin{theorem}[Theorem $7'$, assembled form: the repeated-root
+classification]\label{thm:assembled}
+A quartic over $\Q$ with a repeated root is rational-derived exactly in
+the following cases: types $p(4)$ and $p(3,1)$, always; type $p(2,2)$,
+never; and, for a split $(2,1,1)$ quartic, if and only if it is
+$\sim$-equivalent to $Q_{a(w,z)}$ for an affine rational point $(w,z)$
+of \texttt{576i2} with $D(w,z)\neq0$ and $a(w,z)\notin\{0,1\}$.
+\end{theorem}
+
+\noindent Each clause decomposes into kernel theorems: the $p(2,1,1)$
+clause is Theorem~\ref{thm:classification}, through
+Theorem~\ref{thm:fidelity} and the image form Theorem~\ref{thm:main};
+the elementary sectors are the computations above; the case split by
+multiplicity type, and the observation that a quartic with an
+irrational root is not rational-derived (so the split hypothesis is
+harmless), are elementary [M].  The remaining sector --- four distinct
+roots --- is Part~III.
+
+\subsection{Counterexamples and sanity controls}
+\label{sec:fidelity:sanity}
+
+Following the practice of exhibiting the counterexamples that delimit a
+formalized statement, the development carries a sanity
+layer, kernel-checked independently of the main proofs: a positive
+control (the parameter $a=77/90$ passes both gates,
+\leanline{Thm7Prime/Master.lean}{251}{gates\_at\_77\_90}) and a
+near-miss that doubles as the negative control (Stroeker's properly
+$K$-derived quartic of Theorem~\ref{thm:gap}: its $f'$ splits over
+$\Q$ while $f''$ does not,
+\leanline{Gap/BMThm7GapK.lean}{142}{fp\_splits},
+\leanline{Gap/BMThm7GapK.lean}{148}{fpp\_not\_split\_over\_Q}, so the
+quartic passes the first gate over $\Q$, fails the second, and the pair
+of gates --- not either alone --- carries the classification).  The same quartic serves as the transparent
+negative control of the transcript (\S\ref{sec:gap}), read over two
+base fields; the sanity layer and the audit share their witnesses by
+design, so that a statement-level slip in either would have been caught
+by the other.
+
+%% ================================================================
+%% PART III — THE BOUNDARY
+%% ================================================================
+\part*{Part III. The boundary}
+
+%% ----------------------------------------------------------------
+%% §6 TERRAIN AND THE NORMALIZATION BRIDGE (~5–6p)
+%% SOURCE: blueprint Ch4 (v1.0.4) — 用語は repo と一致 (査読者は突合する)
+%% [K]/[C]/[M]/[A] ラベル規約をこの部の冒頭で宣言 (Ch4 と同文)
+%% ----------------------------------------------------------------
+\section{The terrain and the normalisation bridge}\label{sec:boundary}
+
+With Theorem~$7'$ the repeated-root sector is classified
+unconditionally; what remains open of the original Theorem~7 is exactly
+its $p(1,1,1,1)$ clause, entangled with Conjecture~1 of \cite{BM2000}.
+This part maps the terrain surrounding that boundary.  Throughout it,
+each load-bearing claim carries a label: [K] = kernel-verified in Lean;
+[C] = computer-algebra computation (two-system where so stated; scripts
+and coverage in \texttt{scripts/CERTIFICATES.md}); [M] = ordinary
+mathematical deduction, written but not kernel-checked; [A] = research
+assessment.  Narrative sentences without a label carry no evidential
+weight.
+
+\subsection{The chart, the splitting surface, and the three covers}
+\label{sec:boundary:chart}
+
+Fixed notation for the whole part.  $B$ denotes the rational
+$(a,b)$-chart of the $\sigma_{3}=0$ root space of \S2.2.3 of
+\cite{BM2000}: the quartic has roots $\{1,a,b,c\}$ with
+$c=-ab/\mathrm{den}$, $\mathrm{den}=ab+a+b$; its function field is
+$K(B)=\Q(a,b)$.  The chart quantities
+(\leanline{Gap/BMThm7Boundary.lean}{19}{den},
+\leanline{Gap/BMThm7Boundary.lean}{21}{s1n},
+\leanline{Gap/BMThm7Boundary.lean}{25}{Rq},
+\leanline{Gap/BMThm7Boundary.lean}{27}{Sq},
+\leanline{Gap/BMThm7Boundary.lean}{29}{Q4}) are
+$s_{1n}=\sigma_{1}\,\mathrm{den}$, $s_{2n}=\sigma_{2}\,\mathrm{den}$,
+the cleared splitting conditions
+$R_{q}=\mathrm{den}^{2}(9\sigma_{1}^{2}-32\sigma_{2})$ (for $f'$) and
+$S_{q}=\mathrm{den}^{2}(9\sigma_{1}^{2}-24\sigma_{2})$ (for $f''$), and
+the funnel
+$Q_{4}=(3R_{q}-S_{q})/18=\mathrm{den}^{2}(\sigma_{1}^{2}-4\sigma_{2})$.
+Three kernel identities organize everything below:
+\begin{align}
+18\,Q_{4}&=3R_{q}-S_{q}
+&&\text{(I1, \leanline{Gap/BMThm7Boundary.lean}{36}{I1\_cleared})},
+\label{eq:I1}\\
+s_{1n}^{2}-R_{q}&=-8\,Q_{4}
+&&\text{(I2, \leanline{Gap/BMThm7Boundary.lean}{40}{I2})},
+\label{eq:I2}\\
+Q_{4}&=F_{1}\,F_{2}\,F_{3}
+&&\text{(\leanline{Gap/BMThm7Boundary.lean}{44}{Q4\_factor})},
+\label{eq:Q4factor}
+\end{align}
+with $F_{1}=ab+a+b-1$, $F_{2}=ab+a-b^{2}+b$, $F_{3}=a^{2}-ab-a-b$.
+The kernel statements are the identities only; that $Q_{4}$ is
+squarefree and that each $F_{i}=0$ is an irreducible plane curve of
+genus~$0$ are two-system computer-algebra facts [C], not part of the
+kernel statement.  Three further kernel factorisations
+(\leanline{Gap/BMThm7Boundary.lean}{50}{pairing1},
+\leanline{Gap/BMThm7Boundary.lean}{55}{pairing2},
+\leanline{Gap/BMThm7Boundary.lean}{60}{pairing3}) identify, away from
+the vanishing of explicit cofactors, the locus $Q_{4}=0$ --- where
+Theorem~7's conclusion is algebraically forced --- with the locus on which the
+quartic $\{1,a,b,c\}$ is symmetric under one of the three root
+pairings: Buchholz--MacDougall's own excluded case.
+
+$S$ denotes the \emph{splitting cover} of $B$: the biquadratic cover
+obtained by adjoining $z$ with $z^{2}=R_{q}$ and $w$ with
+$w^{2}=S_{q}$; its function field is, by definition,
+$K(S)=\Q(a,b)(z,w)$.  Concretely, let $U_{B}\subset B$ be the complement of the vanishing
+locus of
+\[
+\mathrm{den}\cdot ab\,(a-1)(b-1)(a-b)\,(ab+\mathrm{den})\,
+(a+\mathrm{den})\,(b+\mathrm{den})
+\]
+--- exactly the base-variable inequalities of a nondegenerate terrain
+point (Proposition~\ref{prop:bridge}: the factors beyond
+$\mathrm{den}$ express, after clearing $\mathrm{den}$, that the four
+roots $\{1,a,b,c\}$, $c=-ab/\mathrm{den}$, are pairwise distinct and
+nonzero).  The splitting surface over the chart is the affine model
+\[
+S_{U}:=\operatorname{Spec}\bigl(\mathcal O(U_{B})[z,w]/
+(z^{2}-R_{q},\,w^{2}-S_{q})\bigr),
+\]
+and we write $U:=S_{U}$ for this open model.  Every element of
+$K(S)$ is a $K(B)$-combination of the spanning set $\{1,z,w,zw\}$ [M];
+it is a basis once Proposition~\ref{prop:S_integral} is in place.
+Kernel statements about $K(S)$ below are proved in span form ---
+quantifying over \emph{any} field equipped with an embedding of $K(B)$
+and square roots of $R_{q}$, $S_{q}$ --- and reach all of $K(S)$
+through that spanning set [M].
+
+For a critical point $x_{0}$ of the chart quartic $q$, \emph{the
+disjunct at $x_{0}$} is the statement that the vertical translate
+$q-q(x_{0})$ --- the transcript's \texttt{bmTranslate}, the very
+operation the printed proof performs --- splits over $\Q$.  The
+critical points are $0$ and $(3\sigma_{1}\pm\rho)/8$ with
+$\rho=z/\mathrm{den}$; the corresponding disjuncts are $D_{0}$,
+$D_{+}$, $D_{-}$
+(\leanline{Gap/BMThm7Fibre.lean}{39}{D0},
+\leanline{Gap/BMThm7Fibre.lean}{43}{Dplus},
+\leanline{Gap/BMThm7Fibre.lean}{47}{Dminus}).  Exchanging the sign of
+the square root $\rho$ exchanges $D_{+}$ and $D_{-}$; no conditions
+beyond $\mathrm{den}\neq0$ and the splitting witness $z^{2}=R_{q}$ are
+folded into the predicates.  Each disjunct is governed by a double
+cover of $U$:
+
+\begin{center}\small
+\begin{tabular}{llll}
+\toprule
+disjunct & cover & radicand & exclusion \\
+\midrule
+$x_{0}=0$ & $\widetilde C_{0}\colon v^{2}=Q_{4}$ & $Q_{4}$ (by I1) &
+[K] Thm~\ref{thm:multiquad} \\
+$x_{0}=\tfrac{3\sigma_{1}+\rho}{8}$ & $C_{+}\colon v^{2}=\gamma_{+}$ &
+$\gamma_{+}=s_{1n}(s_{1n}-z)$ & [K] Thm~\ref{thm:gamma} \\
+$x_{0}=\tfrac{3\sigma_{1}-\rho}{8}$ & $C_{-}\colon v^{2}=\gamma_{-}$ &
+$\gamma_{-}=s_{1n}(s_{1n}+z)$ & [K] Thm~\ref{thm:gamma} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The two $C_{\pm}$ radicands are \emph{conjugate}; neither is
+claimed to have square class $-2Q_{4}$ itself.  Their product ---
+equivalently their layer norm --- has square class $-2Q_{4}$:
+$\gamma_{+}\gamma_{-}=s_{1n}^{2}(s_{1n}^{2}-z^{2})=-8s_{1n}^{2}Q_{4}$
+by \eqref{eq:I2}, and it is this \emph{norm class} that the kernel
+obstruction consumes.  Three covers, one sextic, two obstruction
+routes.  Each cover's branch locus is supported on the zero locus of
+its radicand on $U$, with ramification exactly at the codimension-one
+points where the radicand has odd valuation.
+
+\subsection{The normalisation bridge}\label{sec:boundary:bridge}
+
+In normalised form, Conjecture~1 asserts that no quartic
+$x(x-1)(x-a)(x-b)$ with four distinct roots is $\Q$-derived
+(\leanline{Gap/BMThm7Transcript.lean}{996}{Conjecture1\_normal};
+stated as a definition, without proof --- the open statement of
+\S\ref{sec:open}).  The chart of \S\ref{sec:boundary:chart} is where
+the printed argument of \S2.2.3--2.2.4 of \cite{BM2000} works; the
+following kernel theorem identifies the two pictures exactly.
+
+\begin{proposition}[Normalization bridge;
+\leanline{Gap/BMThm7Terrain.lean}{394}{conjecture1\_iff\_terrain}]
+\label{prop:bridge}
+There exists a $\Q$-derived quartic with four distinct rational roots
+(the $\{0,1,a,b\}$ normal form of Conjecture~1) if and only if there
+exists a nondegenerate rational point of the splitting terrain:
+$(a,b,z,w)\in\Q^{4}$ with $z^{2}=R_{q}(a,b)$, $w^{2}=S_{q}(a,b)$,
+$\mathrm{den}(a,b)\neq0$, and the four roots $\{1,a,b,c\}$,
+$c=-ab/\mathrm{den}$, pairwise distinct and nonzero.  Equivalently:
+the normalised Conjecture~1 holds iff $S(\Q)$ has no nondegenerate
+point.  (The reduction of the unnormalised conjecture to the
+$\{0,1,a,b\}$ normal form is the affine action --- ordinary
+mathematics [M]; only the normal form enters the kernel.)
+\end{proposition}
+
+Both directions are kernel theorems, with every normalisation
+condition tracked
+(\leanline{Gap/BMThm7Terrain.lean}{124}{kderived\_of\_terrain},
+\leanline{Gap/BMThm7Terrain.lean}{223}{terrain\_of\_kderived}).  In
+outline: a terrain point yields the monic quartic
+$f=(x-1)(x-a)(x-b)(x-c)$ with $e_{3}=0$, so $f'(0)=0$ and
+$f'=x(4x^{2}-3e_{1}x+2e_{2})$; the witnesses $z,w$ split the quadratic
+factors of $f'$ and $f''$ via
+$9e_{1}^{2}-32e_{2}=(z/\mathrm{den})^{2}$ and
+$9e_{1}^{2}-24e_{2}=(w/\mathrm{den})^{2}$, and an affine change carries
+$f$ to the $\{0,1,a',b'\}$ normal form.  Conversely, a $\Q$-derived
+quartic in normal form has a rational critical point $x_{0}$, which is
+not a root (the roots are distinct, so $f$ is squarefree and
+$f'(r)\neq0$ at each root $r$); translating $x_{0}$ to the origin and
+scaling the nonzero root $-x_{0}$ to $1$ produces roots $\{1,A,B,C\}$
+with $e_{3}=0$, forces $\mathrm{den}(A,B)\neq0$ (else $AB=0$,
+contradicting nonzero roots), and the rational root differences of the
+split quadratic factors supply the witnesses
+$z:=4\,\mathrm{den}\,(r_{+}-r_{-})$,
+$w:=6\,\mathrm{den}\,(u_{+}-u_{-})$.
+
+\subsection{The fibre correspondence and the radicand derivation}
+\label{sec:boundary:fibre}
+
+The disjuncts and the covers are tied together fibrewise, in the
+kernel.
+
+\begin{proposition}[Fibre correspondence;
+\leanline{Gap/BMThm7Fibre.lean}{293}{fibre\_correspondence}]
+\label{prop:fibre}
+Over $\mathrm{den}\neq0$ with $z^{2}=R_{q}$: $D_{0}$ holds iff the
+fibre of the cleared model $\widetilde C_{0}\colon v^{2}=Q_{4}$ has a
+rational point, and $D_{\pm}$ holds iff the fibre of
+$C_{\pm}\colon v^{2}=\gamma_{\pm}$ has a rational point.  (The kernel
+hypotheses are exactly these two --- $\mathrm{den}\neq0$ and
+$z^{2}=R_{q}$; no further nondegeneracy is needed, so the formal
+statement is slightly stronger than the chart discussion requires.)
+\end{proposition}
+
+For $D_{0}$
+(\leanline{Gap/BMThm7Fibre.lean}{51}{D0\_iff\_disc}): since
+$\sigma_{3}=0$, the translate at $0$ factors as
+$q-q(0)=X^{2}(X^{2}-\sigma_{1}X+\sigma_{2})$, so $D_{0}$ holds iff
+$\sigma_{1}^{2}-4\sigma_{2}$ is a rational square --- the fibre of the
+\emph{chart} cover $C_{0}\colon t^{2}=\sigma_{1}^{2}-4\sigma_{2}$.  The
+chart cover and the cleared model are then identified by
+\leanline{Gap/BMThm7Fibre.lean}{98}{cleared\_model\_iff}: over
+$\mathrm{den}\neq0$ the substitution $v=\mathrm{den}\,t$ is a bijection
+on rational solutions (multiplication by the nonzero square
+$\mathrm{den}^{2}$; the identity \eqref{eq:I1} is consumed
+definitionally), so clearing the denominator introduces no spurious
+solutions and loses none.  For $D_{\pm}$
+(\leanline{Gap/BMThm7Fibre.lean}{117}{Dplus\_iff},
+\leanline{Gap/BMThm7Fibre.lean}{204}{Dminus\_iff}) the radicand is
+\emph{derived}, not posited: at
+$x_{0}=(3s_{1n}\pm z)/(8\,\mathrm{den})$ the translate factors as
+$(X-x_{0})^{2}(X^{2}+BX+C)$ with $B=2x_{0}-\sigma_{1}$,
+$C=\sigma_{2}+3x_{0}^{2}-2\sigma_{1}x_{0}$, the linear-coefficient
+match being exactly $q'(x_{0})=0$ (available from $z^{2}=R_{q}$); the
+discriminant identity $B^{2}-4C=\sigma_{1}(\sigma_{1}\mp\rho)/4$ and
+the clearing
+$4\,\mathrm{den}^{2}(B^{2}-4C)=s_{1n}(s_{1n}\mp z)=\gamma_{\pm}$
+(solution bijection $v=2\,\mathrm{den}\,d$) convert the splitting of
+the quadratic cofactor into ``$\gamma_{\pm}$ is a rational square'' ---
+the fibre of $C_{\pm}$.  Signs, denominators and the direction of
+clearing are all carried inside the kernel statements; the same
+identities are certified independently in CAS [C:
+\texttt{terrain\_crosscheck}, seven checks covering the critical
+points, the factorizations, the discriminant identities and the
+clearing].
+
+\subsection{Integrality of the splitting surface}
+\label{sec:boundary:integral}
+
+\begin{proposition}[Integrality]\label{prop:S_integral}
+$R_{q}$, $S_{q}$ and $R_{q}S_{q}$ are nonsquares in $\Q(a,b)$, and
+remain nonsquares in $\overline{\Q}(a,b)$.  Consequently
+$[K(S):K(B)]=4$, the spanning set $\{1,z,w,zw\}$ is a basis, and the
+splitting surface $S_{U}$ is geometrically integral, and its induced
+dominant map to $B$ has generic degree four.
+\end{proposition}
+
+Over $\Q$ the three exclusions are kernel theorems
+(\leanline{Gap/BMThm7NormCriterion.lean}{60}{Rq\_not\_square},
+\leanline{Gap/BMThm7NormCriterion.lean}{67}{Sq\_not\_square},
+\leanline{Gap/BMThm7NormCriterion.lean}{76}{RqSq\_not\_square}), by
+value specialisation at witness points
+($R_{q}(2,3)=2480$, $S_{q}(1,2)=876$, $(R_{q}S_{q})(1,2)=171696$, none
+a rational square) [K].  A remark on method: on the chart, $R_{q}$ and
+$S_{q}$ are positive semi-definite --- a quartic with four real roots
+has non-negative derivative discriminants --- so any technique that
+excludes squares by exhibiting a \emph{negative value} is unavailable
+for them in principle, and value specialisation at non-square values
+was the route adopted here.  Over $\overline{\Q}$: each of the three has a
+nonconstant irreducible factor of odd multiplicity ($R_{q}$
+irreducible; $S_{q}=3\cdot(\text{irreducible})$; the two are coprime)
+[C], and a squarefree-base-change lemma [M] --- an irreducible factor
+of odd multiplicity survives every algebraic extension of the constant
+field, because squarefreeness is detected by a gcd computation
+unchanged by extension, distinct factors share no geometric component,
+and a square has even valuation along every divisor; an infinite
+extension reduces to a finite subextension containing the finitely
+many coefficients of a hypothetical square root --- shows none is a
+square in $\overline{\Q}(a,b)$.  Degree four, the basis, and
+integrality follow from the standard biquadratic criterion [M]: for
+$r,s,rs$ all nonsquares in a field of characteristic $\neq2$, the
+algebra $K[z,w]/(z^{2}-r,w^{2}-s)$ is a field of degree four with
+basis $\{1,z,w,zw\}$.  Scheme-theoretically, the coordinate ring of
+$S_{U}$ is a free $\mathcal O(U_{B})$-module on that basis, hence
+torsion-free, hence embeds in its generic localisation --- the
+degree-four field just constructed --- and a ring embedding into a
+field is a domain; the same chain over $\overline{\Q}$ gives geometric
+integrality [M].
+
+\subsection{Cover nontriviality}\label{sec:boundary:covers}
+
+A square in the function field $\Q(a,b)$ is non-negative at every
+rational point where it is defined.  Each of the eight candidates whose
+squareness would trivialise a double cover is \emph{negative} at an
+explicit rational point --- the eight negativity certificates are
+kernel lemmas at the points $(-51/13,-17/7)$ (a $K$-witness from
+Theorem~\ref{thm:gap}) and $(1,3)$
+(\leanline{Gap/BMThm7Boundary.lean}{72}{Q4\_neg} through
+\leanline{Gap/BMThm7Boundary.lean}{94}{n2Q4RqSq\_neg}) --- and the
+deduction itself is in the kernel: the specialisation principle is
+evaluation along a ring homomorphism
+(\leanline{Gap/BMThm7FunctionField.lean}{108}{sq\_eval\_nonneg}),
+squares descend from the fraction field to the integrally closed ring
+$\Q[a][b]$
+(\leanline{Gap/BMThm7FunctionField.lean}{117}{square\_descent}), and
+all eight non-squareness verdicts in $\Q(a,b)$ are kernel theorems
+(\leanline{Gap/BMThm7FunctionField.lean}{134}{Q4\_not\_square} and its
+seven companions).  The two-system record remains as the discovery
+artifact [C].
+
+For the two abstract kernel statements below, let $M$ be any field
+containing $\Q(a,b)$ via an embedding
+$\iota\colon\Q(a,b)\hookrightarrow M$, and let
+$\varrho,\varsigma\in M$ satisfy $\varrho^{2}=\iota(R_{q})$ and
+$\varsigma^{2}=\iota(S_{q})$ (written $\varrho,\varsigma$ to keep
+them distinct from the chart quantity $\rho=z/\mathrm{den}$); all
+spans are over $F:=\iota(\Q(a,b))$, with which we identify
+$\Q(a,b)$ below --- in the kernel statements the four coefficients are
+quantified over the base field.
+
+\begin{theorem}[Non-squareness in the multiquadratic extension;
+\leanline{Gap/BMThm7SquareClass.lean}{293}{Q4\_not\_square\_multiquadratic};
+\leanline{Gap/BMThm7SquareClass.lean}{315}{n2Q4\_not\_square\_multiquadratic}]
+\label{thm:multiquad}
+In $M$ as above, neither $Q_{4}$ nor $-2Q_{4}$ is the square of any
+element of
+$\operatorname{Span}_{F}\{1,\varrho,\varsigma,\varrho\varsigma\}$.
+\end{theorem}
+
+The engine is a biquadratic square-class transfer
+(\leanline{Gap/BMThm7SquareClass.lean}{81}{biquadratic\_transfer}):
+if an element of the $F$-span squares to $x \in F$, then one of $x$,
+$xR_{q}$, $xS_{q}$, $xR_{q}S_{q}$ is a square in $F$; degenerate cases are not excluded ---
+the case analysis absorbs them.  The transfer reduces the theorem to
+the eight base-field exclusions above.  Since every element of $K(S)$
+lies in the span [M], the theorem excludes squares in all of $K(S)$;
+the kernel boundary is exactly the span statement, the spanning fact
+is ordinary mathematics.
+
+\begin{theorem}[$C_{\pm}$-exclusion in the layer;
+\leanline{Gap/BMThm7NormCriterion.lean}{272}{gamma\_not\_square\_multiquadratic}]
+\label{thm:gamma}
+For either sign, $\gamma_{\pm}=s_{1n}(s_{1n}\mp\varrho)$ --- an
+element of the layer $L:=F(\varrho)$, not of the base
+field --- is not, in $M$ as above, the square of any element of
+$\operatorname{Span}_{F}\{1,\varrho,\varsigma,\varrho\varsigma\}$.
+\end{theorem}
+
+Because $\gamma_{\pm}$ lives in the layer, the biquadratic transfer
+does not apply to it directly.  Instead a layer quadratic step
+(\leanline{Gap/BMThm7NormCriterion.lean}{87}{step\_over\_layer})
+reduces a hypothetical square root to a square in the layer or its
+$S_{q}$-multiple, and the coordinate norm passage
+(\leanline{Gap/BMThm7NormCriterion.lean}{236}{layer\_square\_norm}:
+$g_{0}^{2}-g_{1}^{2}R_{q}=(p^{2}-q^{2}R_{q})^{2}$, computed in
+coordinates, with no Galois action) turns either case, via
+\eqref{eq:I2} in its polynomial form
+(\leanline{Gap/BMThm7NormCriterion.lean}{38}{I2\_R2}), into the
+statement that $-2Q_{4}$ is a square in $\Q(a,b)$ --- contradicting
+the eight verdicts.  Both signs are handled at once.
+
+Geometric integrality of the three covers follows [M with C and K
+inputs]: $Q_{4}=F_{1}F_{2}F_{3}$ with distinct irreducible factors,
+each to the first power, and $\gcd(F_{i},R_{q}S_{q})=1$ [C], so
+$Q_{4}$ has odd valuation along every geometric component of each
+$F_{i}=0$; the generic point of every such component lies outside the
+branch divisor of $S\to B$ (equivalently, the two divisors share no
+codimension-one component), and the valuations stay odd in
+$\overline{\Q}(S)$; hence
+$Q_{4}\notin\overline{\Q}(S)^{\times2}$, and the same divisor argument
+applies verbatim to $-2Q_{4}$.  For $C_{\pm}$ the specialised kernel
+theorem quantifies its coefficients over $\Q(a,b)$ and is \emph{not}
+base-changed; instead the abstract kernel lemmas
+(\texttt{step\_over\_layer}, \texttt{layer\_square\_norm} --- stated
+for an arbitrary characteristic-zero field) are applied afresh with
+$K=\overline{\Q}(a,b)$, their inputs supplied by the odd-multiplicity
+divisor data through the base-change lemma, and the assembly reduces
+geometric squareness of $\gamma_{\pm}$ to that of $-2Q_{4}$, excluded
+above [M].  So $C_{0}$, $C_{+}$ and $C_{-}$ are dominant,
+geometrically integral degree-two covers of $U$; removing the branch
+locus yields \'etaleness, not integrality.  ($-2Q_{4}$ is not itself a
+radicand: it enters as the layer-norm obstruction class of
+$\gamma_{\pm}$.)
+
+\subsection{What the terrain shows --- and what is not claimed}
+\label{sec:boundary:reading}
+
+The locus inside $S$ where Theorem~7's conclusion is algebraically
+forced is the proper curve $S\cap\{Q_{4}=0\}$: six one-dimensional
+components, each of genus~$0$ [C].  On each component $R_{q}$ restricts
+to a square while $S_{q}$ does not; the restriction of $S_{q}$ has
+constant square class $12=4\cdot 3$ [C], so $w^{2}=S_{q}$ has rational
+solutions only where $S_{q}=0$, and every rational zero of $S_{q}$ on
+each component is a degenerate point of the chart (on $F_{1}$ there are
+no rational zeros at all) [C], hence inadmissible.  Hence over $\Q$ the
+conclusion is never algebraically forced: \emph{for Theorem~7's conclusion to hold
+at a nondegenerate $P\in S(\Q)$}, $P$ must lie in the image of at least
+one of the three nontrivial double covers --- whether every terrain
+point does so is precisely the open content of the theorem, and is not
+assumed here.  Thus the algebraically forced locus $S\cap\{Q_{4}=0\}$ contributes
+no admissible rational terrain point [C+M].
+
+Away from the degeneracy locus each disjunct demands lifting through a
+double cover that is nontrivial over the splitting extension $K(S)$, so
+the image of the rational points of each cover is a thin subset of
+type~II [M] --- essentially by definition, as the image of the rational
+points of a dominant degree-two cover.  \emph{No assertion is made that
+$S(\Q)$ contains rational points outside the union of these images}:
+no such conclusion follows from thinness alone, and the additional
+input that would provide it --- for example an appropriate
+Hilbert-property statement for $S$ --- is not proved here; what is
+proved is geometric integrality.  Thinness bounds what a generic-point argument can see,
+not what rational points exist.  Within the approaches surveyed we
+found no finite descent reduction, and make no claim that none exists;
+and the field-dependence begins
+already at Buchholz--MacDougall's own excluded case, over the quadratic
+extension suggested by the square class, $\Q(\sqrt{3})$
+($12=4\cdot 3$), while Stroeker's points live over $\Q(\sqrt{3441})$.
+
+The reading is an assessment [A] anchored by machine artifacts, not a
+theorem: the computations above eliminate the explicitly listed
+algebraically forced and cover-triviality mechanisms --- they do not
+address whether every rational terrain point lifts to one of the
+covers --- and what remains open is that
+$S(\Q)$ has no nondegenerate points --- equivalent to Conjecture~1 by
+Proposition~\ref{prop:bridge}.  Formally, the sufficiency of
+Conjecture~1
+(\leanline{Gap/BMThm7Transcript.lean}{1002}{thm7\_of\_conjecture1})
+and the normalisation bridge are both kernel theorems; necessity of
+Conjecture~1 for Theorem~7, and the nonexistence of routes outside this
+survey, are not claimed.  We make no assertion that the union of the
+cover images fails to contain $S(\Q)$; no conclusion about
+Conjecture~1 follows from the covers alone.  Every route to Theorem~7
+in the survey above passes through that open statement.
+
+%% ================================================================
+%% §7 FORMALIZATION (5–7p)
+%% SOURCE: RNT §6 + 新規 + MEASUREMENTS.md (定量表)
+%% ================================================================
+\section{The formalization}\label{sec:formal}
+
+\subsection{Architecture and division of labour}\label{sec:formal:arch}
+
+The development was produced under a fixed protocol separating three
+roles.  \emph{Statements and strategy} were designed, checked, and
+frozen by the author before any proof search: every definition (the
+gates as derivative discriminants, the curve as a Weierstrass equation,
+the $a$-map, the chart quantities, the anchor values) was cross-checked
+in Sage and Magma against independent reimplementations, and the frozen
+statement files were hashed.  \emph{Tactic-level proof filling} was
+then delegated to large-language-model assistants (Anthropic Claude,
+including its coding agent), which also drafted computer-algebra
+scripts and portions of this manuscript.  \emph{Verification} was never
+delegated: every Lean proof was re-verified by an independent run of
+the Lean kernel, including its per-declaration axiom report, in a
+process separate from the assistant runs that produced the proofs, and
+again by continuous integration on independent hardware; all load-bearing
+computer-algebra identities and numerical curve data were checked in
+both Magma and Sage (with PARI and the LMFDB as additional cross-checks
+where applicable); and no AI-generated mathematical claim was accepted
+without independent human checking and, where applicable, kernel or
+computer-algebra verification.  The author selected, checked, and
+approved every final definition and theorem statement, and takes full
+responsibility for the content of this article.  Under this protocol,
+every Lean-labelled claim below is certified by the pinned kernel;
+every load-bearing computer-algebra claim was reproduced independently
+in Magma and Sage; ordinary mathematical deductions and literature
+claims ([M], [A]) were checked by the author and lie outside the
+kernel/computer-algebra trust boundary --- and nothing below rests on
+unverified model output.
+
+\subsection{The artifact: pins, certificates, and continuous
+verification}\label{sec:formal:artifact}
+
+The development compiles against mathlib (toolchain
+\texttt{v4.31.0-rc1}, mathlib commit \texttt{d568c8c}) and is archived
+at the frozen release \repotag{} (commit \texttt{\repocommit}) of
+\url{\repourl}, with concept DOI \texttt{\conceptdoi}.  Every
+declaration cited in this paper is hyperlinked to its file and line
+\emph{at that tag}, so the links are permanent; the ten pins listed in
+the repository README are re-resolved mechanically against the actual
+tag content on every push (a fail-closed check: a pin that no longer
+matches fails the build).  The dependency graph, with one node per formal declaration tracked in
+the blueprint and kernel status marked per node, is at
+\url{\blueprinturl}.
+
+All computer-algebra-derived certificates --- the
+\texttt{linear\_combination} cofactors of
+\S\S\ref{sec:repair:backward}--\ref{sec:repair:forward}, the
+elimination certificates, and the Nullstellensatz cofactors of the sign
+cover --- are reproduced \emph{verbatim} in the Lean source, so their
+correctness is checked by the kernel rather than trusted; the
+generating scripts remain in \texttt{scripts/} as the discovery record.
+Continuous integration runs three independent jobs on every push: the
+Lean build with a named-declaration check (all 137 blueprint
+declarations must exist) and an axiom assertion for the main theorems;
+a computer-algebra re-execution job that reruns the terrain
+cross-check script in a digest-pinned container and diffs its 42
+checks against the committed log; and a tag self-verification job that rebuilds the
+release tag itself.
+
+\subsection{The axiom footprint, and the history it records}
+\label{sec:formal:axioms}
+
+The kernel reports the axiom footprint of
+\leanline{Thm7Prime/Master.lean}{619}{thm7prime}, of the transcript
+theorems of Part~I, and of the boundary theorems of Part~III as exactly
+\texttt{[propext, Classical.choice, Quot.sound]} --- the standard
+axioms of classical mathlib reasoning, with no custom axiom and no
+\texttt{sorry}.  The development retains, deliberately, one disclosed
+axiom (\leanline{Thm7Prime/Master.lean}{320}{rank\_E576i2}: the
+Mordell--Weil rank of \texttt{576i2} is $1$, verified unconditionally
+in two independent systems) together with the auxiliary declarations
+that consume it.  These are the trace of an earlier \emph{conditional}
+architecture: the forward direction of Theorem~$7'$ was first proved
+under the rank hypothesis, and the unconditional reconstruction of
+\S\ref{sec:repair:forward} superseded it.  The axiom was not deleted,
+because the kernel's per-declaration axiom report then documents the
+history of the proof as well as its final status: a reader can verify,
+from the report alone, both that the main theorem is unconditional and
+that it was not always so.  Mathlib's lack of a Mordell--Weil rank
+theory (\S\ref{sec:open}) is thus visible in the artifact twice ---
+once as the wall that stands for Conjecture~1, and once as the pressure
+that produced the rank-free proof; the disclosed axiom marks the exact
+point where the pressure was released.  An archived copy of the
+pre-merge master file, carrying the same axiom, is retained under
+\texttt{archive/} as provenance and is excluded from the live build.
+
+\subsection{Quantitative summary}\label{sec:formal:quant}
+
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+component & files & lines & theorems & definitions & axioms \\
+\midrule
+\texttt{Gap/} (audit + boundary) & 9 & 3{,}271 & 148 & 53 & 0 \\
+\texttt{Thm7Prime/} (repair) & 3 & 1{,}076 & 61 & 27 & 1 \\
+\midrule
+live development & 12 & 4{,}347 & 209 & 80 & 1 \\
+\texttt{archive/} (provenance) & 3 & 783 & 40 & 30 & (1) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Declaration counts are top-level \texttt{theorem} and
+\texttt{def}-family declarations at the frozen tag; the parenthesised
+axiom is the archived copy of the same \texttt{rank\_E576i2}.  The
+named-declaration check covers 137 blueprint declarations.  The
+blueprint itself runs to 1{,}378 lines of \LaTeX{} against 4{,}347
+lines of live Lean, a ratio of roughly $1:3.2$.  The verification
+scripts comprise 29 files across four suites (Magma, Sage, rank,
+terrain), with a certificate index in
+\texttt{scripts/CERTIFICATES.md}.
+With the pinned mathlib pre-built, a full kernel verification of the
+development (all twelve files, \texttt{lake build}) completes in 35
+seconds of wall time (88 seconds of CPU time) on an Apple M4 Pro with
+48\,GB of memory; re-checking the statement file
+\texttt{Thm7Prime/Master.lean} alone takes 10 seconds.  This manuscript
+runs to 2{,}052 lines of \LaTeX{} against the same 4{,}347 lines of Lean,
+a ratio of roughly $1:2.1$.
+
+\subsection{Design decisions}\label{sec:formal:design}
+
+Three decisions shaped the development and are recorded for reuse.
+First, the \emph{gate form}: rational-derivedness was formalized
+through division-free discriminant gates rather than through
+\texttt{Polynomial.roots} directly, because polynomial identities under
+\texttt{linear\_combination} are where the kernel is strong; the cost
+--- a possible statement-level slip between the gate form and the
+natural form --- was then paid down by proving the equivalence in the
+kernel (Theorem~\ref{thm:fidelity}).  Second, \emph{value
+specialisation over sign arguments}: since $R_q$ and $S_q$ are positive
+semi-definite on the chart (\S\ref{sec:boundary:integral}), negativity
+certificates were unavailable for them in principle, and non-square
+\emph{values} at rational points carried the exclusions instead; the
+sign-based route and the value-based route coexist in the eight
+verdicts, each where it applies.  Third, \emph{abstract lemmas over
+base change}: the layer lemmas of \S\ref{sec:boundary:covers} were
+stated over an arbitrary characteristic-zero field from the outset, so
+that the geometric ($\overline{\Q}$) applications are fresh
+instantiations of kernel theorems rather than informal base-change
+arguments --- the kernel boundary stays exactly where the paper says it
+is.
+
+%% ================================================================
+%% §8 OPEN SECTOR AND FUTURE WORK (~1.5p)
+%% ================================================================
+\section{The open sector}\label{sec:open}
+
+Following the practice of stating unproved propositions as formal
+definitions --- as \cite{LoefflerStoll} do for the Riemann hypothesis
+--- the outstanding statement is displayed here in the exact form it
+takes in the development
+(\leanline{Gap/BMThm7Transcript.lean}{996}{Conjecture1\_normal};
+reproduced verbatim, deliberately without proof and without
+\texttt{sorry} --- introduced as a definition of a proposition rather
+than as a theorem: the development contains no proof term inhabiting
+it, so the source itself keeps the syntactic distinction between
+stating the conjecture and proving it):
+
+\begin{lstlisting}
+def Conjecture1_normal (K : Type*) [Field K] : Prop :=
+  ∀ a b : K, DistinctRoots a b → ¬ KDerived (bmQuartic a b)
+\end{lstlisting}
+
+\noindent One kernel theorem hangs from it
+(\leanline{Gap/BMThm7Transcript.lean}{1002}{thm7\_of\_conjecture1}):
+if Conjecture~1 (normalised) holds, then the promised conclusion T0 of
+\S2.2.4 holds --- vacuously, since the conjecture empties the
+hypothesis class.  This one line is the only route to T0 represented in the formal
+dependency graph;
+what it proves is sufficiency, not necessity.  By the normalisation
+bridge (Proposition~\ref{prop:bridge}), Conjecture~1 is equivalent to
+the nonexistence of nondegenerate rational points on the splitting
+surface $S$; Part~III records how far computation shuts the known
+approaches, and what a proof would have to decide.
+
+One standing obstacle is a property of the current library, not of the
+mathematics: at the pinned commit, mathlib does not provide the machinery needed
+here for Mordell--Weil rank, Selmer computations, Chabauty's method,
+or Coleman integration, so any completion of the conjecture that proceeds
+through the arithmetic of elliptic surfaces cannot at present be
+carried to a kernel-checked proof without either substantial new
+formalization or disclosed axioms encapsulating the computer-algebra
+rank computations.  For the repeated-root sector this wall was
+\emph{bypassed} rather than breached --- Theorem~$7'$ is rank-free ---
+and it remains standing exactly for Conjecture~1.  The reopening
+condition is explicit: the required machinery must be formalised,
+either in mathlib or locally.
+Dated computational records (measured fibres, descent runs in
+progress, the survey of cover mechanisms) are kept as research notes at
+the repository root, separated from the durable blueprint.
+
+Conjecture~1 itself remains open --- this development maps its
+boundary, it does not resolve it.
+
+%% ================================================================
+%% APPENDIX
+%% ================================================================
+\appendix
+
+\section{Explicit data and the formal statement}\label{app:data}
+
+The sign-selection sextic of \S\ref{sec:repair:forward}(c) is
+\begin{align*}
+P(a,r,s) ={}& -15064695\,ars^4 + 9029055\,as^5 - 2983275\,rs^5\\
+&+ 4985475\,s^6 + 106313580\,ars^3 - 112603320\,as^4\\
+&+ 35756697\,rs^4 - 42229133\,s^5 - 143856972\,ars^2\\
+&+ 415929600\,as^3 - 121880772\,rs^3 + 95245548\,s^4\\
+&- 394608672\,ars - 21311424\,as^2 - 48676140\,rs^2\\
+&+ 103362048\,s^3 + 833400576\,ar - 2611061568\,as\\
+&+ 934428960\,rs - 758843424\,s^2 + 3732293376\,a\\
+&- 1245777408\,r + 1320338880\,s - 1009822464 .
+\end{align*}
+The remaining explicit data (the \texttt{linear\_combination} cofactors,
+the elimination certificates, and the six Nullstellensatz cofactors) are
+reproduced in the Lean source and checked by the kernel; the main text
+records the identity each certificate proves, and the complete
+coefficient lists live in the archived development.
+
+Following the journal's guidance that in-text code should complement
+rather than reproduce the artifact, we display only the main statement;
+its supporting definitions are quoted and pinned at their points of use
+in \S\ref{sec:repair:statement}, and the full statement file is
+\leanfile{Thm7Prime/Master.lean}.  The statements below are reproduced
+verbatim from that file at the frozen tag; the correspondence between
+them and Theorem~\ref{thm:main} is the statement-fidelity claim of this
+paper, checkable by inspection together with
+Theorem~\ref{thm:fidelity}.
+
+\begin{lstlisting}
+def Thm7Backward : Prop :=
+  ∀ w z : ℚ, OnE w z → aDen w z ≠ 0 → aMap w z ≠ 0 → aMap w z ≠ 1 →
+    RD211 (aMap w z)
+
+def Thm7Forward : Prop :=
+  ∀ a : ℚ, RD211 a → ∃ w z : ℚ, OnE w z ∧ aDen w z ≠ 0 ∧ aMap w z = a
+
+def Thm7Prime : Prop := Thm7Backward ∧ Thm7Forward
+
+theorem thm7prime : Thm7Prime := (*@$\langle$@*)thm7_backward, thm7_forward(*@$\rangle$@*)
+\end{lstlisting}
+
+%% ================================================================
+%% BACK MATTER
+%% ================================================================
+\section*{Code availability}
+{\sloppy
+The Lean development, all Magma and Sage verification scripts and logs,
+the blueprint, and build instructions are maintained at \url{\repourl}
+and archived at the frozen release \repotag{} (commit
+\texttt{\repocommit}); the release is deposited at Zenodo under concept
+DOI \url{https://doi.org/\conceptdoi}.  The development descends from two earlier
+archived artifacts, from which selected scripts were carried over with
+a transfer manifest: the audit repository
+(\url{https://doi.org/10.5281/zenodo.21465598}) and the repair
+repository (\url{https://doi.org/10.5281/zenodo.21470001}).
+The release revision carries the intrinsic Software Heritage identifier
+\texttt{swh:1:rev:a5cf446d09b148c9c27a5232e0a0bfddd1f689ab}.
+\par}
+
+\section*{Acknowledgment}
+We record with sadness that Professor R.~J. Stroeker died in October
+2025, and Professor J.~A. MacDougall in May 2025, while the
+verification reported here was in preparation.  The corrections
+reported here are offered to the record of bodies of work that our
+audit found overwhelmingly sound; we have therefore taken particular
+care to distinguish typographical errors, valid intermediate results,
+and the inferential gap, and to state which substantive conclusions of
+the cited works remain unaffected.
+
+\section*{Funding}
+This research did not receive any specific grant from funding agencies
+in the public, commercial, or not-for-profit sectors.
+
+\section*{Declaration of competing interest}
+The author declares no competing interests.
+
+% AI 開示は §7 に一本化 (elsarticle 型の独立宣言節は AFM では不要 —
+% corpus 実測では本文中の開示が標準)
+
+\begin{thebibliography}{20}
+
+\bibitem{BK1995}
+R.~H. Buchholz, S.~M. Kelly,
+On rational-derived quartics,
+Bull. Austral. Math. Soc. 51 (1995) 121--132.
+\url{https://doi.org/10.1017/S0004972700013940}
+
+\bibitem{BM2000}
+R.~H. Buchholz, J.~A. MacDougall,
+When Newton met Diophantus: a study of rational-derived polynomials and
+their extension to quadratic fields,
+J. Number Theory 81 (2000) 210--233.
+\url{https://doi.org/10.1006/jnth.1999.2473}
+
+\bibitem{BC2016}
+A.~Bremner, B.~Carrillo,
+On $K$-derived quartics,
+J. Number Theory 168 (2016) 276--291.
+\url{https://doi.org/10.1016/j.jnt.2016.04.024}
+
+\bibitem{BrascaEtAl}
+A.~J. Best, C.~Birkbeck, R.~Brasca, E.~Rodriguez Boidi,
+R.~Van de Velde, A.~Yang,
+A complete formalization of Fermat's Last Theorem for regular primes in
+Lean,
+Ann. Formaliz. Math. 1 (2025) 103--132.
+\url{https://doi.org/10.46298/afm.14586}
+
+\bibitem{Carrillo2019}
+B.~Carrillo,
+Rational Derived Quartics and Related Topics,
+Ph.D. thesis, Arizona State University, 2019.
+
+\bibitem{Carroll1989}
+C.~E. Carroll,
+Polynomials all of whose derivatives have integer roots,
+Amer. Math. Monthly 96 (1989) 129--130.
+
+\bibitem{Cremona1997}
+J.~E. Cremona,
+Algorithms for Modular Elliptic Curves, second ed.,
+Cambridge University Press, Cambridge, 1997.
+
+\bibitem{Flynn2001}
+E.~V. Flynn,
+On $\Q$-derived polynomials,
+Proc. Edinb. Math. Soc. (2) 44 (2001) 103--110.
+\url{https://doi.org/10.1017/S0013091599000760}
+
+\bibitem{Guy1989}
+R.~K. Guy,
+Unsolved problems come of age,
+Amer. Math. Monthly 96, no.~10 (1989) 903--909.
+
+\bibitem{Lean}
+L.~de~Moura, S.~Ullrich,
+The Lean 4 theorem prover and programming language,
+in: Automated Deduction --- CADE 28, LNCS 12699, Springer, 2021,
+pp. 625--635.
+
+\bibitem{LoefflerStoll}
+D.~Loeffler, M.~Stoll,
+Formalizing zeta and L-functions in Lean,
+Ann. Formaliz. Math. 1 (2025) 43--56.
+\url{https://doi.org/10.46298/afm.15328}
+
+\bibitem{LudwigMerten}
+J.~Ludwig, C.~Merten,
+Formalising the Bruhat--Tits Tree,
+Ann. Formaliz. Math. 2 (2026) 55--81.
+\url{https://doi.org/10.46298/afm.15738}
+
+\bibitem{mathlib}
+The mathlib Community,
+The Lean mathematical library,
+in: Proc. 9th ACM SIGPLAN Int. Conf. on Certified Programs and Proofs
+(CPP 2020), pp. 367--381.
+\url{https://doi.org/10.1145/3372885.3373824}
+
+\bibitem{Stroeker2002}
+R.~J. Stroeker,
+On $\Q$-derived polynomials,
+Econometric Institute Report EI 2002-30, Erasmus University Rotterdam,
+2002.
+
+\bibitem{Stroeker2006}
+R.~J. Stroeker,
+On $\Q$-derived polynomials,
+Rocky Mountain J. Math. 36 (2006) 1705--1713.
+
+\end{thebibliography}
+
+\end{document}
